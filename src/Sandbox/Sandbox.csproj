@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>../../game/bin/Debug/Sandbox/</OutputPath>
+    <OutputPath>../../game/bin/Debug/Sandbox/bin/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

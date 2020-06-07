@@ -1,5 +1,5 @@
-﻿using System;
-using VoltstroEngine;
+﻿using VoltstroEngine;
+using VoltstroEngine.Logging;
 
 namespace Sandbox
 {
@@ -12,7 +12,7 @@ namespace Sandbox
 	{
 		public Application CreateApplication()
 		{
-			Console.WriteLine("Creating new SandBox application...");
+			Logger.Log("Creating new sandbox app...");
 			return new SandboxApp();
 		}
 	}

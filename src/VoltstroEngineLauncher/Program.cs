@@ -3,19 +3,22 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using VoltstroEngine;
+using VoltstroEngine.Logging;
 
 namespace VoltstroEngineLauncher
 {
 	public class Program
 	{
-		private static string defaultGame = "Sandbox";
+		private const string DefaultGame = "Sandbox";
 
 		[STAThread]
 		public static void Main(string[] args)
 		{
+			Logger.InitiateLogger();
+
 			try
 			{
-				string dllPath = Path.GetFullPath($"{defaultGame}/bin/{defaultGame}.dll");
+				string dllPath = Path.GetFullPath($"{DefaultGame}/bin/{DefaultGame}.dll");
 				Assembly gameDll = Assembly.LoadFile(dllPath);
 
 				IEntryPoint entryPoint = null;
@@ -34,7 +37,7 @@ namespace VoltstroEngineLauncher
 
 				if (entryPoint == null)
 				{
-					Console.WriteLine("The game DLL doesn't contain an entry point!");
+					Logger.Log("The game DLL doesn't contain an entry point!", LogVerbosity.Error);
 					Console.ReadLine();
 					Environment.Exit(0);
 				}
@@ -43,16 +46,18 @@ namespace VoltstroEngineLauncher
 			}
 			catch (FileNotFoundException)
 			{
-				Console.WriteLine("The game DLL failed to load!");
+				Logger.Log("The game DLL failed to load!", LogVerbosity.Error);
 				Console.ReadLine();
 				Environment.Exit(0);
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				Logger.Log(ex.ToString(), LogVerbosity.Error);
 				Console.ReadLine();
 				Environment.Exit(0);
 			}
+
+			Logger.EndLogger();
 		}
 	}
 }

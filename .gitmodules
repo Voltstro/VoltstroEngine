@@ -1,0 +1,3 @@
+[submodule "src/ThirdParty/glfw-net"]
+	path = src/ThirdParty/glfw-net
+	url = https://github.com/ForeverZer0/glfw-net

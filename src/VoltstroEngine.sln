@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltstroEngine", "VoltstroE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{77345F96-41BC-48A7-AF2E-31FB7656C58D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{A7EAA04C-6E4E-4F76-9343-4F5018625CF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLFW.NET", "ThirdParty\glfw-net\GLFW.NET\GLFW.NET.csproj", "{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0} = {A7EAA04C-6E4E-4F76-9343-4F5018625CF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C60704E-4B00-40A0-8798-F24EBB9A9C46}

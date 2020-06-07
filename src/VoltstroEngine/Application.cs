@@ -28,6 +28,9 @@ namespace VoltstroEngine
 		{
 			while (isRunning)
 			{
+				Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
+				Renderer.Clear();
+
 				window.OnUpdate();
 			}
 		}

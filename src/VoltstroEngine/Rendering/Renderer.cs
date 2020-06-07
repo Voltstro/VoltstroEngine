@@ -22,7 +22,7 @@ namespace VoltstroEngine.Rendering
 		/// <summary>
 		/// Initializes the rendering system
 		/// </summary>
-		public static void Init()
+		internal static void Init()
 		{
 			if (initialized)
 			{
@@ -33,6 +33,25 @@ namespace VoltstroEngine.Rendering
 			renderingAPI = new OpenGLRenderingAPI();
 			renderingAPI.Init();
 			initialized = true;
+		}
+
+		/// <summary>
+		/// Clears the buffer
+		/// </summary>
+		internal static void Clear()
+		{
+			renderingAPI.Clear();
+		}
+
+		/// <summary>
+		/// Sets the clear color
+		/// </summary>
+		/// <param name="red"></param>
+		/// <param name="green"></param>
+		/// <param name="blue"></param>
+		internal static void SetClearColor(float red, float green, float blue)
+		{
+			renderingAPI.SetClearColor(red, green, blue, 1.0f);
 		}
 	}
 }

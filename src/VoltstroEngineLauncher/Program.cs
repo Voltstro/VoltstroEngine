@@ -44,12 +44,6 @@ namespace VoltstroEngineLauncher
 
 				entryPoint.CreateApplication().Run();
 			}
-			catch (FileNotFoundException)
-			{
-				Logger.Log("The game DLL failed to load!", LogVerbosity.Error);
-				Console.ReadLine();
-				Environment.Exit(0);
-			}
 			catch (Exception ex)
 			{
 				Logger.Log(ex.ToString(), LogVerbosity.Error);

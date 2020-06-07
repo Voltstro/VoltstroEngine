@@ -23,4 +23,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="OpenGL.Net">
+      <HintPath>..\ThirdParty\OpenGL.Net\OpenGL.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

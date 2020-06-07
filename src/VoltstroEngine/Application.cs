@@ -1,4 +1,5 @@
-﻿using VoltstroEngine.Window;
+﻿using VoltstroEngine.Rendering;
+using VoltstroEngine.Window;
 
 namespace VoltstroEngine
 {
@@ -16,6 +17,8 @@ namespace VoltstroEngine
 				Height = 720,
 				VSync = true
 			});
+
+			Renderer.Init();
 		}
 
 		/// <summary>

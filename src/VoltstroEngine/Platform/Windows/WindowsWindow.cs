@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using GLFW;
 using VoltstroEngine.Logging;
+using VoltstroEngine.Platform.OpenGL;
+using VoltstroEngine.Rendering;
 using VoltstroEngine.Window;
 
 namespace VoltstroEngine.Platform.Windows
@@ -16,6 +18,8 @@ namespace VoltstroEngine.Platform.Windows
 		private WindowProperties windowProperties;
 		private GLFW.Window window;
 
+		private IGraphicsContext context;
+
 		public WindowsWindow(WindowProperties properties)
 		{
 			Init(properties);
@@ -24,7 +28,7 @@ namespace VoltstroEngine.Platform.Windows
 		public void OnUpdate()
 		{
 			Glfw.PollEvents();
-			Glfw.SwapBuffers(window);
+			context.SwapBuffers();
 		}
 
 		public int GetWidth()
@@ -66,7 +70,9 @@ namespace VoltstroEngine.Platform.Windows
 			windowProperties = properties;
 
 			window = Glfw.CreateWindow(properties.Width, properties.Height, properties.Title, Monitor.None, GLFW.Window.None);
-			Glfw.MakeContextCurrent(window);
+			context = new OpenGLContext(window);
+			context.Init();
+
 			SetVSync(properties.VSync);
 
 			Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})", LogVerbosity.Debug);

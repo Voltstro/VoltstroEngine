@@ -32,5 +32,10 @@ namespace VoltstroEngine.Platform.OpenGL
 		{
 			Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 		}
+
+		public RenderingAPI GetAPI()
+		{
+			return RenderingAPI.OpenGL;
+		}
 	}
 }

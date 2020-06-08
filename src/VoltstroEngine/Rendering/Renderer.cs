@@ -15,8 +15,7 @@ namespace VoltstroEngine.Rendering
 		/// <returns></returns>
 		public static RenderingAPI GetRenderingAPI()
 		{
-			//For now, we only have one...
-			return RenderingAPI.OpenGL;
+			return renderingAPI.GetAPI();
 		}
 
 		/// <summary>

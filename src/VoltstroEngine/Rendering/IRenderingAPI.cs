@@ -23,5 +23,11 @@
 		/// Clears the buffer
 		/// </summary>
 		public void Clear();
+
+		/// <summary>
+		/// Returns what type or rendering API this is
+		/// </summary>
+		/// <returns></returns>
+		public RenderingAPI GetAPI();
 	}
 }

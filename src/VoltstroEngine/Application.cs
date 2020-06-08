@@ -10,6 +10,9 @@ namespace VoltstroEngine
 
 		public Application()
 		{
+			Renderer.Init();
+
+			//Creates a new window
 			window = IWindow.CreateWindow(new WindowProperties
 			{
 				Title = "Voltstro Engine",
@@ -17,8 +20,6 @@ namespace VoltstroEngine
 				Height = 720,
 				VSync = true
 			});
-
-			Renderer.Init();
 		}
 
 		/// <summary>

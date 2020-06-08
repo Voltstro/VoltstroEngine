@@ -4,6 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Authors>Voltstro</Authors>
+    <Product>Voltstro Engine Launcher</Product>
+    <Copyright>Copyright © Voltstro 2020</Copyright>
+    <PackageProjectUrl>https://github.com/Voltstro/VoltstroEngine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Voltstro/VoltstroEngine</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Description>Voltstro Engine inital engine launcher.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

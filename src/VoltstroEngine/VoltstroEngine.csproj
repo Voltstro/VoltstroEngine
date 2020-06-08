@@ -3,6 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Authors>Voltstro</Authors>
+    <Product>Voltstro Engine</Product>
+    <Copyright>Copyright © Voltstro 2020</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Voltstro/VoltstroEngine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Voltstro/VoltstroEngine</RepositoryUrl>
+    <Description>Voltstro Engine main engine code.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

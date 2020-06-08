@@ -1,4 +1,6 @@
-﻿namespace VoltstroEngine.Window
+﻿using VoltstroEngine.Events;
+
+namespace VoltstroEngine.Window
 {
 	/// <summary>
 	/// Window interface
@@ -47,5 +49,9 @@
 		/// </summary>
 		/// <returns></returns>
 		public bool IsVSync();
+
+		public delegate void OnEventDelegate(IEvent e);
+
+		public event OnEventDelegate OnEvent;
 	}
 }

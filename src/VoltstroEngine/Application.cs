@@ -1,4 +1,5 @@
-﻿using VoltstroEngine.Rendering;
+﻿using VoltstroEngine.Events;
+using VoltstroEngine.Rendering;
 using VoltstroEngine.Window;
 
 namespace VoltstroEngine
@@ -20,6 +21,18 @@ namespace VoltstroEngine
 				Height = 720,
 				VSync = true
 			});
+			window.OnEvent += WindowOnOnEvent;
+		}
+
+		private void WindowOnOnEvent(IEvent e)
+		{
+			EventDispatcher eventDispatcher = new EventDispatcher();
+			eventDispatcher.DispatchEvent<WindowCloseEvent>(e, OnClose);
+		}
+
+		private void OnClose()
+		{
+			isRunning = false;
 		}
 
 		/// <summary>

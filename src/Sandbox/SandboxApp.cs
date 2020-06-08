@@ -8,7 +8,7 @@ namespace Sandbox
 	{
 		public void OnAttach()
 		{
-			
+
 		}
 
 		public void OnDetach()

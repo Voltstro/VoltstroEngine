@@ -35,7 +35,7 @@ namespace VoltstroEngineLauncher
 					break;
 				}
 			}
-			catch (FileNotFoundException ex)
+			catch (FileNotFoundException ex) //The DLL wasn't found
 			{
 				Debug.Assert(false, $"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!\n{ex}");
 #if !DEBUG
@@ -43,7 +43,7 @@ namespace VoltstroEngineLauncher
 				Environment.Exit(0);
 #endif
 			}
-			catch (Exception ex)
+			catch (Exception ex) //Some other error
 			{
 				Debug.Assert(false, $"An unknown error occured while preparing the game for launching!\n{ex}");
 #if !DEBUG
@@ -52,6 +52,7 @@ namespace VoltstroEngineLauncher
 #endif
 			}
 
+			//The entry point wasn't found
 			Debug.Assert(entryPoint != null, "The game DLL doesn't contain an entry point!");
 #if !DEBUG
 			if (entryPoint == null)
@@ -63,6 +64,7 @@ namespace VoltstroEngineLauncher
 			}
 #endif
 
+			//Create the app and run it
 			try
 			{
 				entryPoint.CreateApplication().Run();

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltstroEngineLauncher", "VoltstroEngineLauncher\VoltstroEngineLauncher.csproj", "{83E664BD-06F4-47AB-9859-5766206C9F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoltstroEngineLauncher", "VoltstroEngineLauncher\VoltstroEngineLauncher.csproj", "{83E664BD-06F4-47AB-9859-5766206C9F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltstroEngine", "VoltstroEngine\VoltstroEngine.csproj", "{FAC6EC38-6B10-410B-8DD5-12F973DF7888}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoltstroEngine", "VoltstroEngine\VoltstroEngine.csproj", "{FAC6EC38-6B10-410B-8DD5-12F973DF7888}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{77345F96-41BC-48A7-AF2E-31FB7656C58D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.csproj", "{77345F96-41BC-48A7-AF2E-31FB7656C58D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{A7EAA04C-6E4E-4F76-9343-4F5018625CF7}"
 EndProject
@@ -15,26 +15,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLFW.NET", "ThirdParty\glfw
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Debug|x64.ActiveCfg = Debug|x64
+		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Debug|x64.Build.0 = Debug|x64
+		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Release|x64.ActiveCfg = Release|x64
+		{83E664BD-06F4-47AB-9859-5766206C9F4E}.Release|x64.Build.0 = Release|x64
+		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Debug|x64.ActiveCfg = Debug|x64
+		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Debug|x64.Build.0 = Debug|x64
+		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Release|x64.ActiveCfg = Release|x64
+		{FAC6EC38-6B10-410B-8DD5-12F973DF7888}.Release|x64.Build.0 = Release|x64
+		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Debug|x64.ActiveCfg = Debug|x64
+		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Debug|x64.Build.0 = Debug|x64
+		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Release|x64.ActiveCfg = Release|x64
+		{77345F96-41BC-48A7-AF2E-31FB7656C58D}.Release|x64.Build.0 = Release|x64
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Debug|x64.ActiveCfg = Debug|x64
+		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

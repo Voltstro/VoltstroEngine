@@ -10,9 +10,10 @@
     <PackageProjectUrl>https://github.com/Voltstro/VoltstroEngine</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Voltstro/VoltstroEngine</RepositoryUrl>
     <Description>Voltstro Engine main engine code.</Description>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>../../game/bin/Debug</OutputPath>
   </PropertyGroup>
 

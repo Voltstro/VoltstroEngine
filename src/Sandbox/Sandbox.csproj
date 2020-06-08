@@ -7,11 +7,12 @@
     <Company>Voltstro</Company>
     <Copyright>Copyright © Voltstro 2020</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>../../game/bin/Debug/Sandbox/bin/</OutputPath>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile />
   </PropertyGroup>
 
   <ItemGroup>

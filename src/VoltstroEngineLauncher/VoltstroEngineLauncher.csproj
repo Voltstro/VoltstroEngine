@@ -11,9 +11,10 @@
     <RepositoryUrl>https://github.com/Voltstro/VoltstroEngine</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Description>Voltstro Engine inital engine launcher.</Description>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>../../game/bin/Debug</OutputPath>
   </PropertyGroup>
 

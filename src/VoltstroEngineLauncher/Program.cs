@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,34 +15,56 @@ namespace VoltstroEngineLauncher
 		[STAThread]
 		public static void Main(string[] args)
 		{
+			//Initiate the logger first
 			Logger.InitiateLogger();
+
+			IEntryPoint entryPoint = null;
+			string dllPath = Path.GetFullPath($"{DefaultGame}/bin/{DefaultGame}.dll");
+			try
+			{
+				//Load the game assembly
+				Assembly gameDll = Assembly.LoadFile(dllPath);
+
+				//Find a class the inherits from IEntryPoint so that we can create the game
+				foreach (Type type in gameDll.GetTypes().Where(x => x.IsPublic && x.IsClass)) //Needs to be public
+				{
+					if (!typeof(IEntryPoint).IsAssignableFrom(type)) continue;
+
+					if (!(Activator.CreateInstance(type) is IEntryPoint point)) continue;
+					entryPoint = point;
+					break;
+				}
+			}
+			catch (FileNotFoundException ex)
+			{
+				Debug.Assert(false, $"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!\n{ex}");
+#if !DEBUG
+				Logger.Log($"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!\n{ex.Message}", LogVerbosity.Error);
+				Environment.Exit(0);
+#endif
+			}
+			catch (Exception ex)
+			{
+				Debug.Assert(false, $"An unknown error occured while preparing the game for launching!\n{ex}");
+#if !DEBUG
+				Logger.Log($"An unknown error occured while preparing the game for launching!\n{ex.Message}", LogVerbosity.Error);
+				Environment.Exit(0);
+#endif
+			}
+
+			Debug.Assert(entryPoint != null, "The game DLL doesn't contain an entry point!");
+#if !DEBUG
+			if (entryPoint == null)
+			{
+				Logger.Log("The game DLL doesn't contain an entry point!", LogVerbosity.Error);
+				Console.ReadLine();
+				Environment.Exit(0);
+				return;
+			}
+#endif
 
 			try
 			{
-				string dllPath = Path.GetFullPath($"{DefaultGame}/bin/{DefaultGame}.dll");
-				Assembly gameDll = Assembly.LoadFile(dllPath);
-
-				IEntryPoint entryPoint = null;
-
-				foreach (Type type in gameDll.GetTypes().Where(x => x.IsPublic))
-				{
-					if (typeof(IEntryPoint).IsAssignableFrom(type))
-					{
-						if (Activator.CreateInstance(type) is IEntryPoint point)
-						{
-							entryPoint = point;
-							break;
-						}
-					}
-				}
-
-				if (entryPoint == null)
-				{
-					Logger.Log("The game DLL doesn't contain an entry point!", LogVerbosity.Error);
-					Console.ReadLine();
-					Environment.Exit(0);
-				}
-
 				entryPoint.CreateApplication().Run();
 			}
 			catch (Exception ex)

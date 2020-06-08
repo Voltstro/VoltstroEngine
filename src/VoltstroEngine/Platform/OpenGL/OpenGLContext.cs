@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using GLFW;
 using OpenGL;
 using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
+using Exception = System.Exception;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
@@ -23,9 +25,12 @@ namespace VoltstroEngine.Platform.OpenGL
 				Gl.Initialize();
 				Glfw.MakeContextCurrent(window);
 			}
-			catch (InvalidOperationException ex)
+			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				Debug.Assert(false, $"Some error occured while initializing OpenGL for GLFW!\n{ex}");
+#if !DEBUG
+				Logger.Log(ex.Message, LogVerbosity.Error);
+#endif
 			}
 			Logger.Log("OpenGL Initialized", LogVerbosity.Debug);
 

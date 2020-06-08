@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using OpenGL;
 using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
@@ -19,7 +20,10 @@ namespace VoltstroEngine.Platform.OpenGL
 			}
 			catch (Exception ex)
 			{
-				Logger.Log(ex.ToString(), LogVerbosity.Error);
+				Debug.Assert(false, $"An error occured while enabling OpenGL!\n{ex}");
+#if !DEBUG
+				Logger.Log(ex.Message, LogVerbosity.Error);
+#endif
 			}
 		}
 

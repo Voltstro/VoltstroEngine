@@ -1,19 +1,37 @@
 ﻿using VoltstroEngine;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Events;
+using VoltstroEngine.Layers;
 
 namespace Sandbox
 {
-	public class SandboxApp : Application
+	public class ExampleLayer : ILayer
 	{
+		public void OnAttach()
+		{
+			
+		}
 
+		public void OnDetach()
+		{
+			
+		}
+
+		public void OnUpdate()
+		{
+			
+		}
+
+		public void OnEvent(IEvent e)
+		{
+			
+		}
 	}
 
-	public class SandboxEntry : IEntryPoint
+	public class SandboxApp : Application
 	{
-		public Application CreateApplication()
+		public SandboxApp()
 		{
-			Logger.Log("Creating new sandbox app...");
-			return new SandboxApp();
+			PushOverlay(new ExampleLayer());
 		}
 	}
 }

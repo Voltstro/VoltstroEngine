@@ -60,6 +60,7 @@ namespace VoltstroEngine
 			uint[] indices = new uint[3]{0, 1, 2};
 			indexBuffer = IIndexBuffer.Create(indices, indices.GetBytes() / sizeof(uint));
 
+			//TODO: Asset managing
 			string vertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
 			string fragmentSrc = File.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
 

@@ -18,6 +18,10 @@
     <OutputPath>../../game/bin/Debug</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>../../game/bin/Release</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\VoltstroEngine\VoltstroEngine.csproj" />
   </ItemGroup>

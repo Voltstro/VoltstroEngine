@@ -1,7 +1,9 @@
-﻿using OpenGL;
+﻿using System.IO;
+using OpenGL;
 using VoltstroEngine.Events;
 using VoltstroEngine.Layers;
 using VoltstroEngine.Rendering;
+using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Window;
 using Buffer = System.Buffer;
 
@@ -12,6 +14,8 @@ namespace VoltstroEngine
 		private bool isRunning = true;
 		private readonly IWindow window;
 		private readonly LayerStack layerStack;
+
+		private IShader shader;
 
 		//TODO: Completely remove all OpenGL stuff here
 		private uint vertexArray;
@@ -58,6 +62,11 @@ namespace VoltstroEngine
 
 			int[] indices = new int[3]{0, 1, 2};
 			Gl.BufferData(BufferTarget.ElementArrayBuffer, (uint)Buffer.ByteLength(indices), indices, BufferUsage.StaticDraw);
+
+			string vertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
+			string fragmentSrc = File.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
+
+			shader = IShader.Create("Triangle", vertexSrc, fragmentSrc);
 		}
 
 		private void WindowOnOnEvent(IEvent e)
@@ -83,6 +92,8 @@ namespace VoltstroEngine
 			{
 				Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 				Renderer.Clear();
+
+				shader.Bind();
 
 				Gl.BindVertexArray(vertexArray);
 				Gl.DrawElements(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, null);

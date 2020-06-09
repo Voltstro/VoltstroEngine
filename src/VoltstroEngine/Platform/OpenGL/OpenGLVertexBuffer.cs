@@ -6,7 +6,6 @@ namespace VoltstroEngine.Platform.OpenGL
 	public class OpenGLVertexBuffer : IVertexBuffer
 	{
 		private readonly uint renderID;
-		private BufferLayout layout;
 
 		public OpenGLVertexBuffer(object vertices, uint size)
 		{
@@ -28,16 +27,6 @@ namespace VoltstroEngine.Platform.OpenGL
 		public void UnBind()
 		{
 			Gl.BindBuffer(BufferTarget.ArrayBuffer, 0);
-		}
-
-		public BufferLayout GetLayout()
-		{
-			return layout;
-		}
-
-		public void SetLayout(BufferLayout newLayout)
-		{
-			layout = newLayout;
 		}
 	}
 }

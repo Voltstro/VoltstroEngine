@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using OpenGL;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
@@ -8,6 +7,7 @@ using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Window;
+using Buffer = System.Buffer;
 
 namespace VoltstroEngine
 {
@@ -18,7 +18,11 @@ namespace VoltstroEngine
 		private readonly LayerStack layerStack;
 
 		private IShader shader;
-		private IVertexArray vertexArray;
+		private IIndexBuffer indexBuffer;
+		private IVertexBuffer vertexBuffer;
+
+		//TODO: Completely remove all OpenGL stuff here
+		private uint vertexArray;
 
 		public Application()
 		{
@@ -36,27 +40,25 @@ namespace VoltstroEngine
 
 			layerStack = new LayerStack();
 
-			vertexArray = IVertexArray.Create();
+			vertexArray = Gl.GenVertexArray();
+			Gl.BindVertexArray(vertexArray);
 
-			float[] vertices = new float[3 * 7]
+			float[] vertices = new float[3 * 3]
 			{
-				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-				0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-				0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+				-0.5f, -0.5f, 0.0f,
+				0.5f, -0.5f, 0.0f,
+				0.0f, 0.5f, 0.0f
 			};
 
-			IVertexBuffer vertexBuffer = IVertexBuffer.Create(vertices, vertices.GetBytes());
-			BufferLayout layout = new BufferLayout(new List<BufferElement>
-			{
-				new BufferElement(ShaderDataType.Float3, "a_Position"),
-				new BufferElement(ShaderDataType.Float4, "a_Color")
-			});
-			vertexBuffer.SetLayout(layout);
-			vertexArray.AddVertexBuffer(vertexBuffer);
+			vertexBuffer = IVertexBuffer.Create(vertices, vertices.GetBytes());
+
+			Gl.BufferData(BufferTarget.ArrayBuffer, (uint)Buffer.ByteLength(vertices), vertices, BufferUsage.StaticDraw);
+
+			Gl.EnableVertexAttribArray(0);
+			Gl.VertexAttribPointer(0, 3, VertexAttribType.Float, false, 3 * sizeof(float), null);
 
 			uint[] indices = new uint[3]{0, 1, 2};
-			IIndexBuffer indexBuffer = IIndexBuffer.Create(indices, indices.GetBytes() / sizeof(uint));
-			vertexArray.SetIndexBuffer(indexBuffer);
+			indexBuffer = IIndexBuffer.Create(indices, indices.GetBytes() / sizeof(uint));
 
 			//TODO: Asset managing
 			string vertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
@@ -91,8 +93,8 @@ namespace VoltstroEngine
 
 				shader.Bind();
 
-				vertexArray.Bind();
-				Gl.DrawElements(PrimitiveType.Triangles, (int)vertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
+				Gl.BindVertexArray(vertexArray);
+				Gl.DrawElements(PrimitiveType.Triangles, (int)indexBuffer.GetCount(), DrawElementsType.UnsignedInt, null);
 
 				foreach (ILayer layer in layerStack.GetLayers())
 					layer.OnUpdate();

@@ -1,8 +1,10 @@
 ﻿using System.IO;
 using OpenGL;
 using VoltstroEngine.Events;
+using VoltstroEngine.Extensions;
 using VoltstroEngine.Layers;
 using VoltstroEngine.Rendering;
+using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Window;
 using Buffer = System.Buffer;
@@ -16,12 +18,11 @@ namespace VoltstroEngine
 		private readonly LayerStack layerStack;
 
 		private IShader shader;
+		private IIndexBuffer indexBuffer;
+		private IVertexBuffer vertexBuffer;
 
 		//TODO: Completely remove all OpenGL stuff here
 		private uint vertexArray;
-		private uint vertexBuffer;
-
-		private uint indexBuffer;
 
 		public Application()
 		{
@@ -42,9 +43,6 @@ namespace VoltstroEngine
 			vertexArray = Gl.GenVertexArray();
 			Gl.BindVertexArray(vertexArray);
 
-			vertexBuffer = Gl.GenBuffer();
-			Gl.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
-
 			float[] vertices = new float[3 * 3]
 			{
 				-0.5f, -0.5f, 0.0f,
@@ -52,16 +50,15 @@ namespace VoltstroEngine
 				0.0f, 0.5f, 0.0f
 			};
 
+			vertexBuffer = IVertexBuffer.Create(vertices, vertices.GetBytes());
+
 			Gl.BufferData(BufferTarget.ArrayBuffer, (uint)Buffer.ByteLength(vertices), vertices, BufferUsage.StaticDraw);
 
 			Gl.EnableVertexAttribArray(0);
 			Gl.VertexAttribPointer(0, 3, VertexAttribType.Float, false, 3 * sizeof(float), null);
 
-			indexBuffer = Gl.GenBuffer();
-			Gl.BindBuffer(BufferTarget.ElementArrayBuffer, indexBuffer);
-
-			int[] indices = new int[3]{0, 1, 2};
-			Gl.BufferData(BufferTarget.ElementArrayBuffer, (uint)Buffer.ByteLength(indices), indices, BufferUsage.StaticDraw);
+			uint[] indices = new uint[3]{0, 1, 2};
+			indexBuffer = IIndexBuffer.Create(indices, indices.GetBytes() / sizeof(uint));
 
 			string vertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
 			string fragmentSrc = File.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
@@ -96,7 +93,7 @@ namespace VoltstroEngine
 				shader.Bind();
 
 				Gl.BindVertexArray(vertexArray);
-				Gl.DrawElements(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, null);
+				Gl.DrawElements(PrimitiveType.Triangles, (int)indexBuffer.GetCount(), DrawElementsType.UnsignedInt, null);
 
 				foreach (ILayer layer in layerStack.GetLayers())
 					layer.OnUpdate();

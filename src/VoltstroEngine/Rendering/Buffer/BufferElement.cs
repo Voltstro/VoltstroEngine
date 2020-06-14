@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace VoltstroEngine.Rendering.Buffer
 {
@@ -78,9 +77,6 @@ namespace VoltstroEngine.Rendering.Buffer
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
-
-			Debug.Assert(false, "Unknown ShaderType!");
-			return 0;
 		}
 	}
 }

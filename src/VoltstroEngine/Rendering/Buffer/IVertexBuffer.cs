@@ -17,5 +17,8 @@ namespace VoltstroEngine.Rendering.Buffer
 
 		public void Bind();
 		public void UnBind();
+
+		public void SetLayout(BufferLayout layout);
+		public BufferLayout GetLayout();
 	}
 }

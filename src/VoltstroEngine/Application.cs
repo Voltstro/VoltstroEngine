@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using OpenGL;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
@@ -7,12 +9,36 @@ using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Window;
-using Buffer = System.Buffer;
 
 namespace VoltstroEngine
 {
 	public class Application
 	{
+		private VertexAttribType ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+		{
+			switch (type)
+			{
+				case ShaderDataType.None:
+					return 0;
+
+				case ShaderDataType.Float:
+				case ShaderDataType.Float2:
+				case ShaderDataType.Float3:
+				case ShaderDataType.Float4:
+				case ShaderDataType.Mat3:
+				case ShaderDataType.Mat4:
+					return VertexAttribType.Float;
+
+				case ShaderDataType.Int:
+				case ShaderDataType.Int2:
+				case ShaderDataType.Int3:
+				case ShaderDataType.Int4:
+					return VertexAttribType.Int;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(type), type, null);
+			}
+		}
+
 		private bool isRunning = true;
 		private readonly IWindow window;
 		private readonly LayerStack layerStack;
@@ -43,19 +69,35 @@ namespace VoltstroEngine
 			vertexArray = Gl.GenVertexArray();
 			Gl.BindVertexArray(vertexArray);
 
-			float[] vertices = new float[3 * 3]
+			float[] vertices = new float[3 * 7]
 			{
-				-0.5f, -0.5f, 0.0f,
-				0.5f, -0.5f, 0.0f,
-				0.0f, 0.5f, 0.0f
+				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+				 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
 			};
 
 			vertexBuffer = IVertexBuffer.Create(vertices, vertices.GetBytes());
+			
+			BufferLayout layout = new BufferLayout(new List<BufferElement>
+			{
+				new BufferElement("a_Position", ShaderDataType.Float3),
+				new BufferElement("a_Color", ShaderDataType.Float4)
+			});
+			
+			vertexBuffer.SetLayout(layout);
 
-			Gl.BufferData(BufferTarget.ArrayBuffer, (uint)Buffer.ByteLength(vertices), vertices, BufferUsage.StaticDraw);
-
-			Gl.EnableVertexAttribArray(0);
-			Gl.VertexAttribPointer(0, 3, VertexAttribType.Float, false, 3 * sizeof(float), null);
+			uint index = 0;
+			foreach (BufferElement element in layout.Elements)
+			{
+				Gl.EnableVertexAttribArray(index);
+				Gl.VertexAttribPointer(index, 
+					(int)element.GetComponentCount(), 
+					ShaderDataTypeToOpenGLBaseType(element.Type), 
+					element.Normalized, 
+					(int)layout.Stride, 
+					(IntPtr)element.Offset);
+				index++;
+			}
 
 			uint[] indices = new uint[3]{0, 1, 2};
 			indexBuffer = IIndexBuffer.Create(indices, indices.GetBytes() / sizeof(uint));

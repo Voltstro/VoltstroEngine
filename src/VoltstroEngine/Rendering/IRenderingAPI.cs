@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Interface for a rending API (Such as OpenGL or Vulkan)
 	/// </summary>
-	public interface IRenderingAPI
+	internal interface IRenderingAPI
 	{
 		/// <summary>
 		/// Initializes the rendering API
@@ -23,6 +23,12 @@
 		/// Clears the buffer
 		/// </summary>
 		public void Clear();
+
+		/// <summary>
+		/// Draws something to the screen
+		/// </summary>
+		/// <param name="vertexArray"></param>
+		public void DrawIndexed(IVertexArray vertexArray);
 
 		/// <summary>
 		/// Returns what type or rendering API this is

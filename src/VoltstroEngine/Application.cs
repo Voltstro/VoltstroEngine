@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using OpenGL;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Layers;
@@ -129,15 +128,17 @@ namespace VoltstroEngine
 				Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 				Renderer.Clear();
 
-				//Square
-				squareShader.Bind();
-				squareVertexArray.Bind();
-				Gl.DrawElements(PrimitiveType.Triangles, (int)squareVertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
+				Renderer.BeginScene();
+				{
+					//Square
+					squareShader.Bind();
+					Renderer.Submit(squareVertexArray);
 
-				//Triangle
-				triangleShader.Bind();
-				triangleVertexArray.Bind();
-				Gl.DrawElements(PrimitiveType.Triangles, (int)triangleVertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
+					//Triangle
+					triangleShader.Bind();
+					Renderer.Submit(triangleVertexArray);
+				}
+				Renderer.EndScene();
 
 				foreach (ILayer layer in layerStack.GetLayers())
 					layer.OnUpdate();

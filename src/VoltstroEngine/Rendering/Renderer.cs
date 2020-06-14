@@ -18,6 +18,36 @@ namespace VoltstroEngine.Rendering
 			return renderingAPI.GetAPI();
 		}
 
+		#region Rendering Stuff to Screen
+
+		/// <summary>
+		/// Starts a new scene
+		/// </summary>
+		public static void BeginScene()
+		{
+
+		}
+
+		/// <summary>
+		/// Ends the current scene
+		/// </summary>
+		public static void EndScene()
+		{
+
+		}
+
+		/// <summary>
+		/// Submit something to be drawn
+		/// </summary>
+		/// <param name="vertexArray"></param>
+		public static void Submit(IVertexArray vertexArray)
+		{
+			vertexArray.Bind();
+			renderingAPI.DrawIndexed(vertexArray);
+		}
+		
+		#endregion
+
 		/// <summary>
 		/// Initializes the rendering system
 		/// </summary>

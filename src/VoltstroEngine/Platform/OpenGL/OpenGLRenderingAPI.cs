@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using OpenGL;
-using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
 
 namespace VoltstroEngine.Platform.OpenGL
@@ -35,6 +34,11 @@ namespace VoltstroEngine.Platform.OpenGL
 		public void Clear()
 		{
 			Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+		}
+
+		public void DrawIndexed(IVertexArray vertexArray)
+		{
+			Gl.DrawElements(PrimitiveType.Triangles, (int)vertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
 		}
 
 		public RenderingAPI GetAPI()

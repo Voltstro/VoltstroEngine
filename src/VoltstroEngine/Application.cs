@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using OpenGL;
 using VoltstroEngine.Events;
@@ -14,41 +13,15 @@ namespace VoltstroEngine
 {
 	public class Application
 	{
-		private VertexAttribType ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-		{
-			switch (type)
-			{
-				case ShaderDataType.None:
-					return 0;
-
-				case ShaderDataType.Float:
-				case ShaderDataType.Float2:
-				case ShaderDataType.Float3:
-				case ShaderDataType.Float4:
-				case ShaderDataType.Mat3:
-				case ShaderDataType.Mat4:
-					return VertexAttribType.Float;
-
-				case ShaderDataType.Int:
-				case ShaderDataType.Int2:
-				case ShaderDataType.Int3:
-				case ShaderDataType.Int4:
-					return VertexAttribType.Int;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(type), type, null);
-			}
-		}
-
 		private bool isRunning = true;
 		private readonly IWindow window;
 		private readonly LayerStack layerStack;
 
-		private IShader shader;
-		private IIndexBuffer indexBuffer;
-		private IVertexBuffer vertexBuffer;
+		private readonly IShader triangleShader;
+		private readonly IShader squareShader;
 
-		//TODO: Completely remove all OpenGL stuff here
-		private uint vertexArray;
+		private readonly IVertexArray triangleVertexArray;
+		private readonly IVertexArray squareVertexArray;
 
 		public Application()
 		{
@@ -66,47 +39,70 @@ namespace VoltstroEngine
 
 			layerStack = new LayerStack();
 
-			vertexArray = Gl.GenVertexArray();
-			Gl.BindVertexArray(vertexArray);
+			// ----------
+			//Triangle
+			// ----------
+			triangleVertexArray = IVertexArray.Create();
 
-			float[] vertices = new float[3 * 7]
+			float[] triangleVertices = new float[3 * 7]
 			{
 				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
 				 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
 			};
 
-			vertexBuffer = IVertexBuffer.Create(vertices, vertices.GetBytes());
+			IVertexBuffer triangleVertexBuffer = IVertexBuffer.Create(triangleVertices, triangleVertices.GetBytes());
 			
-			BufferLayout layout = new BufferLayout(new List<BufferElement>
+			BufferLayout triangleBufferLayout = new BufferLayout(new List<BufferElement>
 			{
 				new BufferElement("a_Position", ShaderDataType.Float3),
 				new BufferElement("a_Color", ShaderDataType.Float4)
 			});
 			
-			vertexBuffer.SetLayout(layout);
+			triangleVertexBuffer.SetLayout(triangleBufferLayout);
+			triangleVertexArray.AddVertexBuffer(triangleVertexBuffer);
+			
+			uint[] triangleIndices = new uint[3]{0, 1, 2};
+			IIndexBuffer triangleIndexBuffer = IIndexBuffer.Create(triangleIndices, triangleIndices.GetBytes() / sizeof(uint));
+			triangleVertexArray.SetIndexBuffer(triangleIndexBuffer);
 
-			uint index = 0;
-			foreach (BufferElement element in layout.Elements)
-			{
-				Gl.EnableVertexAttribArray(index);
-				Gl.VertexAttribPointer(index, 
-					(int)element.GetComponentCount(), 
-					ShaderDataTypeToOpenGLBaseType(element.Type), 
-					element.Normalized, 
-					(int)layout.Stride, 
-					(IntPtr)element.Offset);
-				index++;
-			}
-
-			uint[] indices = new uint[3]{0, 1, 2};
-			indexBuffer = IIndexBuffer.Create(indices, indices.GetBytes() / sizeof(uint));
-
+			//Triangle Shader
 			//TODO: Asset managing
-			string vertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
-			string fragmentSrc = File.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
+			string triangleVertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
+			string triangleFragmentSrc = File.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
 
-			shader = IShader.Create("Triangle", vertexSrc, fragmentSrc);
+			triangleShader = IShader.Create("Triangle", triangleVertexSrc, triangleFragmentSrc);
+
+			// ----------
+			//Square
+			// ----------
+			squareVertexArray = IVertexArray.Create();
+
+			float[] squareVertices = new float[3 * 4]
+			{
+				-0.75f, -0.75f, 0.0f,
+				 0.75f, -0.75f, 0.0f,
+				 0.75f,  0.75f, 0.0f,
+				-0.75f,  0.75f, 0.0f
+			};
+
+			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, triangleVertices.GetBytes());
+
+			BufferLayout squareBufferLayout = new BufferLayout(new List<BufferElement>
+			{
+				new BufferElement("a_Position", ShaderDataType.Float3)
+			});
+			squareVertexBuffer.SetLayout(squareBufferLayout);
+			squareVertexArray.AddVertexBuffer(squareVertexBuffer);
+
+			uint[] squareIndices = new uint[6]{0, 1, 2, 2, 3, 0};
+			IIndexBuffer squareIndexBuffer = IIndexBuffer.Create(squareIndices, squareIndices.GetBytes() / sizeof(uint));
+			squareVertexArray.SetIndexBuffer(squareIndexBuffer);
+
+			//Square shader
+			string squareVertexSrc = File.ReadAllText("Shaders/Square.vert").Replace("\r\n", "\n");
+			string squareFragmentSrc = File.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
+			squareShader = IShader.Create("Square", squareVertexSrc, squareFragmentSrc);
 		}
 
 		private void WindowOnOnEvent(IEvent e)
@@ -133,10 +129,15 @@ namespace VoltstroEngine
 				Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 				Renderer.Clear();
 
-				shader.Bind();
+				//Square
+				squareShader.Bind();
+				squareVertexArray.Bind();
+				Gl.DrawElements(PrimitiveType.Triangles, (int)squareVertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
 
-				Gl.BindVertexArray(vertexArray);
-				Gl.DrawElements(PrimitiveType.Triangles, (int)indexBuffer.GetCount(), DrawElementsType.UnsignedInt, null);
+				//Triangle
+				triangleShader.Bind();
+				triangleVertexArray.Bind();
+				Gl.DrawElements(PrimitiveType.Triangles, (int)triangleVertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
 
 				foreach (ILayer layer in layerStack.GetLayers())
 					layer.OnUpdate();

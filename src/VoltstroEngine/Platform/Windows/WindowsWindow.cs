@@ -54,6 +54,11 @@ namespace VoltstroEngine.Platform.Windows
 			return windowProperties.VSync;
 		}
 
+		public void Shutdown()
+		{
+			Glfw.DestroyWindow(window);
+		}
+
 		public event IWindow.OnEventDelegate OnEvent;
 
 		private void Init(WindowProperties properties)

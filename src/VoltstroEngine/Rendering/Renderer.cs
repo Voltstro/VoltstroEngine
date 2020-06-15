@@ -60,7 +60,7 @@ namespace VoltstroEngine.Rendering
 		/// <summary>
 		/// Initializes the rendering system
 		/// </summary>
-		internal static void Init()
+		public static void Init()
 		{
 			if (initialized)
 			{

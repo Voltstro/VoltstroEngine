@@ -81,6 +81,8 @@ namespace VoltstroEngine
 
 				window.OnUpdate();
 			}
+
+			window.Shutdown();
 		}
 
 		public void PushLayer(ILayer layer)

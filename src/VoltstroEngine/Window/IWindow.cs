@@ -50,6 +50,11 @@ namespace VoltstroEngine.Window
 		/// <returns></returns>
 		public bool IsVSync();
 
+		/// <summary>
+		/// Shutdown the window
+		/// </summary>
+		public void Shutdown();
+
 		public delegate void OnEventDelegate(IEvent e);
 
 		public event OnEventDelegate OnEvent;

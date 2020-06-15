@@ -1,0 +1,16 @@
+trigger:
+- master
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+  - script: dotnet restore -v minimal src/VoltstroEngine.sln
+
+    displayName: Dotnet Restore
+  - script: dotnet build src/VoltstroEngine.sln --no-restore -c $(buildConfiguration)
+    displayName: Dotnet Build

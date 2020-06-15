@@ -1,7 +1,9 @@
 steps:
 - task: VSTest@2
-  displayName: Tests
+  displayName: 'Test Assemblies'
   inputs:
     testAssemblyVer2: |
-    **\$(BuildConfiguration)\*test*.dll
+     **\$(BuildConfiguration)\*test*.dll
      !**\obj\**
+    codeCoverageEnabled: true
+    configuration: '$(BuildConfiguration)'

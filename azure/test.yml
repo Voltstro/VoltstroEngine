@@ -3,7 +3,7 @@ steps:
   displayName: 'Test Assemblies'
   inputs:
     testAssemblyVer2: |
-     **\$(BuildConfiguration)\*test*.dll
+     **\$(BuildConfiguration)\x64\*test*.dll
      !**\obj\**
     codeCoverageEnabled: true
     configuration: '$(BuildConfiguration)'

@@ -20,7 +20,7 @@ namespace VoltstroEngine.Tests
 			Assert.IsTrue(Renderer.GetRenderingAPI() == RenderingAPI.OpenGL, "The rendering API wasn't OpenGL!");
 		}
 
-		[Test, Order(2)]
+		//[Test, Order(2)]
 		public void CreateWindowTest()
 		{
 			//Create window

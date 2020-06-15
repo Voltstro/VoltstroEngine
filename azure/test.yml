@@ -2,8 +2,6 @@ steps:
 - task: VSTest@2
   displayName: 'Test Assemblies'
   inputs:
-    testAssemblyVer2: |
-     **\$(BuildConfiguration)\x64\*Tests*.dll
-     !**\obj\**
+    testAssemblyVer2: src\VoltstroEngine.Tests\bin\x64\Release\netcoreapp3.1\VoltstroEngine.Tests.dll
     codeCoverageEnabled: true
     configuration: '$(BuildConfiguration)'

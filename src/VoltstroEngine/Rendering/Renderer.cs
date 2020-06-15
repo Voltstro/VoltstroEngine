@@ -76,7 +76,7 @@ namespace VoltstroEngine.Rendering
 		/// <summary>
 		/// Clears the buffer
 		/// </summary>
-		internal static void Clear()
+		public static void Clear()
 		{
 			renderingAPI.Clear();
 		}
@@ -87,7 +87,7 @@ namespace VoltstroEngine.Rendering
 		/// <param name="red"></param>
 		/// <param name="green"></param>
 		/// <param name="blue"></param>
-		internal static void SetClearColor(float red, float green, float blue)
+		public static void SetClearColor(float red, float green, float blue)
 		{
 			renderingAPI.SetClearColor(red, green, blue, 1.0f);
 		}

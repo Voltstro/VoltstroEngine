@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using VoltstroEngine.Extensions;
 
 namespace VoltstroEngine.Rendering.Camera
 {
@@ -63,7 +64,7 @@ namespace VoltstroEngine.Rendering.Camera
 		private void RecalculateViewMatrix()
 		{
 			Matrix4x4 transform = Matrix4x4.CreateTranslation(Position) *
-			                      Matrix4x4.CreateFromYawPitchRoll(0, 0, Rotation);
+			                      Matrix4x4.CreateRotationZ(Rotation.ToRadian());
 
 			if (Matrix4x4.Invert(transform, out Matrix4x4 result))
 			{

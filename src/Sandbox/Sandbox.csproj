@@ -23,4 +23,8 @@
     <ProjectReference Include="..\VoltstroEngine\VoltstroEngine.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\triangle.vert&quot; &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\triangle.frag&quot; &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\square.vert&quot; &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\square.frag&quot; &quot;$(TargetDir)..\Shaders\&quot;" />
+  </Target>
+
 </Project>

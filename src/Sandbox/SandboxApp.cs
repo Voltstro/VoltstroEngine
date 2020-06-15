@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using VoltstroEngine;
+using VoltstroEngine.Assets;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Layers;
@@ -54,9 +55,8 @@ namespace Sandbox
 			triangleVertexArray.SetIndexBuffer(triangleIndexBuffer);
 
 			//Triangle Shader
-			//TODO: Asset managing
-			string triangleVertexSrc = File.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
-			string triangleFragmentSrc = File.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
+			string triangleVertexSrc = AssetManager.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
+			string triangleFragmentSrc = AssetManager.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
 
 			triangleShader = IShader.Create("Triangle", triangleVertexSrc, triangleFragmentSrc);
 
@@ -86,8 +86,8 @@ namespace Sandbox
 			squareVertexArray.SetIndexBuffer(squareIndexBuffer);
 
 			//Square shader
-			string squareVertexSrc = File.ReadAllText("Shaders/Square.vert").Replace("\r\n", "\n");
-			string squareFragmentSrc = File.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
+			string squareVertexSrc = AssetManager.ReadAllText("Shaders/Square.vert").Replace("\r\n", "\n");
+			string squareFragmentSrc = AssetManager.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
 			squareShader = IShader.Create("Square", squareVertexSrc, squareFragmentSrc);
 		}
 

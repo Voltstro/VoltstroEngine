@@ -1,5 +1,8 @@
-﻿using VoltstroEngine.Events;
+﻿using System.Diagnostics;
+using System.Reflection;
+using VoltstroEngine.Events;
 using VoltstroEngine.Layers;
+using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Window;
 
@@ -14,8 +17,29 @@ namespace VoltstroEngine
 		private readonly IWindow window;
 		private readonly LayerStack layerStack;
 
+		private static Application app;
+
+		/// <summary>
+		/// The name and location of the game
+		/// <para>E.G: Sandbox</para>
+		/// </summary>
+		public static string GameName;
+
 		public Application()
 		{
+			if (app != null)
+			{
+				Debug.Assert(false, "A running app already exists!");
+#if !DEBUG
+				Logger.Log("A running app already exists!", LogVerbosity.Error);
+				return;
+#endif
+			}
+
+			app = this;
+			GameName = Assembly.GetCallingAssembly().GetName().Name;
+			Logger.Log($"Game name is '{GameName}'", LogVerbosity.Debug);
+
 			Renderer.Init();
 
 			//Creates a new window

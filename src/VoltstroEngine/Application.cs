@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Layers;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
+using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Window;
 
@@ -22,6 +24,8 @@ namespace VoltstroEngine
 		private readonly IVertexArray triangleVertexArray;
 		private readonly IVertexArray squareVertexArray;
 
+		private readonly OrthographicCamera camera;
+
 		public Application()
 		{
 			Renderer.Init();
@@ -37,6 +41,9 @@ namespace VoltstroEngine
 			window.OnEvent += WindowOnOnEvent;
 
 			layerStack = new LayerStack();
+
+			//Create camera
+			camera = new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
 
 			// ----------
 			//Triangle
@@ -128,15 +135,15 @@ namespace VoltstroEngine
 				Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 				Renderer.Clear();
 
-				Renderer.BeginScene();
+				camera.SetRotation(45.0f);
+
+				Renderer.BeginScene(camera);
 				{
 					//Square
-					squareShader.Bind();
-					Renderer.Submit(squareVertexArray);
+					Renderer.Submit(squareShader, squareVertexArray);
 
 					//Triangle
-					triangleShader.Bind();
-					Renderer.Submit(triangleVertexArray);
+					Renderer.Submit(triangleShader, triangleVertexArray);
 				}
 				Renderer.EndScene();
 

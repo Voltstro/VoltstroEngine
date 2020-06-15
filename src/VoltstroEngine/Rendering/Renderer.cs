@@ -1,5 +1,8 @@
-﻿using VoltstroEngine.Logging;
+﻿using System.Numerics;
+using VoltstroEngine.Logging;
 using VoltstroEngine.Platform.OpenGL;
+using VoltstroEngine.Rendering.Camera;
+using VoltstroEngine.Rendering.Shaders;
 
 namespace VoltstroEngine.Rendering
 {
@@ -8,6 +11,8 @@ namespace VoltstroEngine.Rendering
 		private static bool initialized;
 
 		private static IRenderingAPI renderingAPI;
+
+		private static SceneData sceneData = new SceneData();
 
 		/// <summary>
 		/// Gets the currently in use rendering API
@@ -23,9 +28,9 @@ namespace VoltstroEngine.Rendering
 		/// <summary>
 		/// Starts a new scene
 		/// </summary>
-		public static void BeginScene()
+		public static void BeginScene(OrthographicCamera camera)
 		{
-
+			sceneData.ViewProjectionMatrix = camera.ViewProjectionMatrix;
 		}
 
 		/// <summary>
@@ -39,9 +44,13 @@ namespace VoltstroEngine.Rendering
 		/// <summary>
 		/// Submit something to be drawn
 		/// </summary>
+		/// <param name="shader"></param>
 		/// <param name="vertexArray"></param>
-		public static void Submit(IVertexArray vertexArray)
+		public static void Submit(IShader shader, IVertexArray vertexArray)
 		{
+			shader.Bind();
+			shader.UploadUniformMat4("u_ViewProjection", sceneData.ViewProjectionMatrix);
+
 			vertexArray.Bind();
 			renderingAPI.DrawIndexed(vertexArray);
 		}
@@ -81,6 +90,11 @@ namespace VoltstroEngine.Rendering
 		internal static void SetClearColor(float red, float green, float blue)
 		{
 			renderingAPI.SetClearColor(red, green, blue, 1.0f);
+		}
+
+		private struct SceneData
+		{
+			public Matrix4x4 ViewProjectionMatrix;
 		}
 	}
 }

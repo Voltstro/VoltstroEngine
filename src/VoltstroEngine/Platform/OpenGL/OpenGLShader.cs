@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Text;
 using OpenGL;
 using VoltstroEngine.Logging;
@@ -37,6 +38,12 @@ namespace VoltstroEngine.Platform.OpenGL
 		public void UnBind()
 		{
 			Gl.UseProgram(0);
+		}
+
+		public void UploadUniformMat4(string name, Matrix4x4 matrix)
+		{
+			int location = Gl.GetUniformLocation(program, name);
+			Gl.UniformMatrix4f(location, 1, false, matrix);
 		}
 
 		/// <summary>

@@ -26,7 +26,7 @@ namespace Sandbox
 
 		private Vector3 cameraPosition = Vector3.Zero;
 
-		private const float MoveSpeed = 0.1f;
+		private const float MoveSpeed = 2f;
 
 		private static readonly Matrix4x4 Scale = Matrix4x4.CreateScale(0.1f);
 
@@ -114,8 +114,16 @@ namespace Sandbox
 			Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 			Renderer.Clear();
 
-			if(Input.IsKeyPressed(KeyCode.Tab))
-				Logger.Log("Tab pressed!");
+			//Camera movement
+			if (Input.IsKeyPressed(KeyCode.A))
+				cameraPosition.X -= MoveSpeed * ts.Seconds;
+			if (Input.IsKeyPressed(KeyCode.D))
+				cameraPosition.X += MoveSpeed * ts.Seconds;
+
+			if (Input.IsKeyPressed(KeyCode.W))
+				cameraPosition.Y += MoveSpeed * ts.Seconds;
+			if (Input.IsKeyPressed(KeyCode.S))
+				cameraPosition.Y -= MoveSpeed * ts.Seconds;
 
 			camera.SetPosition(cameraPosition);
 
@@ -141,21 +149,6 @@ namespace Sandbox
 
 		public void OnEvent(IEvent e)
 		{
-			EventDispatcher.DispatchEvent<KeyPressedEvent>(e, KeyPressedEvent);
-		}
-
-		private void KeyPressedEvent(KeyPressedEvent e)
-		{
-			//Camera movement
-			if (e.KeyCode == KeyCode.A)
-				cameraPosition.X -= MoveSpeed;
-			if (e.KeyCode == KeyCode.D)
-				cameraPosition.X += MoveSpeed;
-
-			if (e.KeyCode == KeyCode.W)
-				cameraPosition.Y += MoveSpeed;
-			if (e.KeyCode == KeyCode.S)
-				cameraPosition.Y -= MoveSpeed;
 		}
 	}
 

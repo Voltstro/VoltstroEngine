@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 using VoltstroEngine;
 using VoltstroEngine.Assets;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
+using VoltstroEngine.Inputs;
 using VoltstroEngine.Layers;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
@@ -20,6 +22,12 @@ namespace Sandbox
 		private readonly IVertexArray squareVertexArray;
 
 		private readonly OrthographicCamera camera;
+
+		private Vector3 cameraPosition = Vector3.Zero;
+
+		private const float MoveSpeed = 0.1f;
+
+		private static readonly Matrix4x4 Scale = Matrix4x4.CreateScale(0.1f);
 
 		public ExampleLayer()
 		{
@@ -65,10 +73,10 @@ namespace Sandbox
 			squareVertexArray = IVertexArray.Create();
 
 			float[] squareVertices = {
-				-0.75f, -0.75f, 0.0f,
-				 0.75f, -0.75f, 0.0f,
-				 0.75f,  0.75f, 0.0f,
-				-0.75f,  0.75f, 0.0f
+				-0.5f, -0.5f, 0.0f,
+				 0.5f, -0.5f, 0.0f,
+				 0.5f,  0.5f, 0.0f,
+				-0.5f,  0.5f, 0.0f
 			};
 
 			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, triangleVertices.GetBytes());
@@ -105,20 +113,46 @@ namespace Sandbox
 			Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 			Renderer.Clear();
 
+			camera.SetPosition(cameraPosition);
+
 			Renderer.BeginScene(camera);
 			{
 				//Square
-				Renderer.Submit(squareShader, squareVertexArray);
+				for (int y = 0; y < 10; y++)
+				{
+					for (int x = 0; x < 10; x++)
+					{
+						Vector3 pos = new Vector3(x * 1.1f, y * 1.1f, 0);
+						Matrix4x4 transform = Matrix4x4.CreateTranslation(pos) * Scale;
+
+						Renderer.Submit(squareShader, squareVertexArray, transform);
+					}
+				}
 
 				//Triangle
-				Renderer.Submit(triangleShader, triangleVertexArray);
+				//Renderer.Submit(triangleShader, triangleVertexArray, Matrix4x4.Identity);
 			}
 			Renderer.EndScene();
 		}
 
 		public void OnEvent(IEvent e)
 		{
-			
+			EventDispatcher eventDispatcher = new EventDispatcher();
+			eventDispatcher.DispatchEvent<KeyPressedEvent>(e, KeyPressedEvent);
+		}
+
+		private void KeyPressedEvent(KeyPressedEvent e)
+		{
+			//Camera movement
+			if (e.KeyCode == KeyCode.A)
+				cameraPosition.X -= MoveSpeed;
+			if (e.KeyCode == KeyCode.D)
+				cameraPosition.X += MoveSpeed;
+
+			if (e.KeyCode == KeyCode.W)
+				cameraPosition.Y += MoveSpeed;
+			if (e.KeyCode == KeyCode.S)
+				cameraPosition.Y -= MoveSpeed;
 		}
 	}
 

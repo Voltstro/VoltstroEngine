@@ -46,10 +46,12 @@ namespace VoltstroEngine.Rendering
 		/// </summary>
 		/// <param name="shader"></param>
 		/// <param name="vertexArray"></param>
-		public static void Submit(IShader shader, IVertexArray vertexArray)
+		/// <param name="transform"></param>
+		public static void Submit(IShader shader, IVertexArray vertexArray, Matrix4x4 transform)
 		{
 			shader.Bind();
 			shader.UploadUniformMat4("u_ViewProjection", sceneData.ViewProjectionMatrix);
+			shader.UploadUniformMat4("u_Transform", transform);
 
 			vertexArray.Bind();
 			renderingAPI.DrawIndexed(vertexArray);

@@ -66,7 +66,7 @@ namespace VoltstroEngine
 				layer.OnEvent(e);
 		}
 
-		private void OnClose()
+		private void OnClose(WindowCloseEvent e)
 		{
 			isRunning = false;
 		}

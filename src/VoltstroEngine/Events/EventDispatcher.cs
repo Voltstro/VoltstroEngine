@@ -13,11 +13,11 @@ namespace VoltstroEngine.Events
 		/// <typeparam name="T"></typeparam>
 		/// <param name="e"></param>
 		/// <param name="result"></param>
-		public void DispatchEvent<T>(IEvent e, Action result)
+		public void DispatchEvent<T>(IEvent e, Action<T> result)
 		{
 			if (e.GetType() == typeof(T))
 			{
-				result.Invoke();
+				result.Invoke((T)e);
 			}
 		}
 	}

@@ -59,6 +59,11 @@ namespace VoltstroEngine.Platform.Windows
 			Glfw.DestroyWindow(window);
 		}
 
+		public float GetTime()
+		{
+			return (float)Glfw.Time;
+		}
+
 		public event IWindow.OnEventDelegate OnEvent;
 
 		private void Init(WindowProperties properties)

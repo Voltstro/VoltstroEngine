@@ -55,6 +55,8 @@ namespace VoltstroEngine.Window
 		/// </summary>
 		public void Shutdown();
 
+		public float GetTime();
+
 		public delegate void OnEventDelegate(IEvent e);
 
 		public event OnEventDelegate OnEvent;

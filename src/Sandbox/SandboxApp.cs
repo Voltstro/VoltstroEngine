@@ -5,6 +5,7 @@ using VoltstroEngine.Assets;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Layers;
+using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Camera;
@@ -101,7 +102,7 @@ namespace Sandbox
 			
 		}
 
-		public void OnUpdate()
+		public void OnUpdate(TimeStep ts)
 		{
 			Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 			Renderer.Clear();

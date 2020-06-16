@@ -25,6 +25,8 @@ namespace VoltstroEngine
 		/// </summary>
 		public static string GameName;
 
+		private float lastTime;
+
 		public Application()
 		{
 			if (app != null)
@@ -76,8 +78,12 @@ namespace VoltstroEngine
 		{
 			while (isRunning)
 			{
+				float time = window.GetTime();
+				TimeStep timeStep = new TimeStep(time - lastTime);
+				lastTime = time;
+
 				foreach (ILayer layer in layerStack.GetLayers())
-					layer.OnUpdate();
+					layer.OnUpdate(timeStep);
 
 				window.OnUpdate();
 			}

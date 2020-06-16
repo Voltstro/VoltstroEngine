@@ -7,7 +7,7 @@ namespace VoltstroEngine.Layers
 		public void OnAttach();
 		public void OnDetach();
 
-		public void OnUpdate();
+		public void OnUpdate(TimeStep ts);
 
 		public void OnEvent(IEvent e);
 	}

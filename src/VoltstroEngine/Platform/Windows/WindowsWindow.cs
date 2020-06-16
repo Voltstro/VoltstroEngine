@@ -97,6 +97,9 @@ namespace VoltstroEngine.Platform.Windows
 
 			SetVSync(properties.VSync);
 
+			//Setup input
+			Input.KeyInputImpl = new WindowsInput(window);
+
 			//GLFW callbacks
 			Glfw.SetWindowSizeCallback(window, (outWindow, width, height) => OnEvent?.Invoke(new WindowResizedEvent(width, height)));
 			Glfw.SetCloseCallback(window, outWindow => OnEvent?.Invoke(new WindowCloseEvent()));

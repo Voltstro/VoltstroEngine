@@ -137,8 +137,7 @@ namespace Sandbox
 
 		public void OnEvent(IEvent e)
 		{
-			EventDispatcher eventDispatcher = new EventDispatcher();
-			eventDispatcher.DispatchEvent<KeyPressedEvent>(e, KeyPressedEvent);
+			EventDispatcher.DispatchEvent<KeyPressedEvent>(e, KeyPressedEvent);
 		}
 
 		private void KeyPressedEvent(KeyPressedEvent e)

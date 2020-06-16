@@ -59,8 +59,7 @@ namespace VoltstroEngine
 
 		private void WindowOnOnEvent(IEvent e)
 		{
-			EventDispatcher eventDispatcher = new EventDispatcher();
-			eventDispatcher.DispatchEvent<WindowCloseEvent>(e, OnClose);
+			EventDispatcher.DispatchEvent<WindowCloseEvent>(e, OnClose);
 
 			foreach (ILayer layer in layerStack.GetLayers())
 				layer.OnEvent(e);

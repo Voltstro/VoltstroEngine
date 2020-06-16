@@ -5,7 +5,7 @@ namespace VoltstroEngine.Events
 	/// <summary>
 	/// Handles dispatching events
 	/// </summary>
-	public class EventDispatcher
+	public static class EventDispatcher
 	{
 		/// <summary>
 		/// Dispatches a event
@@ -13,7 +13,7 @@ namespace VoltstroEngine.Events
 		/// <typeparam name="T"></typeparam>
 		/// <param name="e"></param>
 		/// <param name="result"></param>
-		public void DispatchEvent<T>(IEvent e, Action<T> result)
+		public static void DispatchEvent<T>(IEvent e, Action<T> result)
 		{
 			if (e.GetType() == typeof(T))
 			{

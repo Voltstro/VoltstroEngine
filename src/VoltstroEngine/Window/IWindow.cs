@@ -55,6 +55,10 @@ namespace VoltstroEngine.Window
 		/// </summary>
 		public void Shutdown();
 
+		/// <summary>
+		/// Gets the time this windows has been running for
+		/// </summary>
+		/// <returns></returns>
 		public float GetTime();
 
 		public delegate void OnEventDelegate(IEvent e);

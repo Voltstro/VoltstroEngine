@@ -1,5 +1,8 @@
 ﻿namespace VoltstroEngine.Rendering.Texture
 {
+	/// <summary>
+	/// Base of a texture
+	/// </summary>
 	public interface ITexture
 	{
 		/// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Numerics;
-using OpenGL;
 
 namespace VoltstroEngine.Rendering.Shaders
 {
@@ -41,6 +40,11 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <param name="matrix"></param>
 		public void UploadUniformMat4(string name, Matrix4x4 matrix);
 
+		/// <summary>
+		/// Uploads a uniform <see cref="int"/>
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
 		public void UploadUniformInt(string name, int value);
 	}
 }

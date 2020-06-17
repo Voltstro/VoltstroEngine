@@ -20,7 +20,7 @@ namespace Sandbox
 		private readonly IShader squareShader;
 		private readonly IShader textureShader;
 
-		private readonly I2DTexture texture;
+		private readonly I2DTexture birdiTexture, faceTexture;
 
 		private readonly IVertexArray triangleVertexArray;
 		private readonly IVertexArray squareVertexArray;
@@ -107,7 +107,8 @@ namespace Sandbox
 			string textureFragmentSrc = AssetManager.ReadAllText("Shaders/Texture.frag").Replace("\r\n", "\n");
 			textureShader = IShader.Create("Texture", textureVertexSrc, textureFragmentSrc);
 			
-			texture = I2DTexture.Create("Textures/Birdi.png");
+			birdiTexture = I2DTexture.Create("Textures/Birdi.png");
+			faceTexture = I2DTexture.Create("Textures/Face.png");
 
 			textureShader.Bind();
 			textureShader.UploadUniformInt("u_Texture", 0);
@@ -155,7 +156,10 @@ namespace Sandbox
 					}
 				}
 
-				texture.Bind(0);
+				birdiTexture.Bind();
+				Renderer.Submit(textureShader, squareVertexArray, Matrix4x4.Identity);
+
+				faceTexture.Bind();
 				Renderer.Submit(textureShader, squareVertexArray, Matrix4x4.Identity);
 
 				//Triangle

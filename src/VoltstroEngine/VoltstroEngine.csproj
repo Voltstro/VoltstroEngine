@@ -36,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-x64" Version="7.19.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="OpenGL.Net">
       <HintPath>..\ThirdParty\OpenGL.Net\OpenGL.Net.dll</HintPath>
     </Reference>

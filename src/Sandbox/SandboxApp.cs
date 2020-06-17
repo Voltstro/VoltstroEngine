@@ -6,7 +6,6 @@ using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Inputs;
 using VoltstroEngine.Layers;
-using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Camera;
@@ -19,6 +18,9 @@ namespace Sandbox
 	{
 		private readonly IShader triangleShader;
 		private readonly IShader squareShader;
+		private readonly IShader textureShader;
+
+		private readonly I2DTexture texture;
 
 		private readonly IVertexArray triangleVertexArray;
 		private readonly IVertexArray squareVertexArray;
@@ -75,17 +77,18 @@ namespace Sandbox
 			squareVertexArray = IVertexArray.Create();
 
 			float[] squareVertices = {
-				-0.5f, -0.5f, 0.0f,
-				 0.5f, -0.5f, 0.0f,
-				 0.5f,  0.5f, 0.0f,
-				-0.5f,  0.5f, 0.0f
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+				 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+				-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 			};
 
 			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, triangleVertices.GetBytes());
 
 			BufferLayout squareBufferLayout = new BufferLayout(new List<BufferElement>
 			{
-				new BufferElement("a_Position", ShaderDataType.Float3)
+				new BufferElement("a_Position", ShaderDataType.Float3),
+				new BufferElement("a_TexCoord", ShaderDataType.Float2)
 			});
 			squareVertexBuffer.SetLayout(squareBufferLayout);
 			squareVertexArray.AddVertexBuffer(squareVertexBuffer);
@@ -99,7 +102,15 @@ namespace Sandbox
 			string squareFragmentSrc = AssetManager.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
 			squareShader = IShader.Create("Square", squareVertexSrc, squareFragmentSrc);
 
-			I2DTexture texture = I2DTexture.Create("Textures/Trigger.png");
+			//Texture shader
+			string textureVertexSrc = AssetManager.ReadAllText("Shaders/Texture.vert").Replace("\r\n", "\n");
+			string textureFragmentSrc = AssetManager.ReadAllText("Shaders/Texture.frag").Replace("\r\n", "\n");
+			textureShader = IShader.Create("Texture", textureVertexSrc, textureFragmentSrc);
+			
+			texture = I2DTexture.Create("Textures/Birdi.png");
+
+			textureShader.Bind();
+			textureShader.UploadUniformInt("u_Texture", 0);
 		}
 
 		public void OnAttach()
@@ -143,6 +154,9 @@ namespace Sandbox
 						Renderer.Submit(squareShader, squareVertexArray, transform);
 					}
 				}
+
+				texture.Bind(0);
+				Renderer.Submit(textureShader, squareVertexArray, Matrix4x4.Identity);
 
 				//Triangle
 				//Renderer.Submit(triangleShader, triangleVertexArray, Matrix4x4.Identity);

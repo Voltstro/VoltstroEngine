@@ -40,5 +40,7 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <param name="name"></param>
 		/// <param name="matrix"></param>
 		public void UploadUniformMat4(string name, Matrix4x4 matrix);
+
+		public void UploadUniformInt(string name, int value);
 	}
 }

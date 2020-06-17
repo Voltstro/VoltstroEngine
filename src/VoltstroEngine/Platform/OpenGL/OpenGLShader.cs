@@ -46,6 +46,12 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.UniformMatrix4f(location, 1, false, matrix);
 		}
 
+		public void UploadUniformInt(string name, int value)
+		{
+			int location = Gl.GetUniformLocation(program, name);
+			Gl.Uniform1i(location, 1, value);
+		}
+
 		/// <summary>
 		/// Compiles the shader
 		/// </summary>

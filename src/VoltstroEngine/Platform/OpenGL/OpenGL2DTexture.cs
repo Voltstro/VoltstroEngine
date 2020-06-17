@@ -13,7 +13,7 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public OpenGL2DTexture(string imagePath)
 		{
-			using MagickImage image = new MagickImage(imagePath);
+			using MagickImage image = new MagickImage($"{Application.GameName}/{imagePath}");
 
 			InternalFormat internalFormat = 0;
 			PixelFormat dataFormat = 0;

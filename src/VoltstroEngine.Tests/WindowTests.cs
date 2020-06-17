@@ -11,6 +11,7 @@ namespace VoltstroEngine.Tests
 		public void Setup()
 		{
 			Logger.InitiateLogger();
+			Renderer.Create();
 			Renderer.Init();
 		}
 

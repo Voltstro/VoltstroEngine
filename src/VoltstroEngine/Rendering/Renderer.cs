@@ -62,7 +62,7 @@ namespace VoltstroEngine.Rendering
 		/// <summary>
 		/// Creates the rendering system
 		/// </summary>
-		internal static void Create()
+		public static void Create()
 		{
 			renderingAPI = new OpenGLRenderingAPI();
 		}

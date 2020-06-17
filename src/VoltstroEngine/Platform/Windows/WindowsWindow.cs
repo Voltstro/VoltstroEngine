@@ -86,7 +86,11 @@ namespace VoltstroEngine.Platform.Windows
 			window = Glfw.CreateWindow(properties.Width, properties.Height, properties.Title, Monitor.None, GLFW.Window.None);
 
 			//Create context
-			context = new OpenGLContext(window);
+			context = Renderer.GetRenderingAPI() switch
+			{
+				RenderingAPI.OpenGL => new OpenGLContext(window),
+				_ => throw new ArgumentOutOfRangeException()
+			};
 
 			//Init the context
 			context.Init();

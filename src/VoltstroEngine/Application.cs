@@ -42,6 +42,8 @@ namespace VoltstroEngine
 			GameName = Assembly.GetCallingAssembly().GetName().Name;
 			Logger.Log($"Game name is '{GameName}'", LogVerbosity.Debug);
 
+			Renderer.Create();
+
 			//Creates a new window
 			window = IWindow.CreateWindow(new WindowProperties
 			{

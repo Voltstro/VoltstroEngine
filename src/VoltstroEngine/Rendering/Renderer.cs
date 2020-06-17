@@ -60,6 +60,14 @@ namespace VoltstroEngine.Rendering
 		#endregion
 
 		/// <summary>
+		/// Creates the rendering system
+		/// </summary>
+		internal static void Create()
+		{
+			renderingAPI = new OpenGLRenderingAPI();
+		}
+
+		/// <summary>
 		/// Initializes the rendering system
 		/// </summary>
 		public static void Init()
@@ -70,7 +78,6 @@ namespace VoltstroEngine.Rendering
 				return;
 			}
 
-			renderingAPI = new OpenGLRenderingAPI();
 			renderingAPI.Init();
 			initialized = true;
 		}

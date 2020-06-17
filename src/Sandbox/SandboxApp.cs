@@ -11,6 +11,7 @@ using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
+using VoltstroEngine.Rendering.Texture;
 
 namespace Sandbox
 {
@@ -97,6 +98,8 @@ namespace Sandbox
 			string squareVertexSrc = AssetManager.ReadAllText("Shaders/Square.vert").Replace("\r\n", "\n");
 			string squareFragmentSrc = AssetManager.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
 			squareShader = IShader.Create("Square", squareVertexSrc, squareFragmentSrc);
+
+			I2DTexture texture = I2DTexture.Create("Textures/Trigger.png");
 		}
 
 		public void OnAttach()

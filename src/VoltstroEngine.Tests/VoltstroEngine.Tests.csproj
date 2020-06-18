@@ -22,4 +22,17 @@
     <ProjectReference Include="..\VoltstroEngine\VoltstroEngine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestTextures\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestTextures\Birdi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestTextures\Face.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
+﻿using System.Numerics;
 using VoltstroEngine;
 using VoltstroEngine.Assets;
 using VoltstroEngine.Events;
@@ -52,9 +51,9 @@ namespace Sandbox
 
 			IVertexBuffer triangleVertexBuffer = IVertexBuffer.Create(triangleVertices, triangleVertices.GetBytes());
 			
-			BufferLayout triangleBufferLayout = new BufferLayout(new List<BufferElement>
+			BufferLayout triangleBufferLayout = new BufferLayout(new []
 			{
-				new BufferElement("a_Position", ShaderDataType.Float3),
+				new BufferElement("a_Position", ShaderDataType.Float3), 
 				new BufferElement("a_Color", ShaderDataType.Float4)
 			});
 			
@@ -85,7 +84,7 @@ namespace Sandbox
 
 			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, triangleVertices.GetBytes());
 
-			BufferLayout squareBufferLayout = new BufferLayout(new List<BufferElement>
+			BufferLayout squareBufferLayout = new BufferLayout(new []
 			{
 				new BufferElement("a_Position", ShaderDataType.Float3),
 				new BufferElement("a_TexCoord", ShaderDataType.Float2)

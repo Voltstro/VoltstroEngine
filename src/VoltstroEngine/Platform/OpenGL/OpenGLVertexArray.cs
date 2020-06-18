@@ -37,7 +37,7 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void AddVertexBuffer(IVertexBuffer vertexBuffer)
 		{
-			Debug.Assert(vertexBuffer.GetLayout().Elements.Count != 0, "Vertex buffer has no layout!");
+			Debug.Assert(vertexBuffer.GetLayout().Elements.Length != 0, "Vertex buffer has no layout!");
 
 			Gl.BindVertexArray(rendererID);
 			vertexBuffer.Bind();

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using VoltstroEngine.Rendering.Buffer;
 
 namespace VoltstroEngine.Tests
@@ -39,13 +38,13 @@ namespace VoltstroEngine.Tests
 		[Test]
 		public void BufferLayoutTest()
 		{
-			BufferLayout layout = new BufferLayout(new List<BufferElement>
+			BufferLayout layout = new BufferLayout(new []
 			{
 				new BufferElement("a_Position", ShaderDataType.Float3),
 				new BufferElement("a_Color", ShaderDataType.Float4)
 			});
 
-			Assert.AreEqual(2, layout.Elements.Count);
+			Assert.AreEqual(2, layout.Elements.Length);
 			Assert.AreEqual(28, layout.Stride);
 
 			Assert.IsTrue(layout.Elements[0].Type == ShaderDataType.Float3);

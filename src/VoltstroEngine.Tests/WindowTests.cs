@@ -7,7 +7,7 @@ namespace VoltstroEngine.Tests
 {
 	public class WindowTests
 	{
-		[SetUp]
+		[OneTimeSetUp]
 		public void Setup()
 		{
 			Logger.InitiateLogger();
@@ -15,12 +15,19 @@ namespace VoltstroEngine.Tests
 			Renderer.Init();
 		}
 
-		[Test, Order(1)]
+		[OneTimeTearDown]
+		public void Teardown()
+		{
+			Logger.EndLogger();
+		}
+
+		[Test]
 		public void CheckRenderingAPI()
 		{
 			Assert.IsTrue(Renderer.GetRenderingAPI() == RenderingAPI.OpenGL, "The rendering API wasn't OpenGL!");
 		}
 
+		//This doesn't work on Azure build agents (Or well at least the hosted ones from Microsoft)
 		//[Test, Order(2)]
 		public void CreateWindowTest()
 		{

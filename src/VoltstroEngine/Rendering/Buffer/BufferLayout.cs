@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace VoltstroEngine.Rendering.Buffer
+﻿namespace VoltstroEngine.Rendering.Buffer
 {
 	public class BufferLayout
 	{
-		public BufferLayout(List<BufferElement> elements)
+		public BufferLayout(BufferElement[] elements)
 		{
 			Elements = elements;
 			CalculateOffsetsAndStride();
 		}
 
-		public List<BufferElement> Elements { get; }
+		public BufferElement[] Elements { get; }
 		public uint Stride { get; private set; }
 
 		private void CalculateOffsetsAndStride()

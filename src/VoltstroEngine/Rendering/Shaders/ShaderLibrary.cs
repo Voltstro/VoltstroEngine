@@ -34,7 +34,15 @@ namespace VoltstroEngine.Rendering.Shaders
 			AddShader(shader.GetShaderName(), shader);
 		}
 
-		//TODO: Allow loading of shaders from here
+		/// <summary>
+		/// Loads and adds a shader to the library
+		/// </summary>
+		/// <param name="filePath"></param>
+		public void LoadAndAddShader(string filePath)
+		{
+			IShader shader = IShader.Create(filePath);
+			AddShader(shader);
+		}
 
 		/// <summary>
 		/// Gets a shader

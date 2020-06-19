@@ -63,7 +63,7 @@ namespace Sandbox
 			squareVertexArray.SetIndexBuffer(squareIndexBuffer);
 
 			//Square shader
-			shaderLibrary.AddShader(IShader.Create("Shaders/Square.glsl"));
+			shaderLibrary.LoadAndAddShader("Shaders/Square.glsl");
 
 			//Texture shader
 			IShader textureShader = IShader.Create("Shaders/Texture.glsl");

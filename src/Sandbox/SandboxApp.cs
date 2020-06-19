@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using VoltstroEngine;
-using VoltstroEngine.Assets;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Inputs;
@@ -64,14 +63,10 @@ namespace Sandbox
 			squareVertexArray.SetIndexBuffer(squareIndexBuffer);
 
 			//Square shader
-			string squareVertexSrc = AssetManager.ReadAllText("Shaders/Square.vert").Replace("\r\n", "\n");
-			string squareFragmentSrc = AssetManager.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
-			shaderLibrary.AddShader(IShader.Create("Square", squareVertexSrc, squareFragmentSrc));
+			shaderLibrary.AddShader(IShader.Create("Shaders/Square.glsl"));
 
 			//Texture shader
-			string textureVertexSrc = AssetManager.ReadAllText("Shaders/Texture.vert").Replace("\r\n", "\n");
-			string textureFragmentSrc = AssetManager.ReadAllText("Shaders/Texture.frag").Replace("\r\n", "\n");
-			IShader textureShader = IShader.Create("Texture", textureVertexSrc, textureFragmentSrc);
+			IShader textureShader = IShader.Create("Shaders/Texture.glsl");
 			shaderLibrary.AddShader(textureShader);
 			
 			birdiTexture = I2DTexture.Create("Textures/Birdi.png");

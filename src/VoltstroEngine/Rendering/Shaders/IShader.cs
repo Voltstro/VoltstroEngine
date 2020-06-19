@@ -12,6 +12,21 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// Creates a new shader
 		/// </summary>
 		/// <returns></returns>
+		public static IShader Create(string shaderPath)
+		{
+			switch (Renderer.GetRenderingAPI())
+			{
+				case RenderingAPI.OpenGL:
+					return new Platform.OpenGL.OpenGLShader(shaderPath);
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
+		/// <summary>
+		/// Creates a new shader
+		/// </summary>
+		/// <returns></returns>
 		public static IShader Create(string name, string vertexSrc, string fragmentSrc)
 		{
 			switch (Renderer.GetRenderingAPI())

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Numerics;
 using System.Text;
 using OpenGL;
@@ -11,9 +12,34 @@ namespace VoltstroEngine.Platform.OpenGL
 {
 	public class OpenGLShader : IShader
 	{
+		private static readonly string[] ShaderTypes = { "vert", "frag" };
+
 		public readonly string ShaderName;
 		private List<uint> shaderIDs;
 		private uint program;
+
+		public OpenGLShader(string shaderPath)
+		{
+			//Read shader file, we remove \r\n otherwise it fucks up OpenGL, this is a Windows only issue, of course...
+			string shaderFileText = File.ReadAllText($"{Application.GameName}/{shaderPath}").Replace("\r\n", "\n");
+
+			//Split the shader
+			string[] sources = shaderFileText.Split("#type ", StringSplitOptions.RemoveEmptyEntries);
+			Dictionary<ShaderType, string> shaderSources = new Dictionary<ShaderType, string>();
+			foreach (string source in sources)
+			{
+				foreach (string shaderType in ShaderTypes)
+				{
+					if (!source.StartsWith(shaderType)) continue;
+
+					shaderSources.Add(GetShaderTypeFromString(shaderType), source.Replace(shaderType, ""));
+					break;
+				}
+			}
+
+			Compile(shaderSources);
+			ShaderName = Path.GetFileNameWithoutExtension($"{Application.GameName}/{shaderPath}");
+		}
 
 		public OpenGLShader(string name, string vertexSrc, string fragmentSrc)
 		{
@@ -55,6 +81,22 @@ namespace VoltstroEngine.Platform.OpenGL
 		public string GetShaderName()
 		{
 			return ShaderName;
+		}
+
+		private ShaderType GetShaderTypeFromString(string type)
+		{
+			switch (type)
+			{
+				case "vert":
+					return ShaderType.VertexShader;
+				case "frag":
+					return ShaderType.FragmentShader;
+				default:
+					Debug.Assert(false, "Unknown shader type!");
+					break;
+			}
+
+			return 0;
 		}
 
 		/// <summary>

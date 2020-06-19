@@ -15,13 +15,10 @@ namespace Sandbox
 {
 	public class ExampleLayer : ILayer
 	{
-		private readonly IShader triangleShader;
-		private readonly IShader squareShader;
-		private readonly IShader textureShader;
+		private readonly ShaderLibrary shaderLibrary;
 
 		private readonly I2DTexture birdiTexture, faceTexture;
 
-		private readonly IVertexArray triangleVertexArray;
 		private readonly IVertexArray squareVertexArray;
 
 		private readonly OrthographicCamera camera;
@@ -37,38 +34,8 @@ namespace Sandbox
 			//Create camera
 			camera = new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
 
-			// ----------
-			//Triangle
-			// ----------
-			triangleVertexArray = IVertexArray.Create();
-
-			float[] triangleVertices = 
-			{
-				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
-			};
-
-			IVertexBuffer triangleVertexBuffer = IVertexBuffer.Create(triangleVertices, triangleVertices.GetBytes());
-			
-			BufferLayout triangleBufferLayout = new BufferLayout(new []
-			{
-				new BufferElement("a_Position", ShaderDataType.Float3), 
-				new BufferElement("a_Color", ShaderDataType.Float4)
-			});
-			
-			triangleVertexBuffer.SetLayout(triangleBufferLayout);
-			triangleVertexArray.AddVertexBuffer(triangleVertexBuffer);
-			
-			uint[] triangleIndices = {0, 1, 2};
-			IIndexBuffer triangleIndexBuffer = IIndexBuffer.Create(triangleIndices, triangleIndices.GetBytes() / sizeof(uint));
-			triangleVertexArray.SetIndexBuffer(triangleIndexBuffer);
-
-			//Triangle Shader
-			string triangleVertexSrc = AssetManager.ReadAllText("Shaders/Triangle.vert").Replace("\r\n", "\n");
-			string triangleFragmentSrc = AssetManager.ReadAllText("Shaders/Triangle.frag").Replace("\r\n", "\n");
-
-			triangleShader = IShader.Create("Triangle", triangleVertexSrc, triangleFragmentSrc);
+			//Shader library
+			shaderLibrary = new ShaderLibrary();
 
 			// ----------
 			//Square
@@ -82,7 +49,7 @@ namespace Sandbox
 				-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 			};
 
-			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, triangleVertices.GetBytes());
+			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, squareVertices.GetBytes());
 
 			BufferLayout squareBufferLayout = new BufferLayout(new []
 			{
@@ -99,12 +66,13 @@ namespace Sandbox
 			//Square shader
 			string squareVertexSrc = AssetManager.ReadAllText("Shaders/Square.vert").Replace("\r\n", "\n");
 			string squareFragmentSrc = AssetManager.ReadAllText("Shaders/Square.frag").Replace("\r\n", "\n");
-			squareShader = IShader.Create("Square", squareVertexSrc, squareFragmentSrc);
+			shaderLibrary.AddShader(IShader.Create("Square", squareVertexSrc, squareFragmentSrc));
 
 			//Texture shader
 			string textureVertexSrc = AssetManager.ReadAllText("Shaders/Texture.vert").Replace("\r\n", "\n");
 			string textureFragmentSrc = AssetManager.ReadAllText("Shaders/Texture.frag").Replace("\r\n", "\n");
-			textureShader = IShader.Create("Texture", textureVertexSrc, textureFragmentSrc);
+			IShader textureShader = IShader.Create("Texture", textureVertexSrc, textureFragmentSrc);
+			shaderLibrary.AddShader(textureShader);
 			
 			birdiTexture = I2DTexture.Create("Textures/Birdi.png");
 			faceTexture = I2DTexture.Create("Textures/Face.png");
@@ -151,18 +119,15 @@ namespace Sandbox
 						Vector3 pos = new Vector3(x * 1.1f, y * 1.1f, 0);
 						Matrix4x4 transform = Matrix4x4.CreateTranslation(pos) * Scale;
 
-						Renderer.Submit(squareShader, squareVertexArray, transform);
+						Renderer.Submit(shaderLibrary.GetShader("Square"), squareVertexArray, transform);
 					}
 				}
 
 				birdiTexture.Bind();
-				Renderer.Submit(textureShader, squareVertexArray, Matrix4x4.Identity);
+				Renderer.Submit(shaderLibrary.GetShader("Texture"), squareVertexArray, Matrix4x4.Identity);
 
 				faceTexture.Bind();
-				Renderer.Submit(textureShader, squareVertexArray, Matrix4x4.Identity);
-
-				//Triangle
-				//Renderer.Submit(triangleShader, triangleVertexArray, Matrix4x4.Identity);
+				Renderer.Submit(shaderLibrary.GetShader("Texture"), squareVertexArray, Matrix4x4.Identity);
 			}
 			Renderer.EndScene();
 		}

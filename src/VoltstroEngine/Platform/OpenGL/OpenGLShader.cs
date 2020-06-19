@@ -52,6 +52,11 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.Uniform1i(location, 1, value);
 		}
 
+		public string GetShaderName()
+		{
+			return ShaderName;
+		}
+
 		/// <summary>
 		/// Compiles the shader
 		/// </summary>

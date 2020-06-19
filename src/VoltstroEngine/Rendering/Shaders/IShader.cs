@@ -46,5 +46,11 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <param name="name"></param>
 		/// <param name="value"></param>
 		public void UploadUniformInt(string name, int value);
+
+		/// <summary>
+		/// Get this shader's name
+		/// </summary>
+		/// <returns></returns>
+		public string GetShaderName();
 	}
 }

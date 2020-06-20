@@ -7,6 +7,7 @@ using VoltstroEngine.Logging;
 using VoltstroEngine.Platform.OpenGL;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Window;
+using Exception = System.Exception;
 
 namespace VoltstroEngine.Platform.Windows
 {
@@ -18,7 +19,7 @@ namespace VoltstroEngine.Platform.Windows
 		private static bool glfwInitialized;
 
 		private WindowProperties windowProperties;
-		private GLFW.Window window;
+		private NativeWindow window;
 
 		private IGraphicsContext context;
 
@@ -29,8 +30,16 @@ namespace VoltstroEngine.Platform.Windows
 
 		public void OnUpdate()
 		{
-			Glfw.PollEvents();
-			context.SwapBuffers();
+			if(Glfw.WindowShouldClose(window)) return;
+			try
+			{
+				Glfw.PollEvents();
+				context.SwapBuffers();
+			}
+			catch (Exception ex)
+			{
+				Logger.Log(ex.ToString());
+			}
 		}
 
 		public int GetWidth()
@@ -56,7 +65,7 @@ namespace VoltstroEngine.Platform.Windows
 
 		public void Shutdown()
 		{
-			Glfw.DestroyWindow(window);
+			//Glfw.DestroyWindow(window);
 		}
 
 		public float GetTime()
@@ -83,7 +92,7 @@ namespace VoltstroEngine.Platform.Windows
 
 			//Set the properties and create the window
 			windowProperties = properties;
-			window = Glfw.CreateWindow(properties.Width, properties.Height, properties.Title, Monitor.None, GLFW.Window.None);
+			window = new NativeWindow(properties.Width, properties.Height, properties.Title);
 
 			//Create context
 			context = Renderer.GetRenderingAPI() switch
@@ -101,47 +110,45 @@ namespace VoltstroEngine.Platform.Windows
 			Input.KeyInputImpl = new WindowsInput(window);
 
 			//GLFW callbacks
-			Glfw.SetWindowSizeCallback(window, (outWindow, width, height) => OnEvent?.Invoke(new WindowResizedEvent(width, height)));
-			Glfw.SetCloseCallback(window, outWindow => OnEvent?.Invoke(new WindowCloseEvent()));
+			window.Closed += (sender, args) => OnEvent?.Invoke(new WindowCloseEvent());
 
-			Glfw.SetKeyCallback(window,
-				delegate(GLFW.Window outWindow, Keys key, int code, InputState state, ModifierKeys mods)
+			window.SizeChanged += (sender, args) =>
+				OnEvent?.Invoke(new WindowResizedEvent(args.Size.Width, args.Size.Height));
+
+			window.KeyAction += delegate(object sender, KeyEventArgs args)
+			{
+				switch (args.State)
 				{
-					switch (state)
-					{
-						case InputState.Release:
-							OnEvent?.Invoke(new KeyReleasedEvent((KeyCode)key));
-							break;
-						case InputState.Press:
-							OnEvent?.Invoke(new KeyPressedEvent((KeyCode)key));
-							break;
-						case InputState.Repeat:
-							OnEvent?.Invoke(new KeyPressedEvent((KeyCode)key, 1));
-							break;
-						default:
-							throw new ArgumentOutOfRangeException(nameof(state), state, null);
-					}
-				});
+					case InputState.Release:
+						OnEvent?.Invoke(new KeyReleasedEvent((KeyCode)args.Key));
+						break;
+					case InputState.Press:
+						OnEvent?.Invoke(new KeyPressedEvent((KeyCode)args.Key));
+						break;
+					case InputState.Repeat:
+						OnEvent?.Invoke(new KeyPressedEvent((KeyCode)args.Key, 1));
+						break;
+					default:
+						throw new ArgumentOutOfRangeException(nameof(args.State), args.State, null);
+				}
+			};
 
-			Glfw.SetCharCallback(window, (outWindow, key) => OnEvent?.Invoke(new KeyTypedEvent((KeyCode)key)));
-
-			Glfw.SetMouseButtonCallback(window,
-				delegate(GLFW.Window outWindow, MouseButton button, InputState state, ModifierKeys modifiers)
+			window.MouseButton += delegate(object sender, MouseButtonEventArgs args)
+			{
+				switch (args.Action)
 				{
-					switch (state)
-					{
-						case InputState.Release:
-							OnEvent?.Invoke(new MouseButtonPressedEvent((int)button));
-							break;
-						case InputState.Press:
-							OnEvent?.Invoke(new MouseButtonReleasedEvent((int)button));
-							break;
-					}
-				});
+					case InputState.Press:
+						OnEvent?.Invoke(new MouseButtonPressedEvent((int)args.Button));
+						break;
+					case InputState.Release:
+						OnEvent?.Invoke(new MouseButtonReleasedEvent((int)args.Button));
+						break;
+				}
+			};
 
-			Glfw.SetScrollCallback(window, (outWindow, xOffset, yOffset) => OnEvent?.Invoke(new MouseScrollEvent((float)xOffset, (float)yOffset)));
+			window.MouseScroll += (sender, args) => OnEvent?.Invoke(new MouseScrollEvent((float) args.X, (float) args.Y));
 
-			Glfw.SetCursorPositionCallback(window, (outWindow, xPos, yPos) => OnEvent?.Invoke(new MouseMovedEvent((float)xPos, (float)yPos)));
+			window.MouseMoved += (sender, args) => OnEvent?.Invoke(new MouseMovedEvent((float) args.X, (float) args.Y));
 
 			Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})", LogVerbosity.Debug);
 		}

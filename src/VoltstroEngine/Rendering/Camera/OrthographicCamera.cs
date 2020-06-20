@@ -31,6 +31,19 @@ namespace VoltstroEngine.Rendering.Camera
 		public float Rotation { get; private set; }
 
 		/// <summary>
+		/// Sets the projection
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="bottom"></param>
+		/// <param name="top"></param>
+		public void SetProjection(float left, float right, float bottom, float top)
+		{
+			ProjectionMatrix = Matrix4x4.CreateOrthographicOffCenter(left, right, bottom, top, -1.0f, 1.0f);
+			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
+		}
+
+		/// <summary>
 		/// Sets the position of the camera
 		/// </summary>
 		/// <param name="position"></param>

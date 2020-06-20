@@ -2,11 +2,9 @@
 using VoltstroEngine;
 using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
-using VoltstroEngine.Inputs;
 using VoltstroEngine.Layers;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
-using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Rendering.Texture;
 
@@ -20,18 +18,14 @@ namespace Sandbox
 
 		private readonly IVertexArray squareVertexArray;
 
-		private readonly OrthographicCamera camera;
-
-		private Vector3 cameraPosition = Vector3.Zero;
-
-		private const float MoveSpeed = 2f;
+		private readonly OrthographicCameraController cameraController;
 
 		private static readonly Matrix4x4 Scale = Matrix4x4.CreateScale(0.1f);
 
 		public ExampleLayer()
 		{
 			//Create camera
-			camera = new OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
+			cameraController = new OrthographicCameraController(1280.0f / 720.0f);
 
 			//Shader library
 			shaderLibrary = new ShaderLibrary();
@@ -88,23 +82,13 @@ namespace Sandbox
 
 		public void OnUpdate(TimeStep ts)
 		{
+			cameraController.OnUpdate(ts);
+
+			//Render
 			Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
 			Renderer.Clear();
 
-			//Camera movement
-			if (Input.IsKeyPressed(KeyCode.A))
-				cameraPosition.X -= MoveSpeed * ts.Seconds;
-			if (Input.IsKeyPressed(KeyCode.D))
-				cameraPosition.X += MoveSpeed * ts.Seconds;
-
-			if (Input.IsKeyPressed(KeyCode.W))
-				cameraPosition.Y += MoveSpeed * ts.Seconds;
-			if (Input.IsKeyPressed(KeyCode.S))
-				cameraPosition.Y -= MoveSpeed * ts.Seconds;
-
-			camera.SetPosition(cameraPosition);
-
-			Renderer.BeginScene(camera);
+			Renderer.BeginScene(cameraController.GetCamera());
 			{
 				//Square
 				for (int y = 0; y < 10; y++)
@@ -129,6 +113,7 @@ namespace Sandbox
 
 		public void OnEvent(IEvent e)
 		{
+			cameraController.OnEvent(e);
 		}
 	}
 

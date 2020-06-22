@@ -14,6 +14,8 @@ namespace VoltstroEngine
 	public class Application
 	{
 		private bool isRunning = true;
+		private bool minimized;
+
 		private readonly IWindow window;
 		private readonly LayerStack layerStack;
 
@@ -62,9 +64,22 @@ namespace VoltstroEngine
 		private void WindowOnOnEvent(IEvent e)
 		{
 			EventDispatcher.DispatchEvent<WindowCloseEvent>(e, OnClose);
+			EventDispatcher.DispatchEvent<WindowResizedEvent>(e, WindowResize);
 
 			foreach (ILayer layer in layerStack.GetLayers())
 				layer.OnEvent(e);
+		}
+
+		private void WindowResize(WindowResizedEvent e)
+		{
+			if (e.Width == 0 || e.Height == 0)
+			{
+				minimized = true;
+				return;
+			}
+
+			minimized = false;
+			Renderer.OnWindowResize((uint)e.Width, (uint)e.Height);
 		}
 
 		private void OnClose(WindowCloseEvent e)
@@ -83,8 +98,11 @@ namespace VoltstroEngine
 				TimeStep timeStep = new TimeStep(time - lastTime);
 				lastTime = time;
 
-				foreach (ILayer layer in layerStack.GetLayers())
-					layer.OnUpdate(timeStep);
+				if (!minimized)
+				{
+					foreach (ILayer layer in layerStack.GetLayers())
+						layer.OnUpdate(timeStep);
+				}
 
 				window.OnUpdate();
 			}

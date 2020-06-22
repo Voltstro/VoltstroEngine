@@ -112,8 +112,13 @@ namespace VoltstroEngine.Platform.Windows
 			//GLFW callbacks
 			window.Closed += (sender, args) => OnEvent?.Invoke(new WindowCloseEvent());
 
-			window.SizeChanged += (sender, args) =>
+			window.SizeChanged += delegate(object sender, SizeChangeEventArgs args)
+			{
+				windowProperties.Width = args.Size.Width;
+				windowProperties.Height = args.Size.Height;
+
 				OnEvent?.Invoke(new WindowResizedEvent(args.Size.Width, args.Size.Height));
+			};
 
 			window.KeyAction += delegate(object sender, KeyEventArgs args)
 			{

@@ -35,5 +35,14 @@
 		/// </summary>
 		/// <returns></returns>
 		public RenderingAPI GetAPI();
+
+		/// <summary>
+		/// Sets the viewport size
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		public void SetViewport(uint x, uint y, uint width, uint height);
 	}
 }

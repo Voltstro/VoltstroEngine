@@ -101,6 +101,16 @@ namespace VoltstroEngine.Rendering
 			renderingAPI.SetClearColor(red, green, blue, 1.0f);
 		}
 
+		/// <summary>
+		/// Call on window resize
+		/// </summary>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		internal static void OnWindowResize(uint width, uint height)
+		{
+			renderingAPI.SetViewport(0, 0, width, height);
+		}
+
 		private struct SceneData
 		{
 			public Matrix4x4 ViewProjectionMatrix;

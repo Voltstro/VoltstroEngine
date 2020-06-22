@@ -7,11 +7,10 @@ namespace VoltstroEngine.Rendering.Camera
 	{
 		public OrthographicCamera(float left, float right, float bottom, float top)
 		{
-			ProjectionMatrix = Matrix4x4.CreateOrthographicOffCenter(left, right, bottom, top, -1.0f, 1.0f);
+			ProjectionMatrix = MathExtensions.Ortho(left, right, bottom, top, -1.0f, 1.0f);
+			ViewMatrix  = Matrix4x4.Identity;
 			Rotation = 0.0f;
 			Position = new Vector3(0.0f, 0.0f, 0.0f);
-
-			ViewMatrix  = Matrix4x4.Identity;
 
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 		}

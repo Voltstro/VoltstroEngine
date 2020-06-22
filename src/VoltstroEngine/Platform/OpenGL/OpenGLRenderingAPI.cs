@@ -45,5 +45,10 @@ namespace VoltstroEngine.Platform.OpenGL
 		{
 			return RenderingAPI.OpenGL;
 		}
+
+		public void SetViewport(uint x, uint y, uint width, uint height)
+		{
+			Gl.Viewport((int)x, (int)y, (int)width, (int)height);
+		}
 	}
 }

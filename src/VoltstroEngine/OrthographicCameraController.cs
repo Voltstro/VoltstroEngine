@@ -23,6 +23,8 @@ namespace VoltstroEngine
 		public float ZoomLevel { get; private set; }
 
 		public Vector3 CameraPosition;
+		public float CameraRotation = 45.0f;
+
 		public float CameraTranslationSpeed;
 
 		private readonly OrthographicCamera camera;
@@ -50,6 +52,7 @@ namespace VoltstroEngine
 				CameraPosition.Y -= CameraTranslationSpeed * ts.Seconds;
 
 			camera.SetPosition(CameraPosition);
+			camera.SetRotation(CameraRotation);
 
 			CameraTranslationSpeed = ZoomLevel;
 		}
@@ -69,6 +72,9 @@ namespace VoltstroEngine
 
 		private void OnWindowResized(WindowResizedEvent e)
 		{
+			if(e.Width == 0 || e.Height == 0)
+				return;
+
 			AspectRatio = e.Width / e.Height;
 			camera.SetProjection(-AspectRatio * ZoomLevel, AspectRatio * ZoomLevel, -ZoomLevel, ZoomLevel);
 		}

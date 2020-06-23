@@ -45,21 +45,21 @@ namespace VoltstroEngine
 		public void OnUpdate(TimeStep ts)
 		{
 			//Camera movement
-			if (Input.IsKeyPressed(KeyCode.A))
-				CameraPosition.X -= CameraTranslationSpeed * ts.Seconds;
 			if (Input.IsKeyPressed(KeyCode.D))
+				CameraPosition.X -= CameraTranslationSpeed * ts.Seconds;
+			if (Input.IsKeyPressed(KeyCode.A))
 				CameraPosition.X += CameraTranslationSpeed * ts.Seconds;
 
-			if (Input.IsKeyPressed(KeyCode.W))
-				CameraPosition.Y += CameraTranslationSpeed * ts.Seconds;
 			if (Input.IsKeyPressed(KeyCode.S))
+				CameraPosition.Y += CameraTranslationSpeed * ts.Seconds;
+			if (Input.IsKeyPressed(KeyCode.W))
 				CameraPosition.Y -= CameraTranslationSpeed * ts.Seconds;
 
 			if (Rotation)
 			{
-				if (Input.IsKeyPressed(KeyCode.Q))
-					CameraRotation += CameraRotationSpeed * ts.Seconds;
 				if (Input.IsKeyPressed(KeyCode.E))
+					CameraRotation += CameraRotationSpeed * ts.Seconds;
+				if (Input.IsKeyPressed(KeyCode.Q))
 					CameraRotation -= CameraRotationSpeed * ts.Seconds;
 
 				camera.SetRotation(CameraRotation);

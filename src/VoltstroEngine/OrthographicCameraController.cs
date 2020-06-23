@@ -15,6 +15,7 @@ namespace VoltstroEngine
 
 			CameraPosition = Vector3.Zero;
 			CameraTranslationSpeed = 2.0f;
+			CameraRotationSpeed = 25.0f;
 
 			camera = new OrthographicCamera(-aspectRatio * ZoomLevel, aspectRatio * ZoomLevel, -ZoomLevel, ZoomLevel);
 		}
@@ -22,10 +23,13 @@ namespace VoltstroEngine
 		public float AspectRatio { get; private set; }
 		public float ZoomLevel { get; private set; }
 
+		public bool Rotation { get; set; } = true;
+
 		public Vector3 CameraPosition;
-		public float CameraRotation = 45.0f;
+		public float CameraRotation;
 
 		public float CameraTranslationSpeed;
+		public float CameraRotationSpeed;
 
 		private readonly OrthographicCamera camera;
 
@@ -51,8 +55,17 @@ namespace VoltstroEngine
 			if (Input.IsKeyPressed(KeyCode.S))
 				CameraPosition.Y -= CameraTranslationSpeed * ts.Seconds;
 
+			if (Rotation)
+			{
+				if (Input.IsKeyPressed(KeyCode.Q))
+					CameraRotation += CameraRotationSpeed * ts.Seconds;
+				if (Input.IsKeyPressed(KeyCode.E))
+					CameraRotation -= CameraRotationSpeed * ts.Seconds;
+
+				camera.SetRotation(CameraRotation);
+			}
+
 			camera.SetPosition(CameraPosition);
-			camera.SetRotation(CameraRotation);
 
 			CameraTranslationSpeed = ZoomLevel;
 		}

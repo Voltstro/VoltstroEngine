@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using VoltstroEngine.Extensions;
+using VoltstroEngine.Logging;
 
 namespace VoltstroEngine.Rendering.Camera
 {
@@ -8,7 +9,7 @@ namespace VoltstroEngine.Rendering.Camera
 		public OrthographicCamera(float left, float right, float bottom, float top)
 		{
 			ProjectionMatrix = MathExtensions.Ortho(left, right, bottom, top, -1.0f, 1.0f);
-			ViewMatrix  = Matrix4x4.Identity;
+			ViewMatrix = Matrix4x4.Identity;
 			Rotation = 0.0f;
 			Position = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -75,13 +76,22 @@ namespace VoltstroEngine.Rendering.Camera
 
 		private void RecalculateViewMatrix()
 		{
-			Matrix4x4 transform = Matrix4x4.CreateTranslation(Position) *
-			                      Matrix4x4.CreateRotationZ(Rotation.ToRadian());
+			//This is the matrix for our rotation. We're just rotating around the Z axis (anti/clockwise)
+			Matrix4x4 rotation = Matrix4x4.CreateRotationZ(Rotation.ToRadian());
+			//The matrix for our camera's offset/position
+			Matrix4x4 translation = Matrix4x4.CreateTranslation(Position);
 
+			//To transform properly, we do T2 * T1, where T1 is the first 'movement', and T2 is the 2nd.
+			//We want to move then rotate, so do 'rotation * translation' (because rotation = T2)
+			//However from testing this doesn't appear to make any difference (so far)
+			Matrix4x4 transform = rotation * translation;
+
+			//? What is this for?
 			if (Matrix4x4.Invert(transform, out Matrix4x4 result))
 			{
 				ViewMatrix = result;
-				ViewProjectionMatrix = ProjectionMatrix * result;
+				//TODO: This only works on opengl, DirectX needs to be multiplied the other way round
+				ViewProjectionMatrix = result * ProjectionMatrix;
 			}
 		}
 	}

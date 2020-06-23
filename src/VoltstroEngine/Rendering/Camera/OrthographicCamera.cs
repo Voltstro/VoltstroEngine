@@ -39,7 +39,7 @@ namespace VoltstroEngine.Rendering.Camera
 		/// <param name="top"></param>
 		public void SetProjection(float left, float right, float bottom, float top)
 		{
-			ProjectionMatrix = Matrix4x4.CreateOrthographicOffCenter(left, right, bottom, top, -1.0f, 1.0f);
+			ProjectionMatrix = MathExtensions.Ortho(left, right, bottom, top, -1.0f, 1.0f);
 			ViewProjectionMatrix = ProjectionMatrix * ViewMatrix;
 		}
 

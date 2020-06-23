@@ -88,8 +88,7 @@ namespace VoltstroEngine
 			if(e.Width == 0 || e.Height == 0)
 				return;
 
-			//TODO: Possible loss of fraction
-			AspectRatio = e.Width / e.Height;
+			AspectRatio = (float)e.Width / e.Height;
 			camera.SetProjection(-AspectRatio * ZoomLevel, AspectRatio * ZoomLevel, -ZoomLevel, ZoomLevel);
 		}
 	}

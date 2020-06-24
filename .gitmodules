@@ -1,3 +1,6 @@
 [submodule "src/ThirdParty/glfw-net"]
 	path = src/ThirdParty/glfw-net
 	url = https://github.com/Voltstro/glfw-net
+[submodule "src/ThirdParty/StbImageSharp"]
+	path = src/ThirdParty/StbImageSharp
+	url = https://github.com/Voltstro/StbImageSharp

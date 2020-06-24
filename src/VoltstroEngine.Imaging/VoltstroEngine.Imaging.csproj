@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StbImageSharp" Version="2.22.4" />
+    <ProjectReference Include="..\ThirdParty\StbImageSharp\src\StbImageSharp.csproj" />
   </ItemGroup>
 
 </Project>

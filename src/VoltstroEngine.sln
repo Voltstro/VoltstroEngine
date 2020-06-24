@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F4B66292
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltstroEngine.Imaging", "VoltstroEngine.Imaging\VoltstroEngine.Imaging.csproj", "{70E3BDF8-0ACD-4E20-BC6B-E2730CE468D0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StbImageSharp", "ThirdParty\StbImageSharp\src\StbImageSharp.csproj", "{480F50CE-E337-4B80-9796-8F270C715120}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -49,6 +51,10 @@ Global
 		{70E3BDF8-0ACD-4E20-BC6B-E2730CE468D0}.Debug|x64.Build.0 = Debug|x64
 		{70E3BDF8-0ACD-4E20-BC6B-E2730CE468D0}.Release|x64.ActiveCfg = Release|x64
 		{70E3BDF8-0ACD-4E20-BC6B-E2730CE468D0}.Release|x64.Build.0 = Release|x64
+		{480F50CE-E337-4B80-9796-8F270C715120}.Debug|x64.ActiveCfg = Debug|x64
+		{480F50CE-E337-4B80-9796-8F270C715120}.Debug|x64.Build.0 = Debug|x64
+		{480F50CE-E337-4B80-9796-8F270C715120}.Release|x64.ActiveCfg = Release|x64
+		{480F50CE-E337-4B80-9796-8F270C715120}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0} = {A7EAA04C-6E4E-4F76-9343-4F5018625CF7}
 		{724E8BD1-37AC-4E67-8C0E-20C4FDF5867E} = {F4B66292-ED40-4651-81BA-E75EF1C5C0C3}
+		{480F50CE-E337-4B80-9796-8F270C715120} = {A7EAA04C-6E4E-4F76-9343-4F5018625CF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C60704E-4B00-40A0-8798-F24EBB9A9C46}

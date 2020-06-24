@@ -4,6 +4,22 @@ namespace VoltstroEngine.Rendering.Buffer
 {
 	public class BufferElement
 	{
+		public bool Normalized;
+		public uint Offset;
+		public uint Size;
+
+		public BufferElement(string name, ShaderDataType type, bool normalized = false)
+		{
+			Name = name;
+			Type = type;
+			Size = ShaderTypeSize(type);
+			Offset = 0;
+			Normalized = normalized;
+		}
+
+		public string Name { get; }
+		public ShaderDataType Type { get; }
+
 		public static uint ShaderTypeSize(ShaderDataType type)
 		{
 			switch (type)
@@ -32,21 +48,6 @@ namespace VoltstroEngine.Rendering.Buffer
 					throw new ArgumentOutOfRangeException(nameof(type), type, null);
 			}
 		}
-
-		public BufferElement(string name, ShaderDataType type, bool normalized = false)
-		{
-			Name = name;
-			Type = type;
-			Size = ShaderTypeSize(type);
-			Offset = 0;
-			Normalized = normalized;
-		}
-
-		public string Name { get; private set; }
-		public ShaderDataType Type { get; private set; }
-		public uint Size;
-		public uint Offset;
-		public bool Normalized;
 
 		public uint GetComponentCount()
 		{

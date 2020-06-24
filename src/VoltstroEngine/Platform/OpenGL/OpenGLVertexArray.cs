@@ -9,20 +9,14 @@ namespace VoltstroEngine.Platform.OpenGL
 {
 	public class OpenGLVertexArray : IVertexArray
 	{
-		private IIndexBuffer indexBuffer;
-		private readonly List<IVertexBuffer> vertexBuffers;
-
 		private readonly uint rendererID;
+		private readonly List<IVertexBuffer> vertexBuffers;
+		private IIndexBuffer indexBuffer;
 
 		public OpenGLVertexArray()
 		{
 			vertexBuffers = new List<IVertexBuffer>();
 			rendererID = Gl.CreateVertexArray();
-		}
-
-		~OpenGLVertexArray()
-		{
-			Gl.DeleteVertexArrays(rendererID);
 		}
 
 		public void Bind()
@@ -46,12 +40,12 @@ namespace VoltstroEngine.Platform.OpenGL
 			foreach (BufferElement element in vertexBuffer.GetLayout().Elements)
 			{
 				Gl.EnableVertexAttribArray(index);
-				Gl.VertexAttribPointer(index, 
-					(int)element.GetComponentCount(), 
-					ShaderDataTypeToOpenGLBaseType(element.Type), 
-					element.Normalized, 
-					(int)vertexBuffer.GetLayout().Stride, 
-					(IntPtr)element.Offset);
+				Gl.VertexAttribPointer(index,
+					(int) element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.Type),
+					element.Normalized,
+					(int) vertexBuffer.GetLayout().Stride,
+					(IntPtr) element.Offset);
 				index++;
 			}
 
@@ -74,6 +68,11 @@ namespace VoltstroEngine.Platform.OpenGL
 		public IIndexBuffer GetIndexBuffer()
 		{
 			return indexBuffer;
+		}
+
+		~OpenGLVertexArray()
+		{
+			Gl.DeleteVertexArrays(rendererID);
 		}
 
 		private VertexAttribType ShaderDataTypeToOpenGLBaseType(ShaderDataType type)

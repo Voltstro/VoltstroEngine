@@ -6,7 +6,7 @@ namespace VoltstroEngine.Extensions
 	{
 		public static uint GetBytes(this Array array)
 		{
-			return (uint)Buffer.ByteLength(array);
+			return (uint) Buffer.ByteLength(array);
 		}
 	}
 }

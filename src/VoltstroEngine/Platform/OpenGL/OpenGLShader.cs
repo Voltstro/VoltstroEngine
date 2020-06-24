@@ -13,11 +13,11 @@ namespace VoltstroEngine.Platform.OpenGL
 {
 	public class OpenGLShader : IShader
 	{
-		private static readonly string[] ShaderTypes = { "vert", "frag" };
+		private static readonly string[] ShaderTypes = {"vert", "frag"};
 
 		public readonly string ShaderName;
-		private List<uint> shaderIDs;
 		private uint program;
+		private List<uint> shaderIDs;
 
 		public OpenGLShader(string shaderPath)
 		{
@@ -28,14 +28,12 @@ namespace VoltstroEngine.Platform.OpenGL
 			string[] sources = shaderFileText.Split("#type ", StringSplitOptions.RemoveEmptyEntries);
 			Dictionary<ShaderType, string> shaderSources = new Dictionary<ShaderType, string>();
 			foreach (string source in sources)
+			foreach (string shaderType in ShaderTypes)
 			{
-				foreach (string shaderType in ShaderTypes)
-				{
-					if (!source.StartsWith(shaderType)) continue;
+				if (!source.StartsWith(shaderType)) continue;
 
-					shaderSources.Add(GetShaderTypeFromString(shaderType), source.Replace(shaderType, ""));
-					break;
-				}
+				shaderSources.Add(GetShaderTypeFromString(shaderType), source.Replace(shaderType, ""));
+				break;
 			}
 
 			Compile(shaderSources);
@@ -50,11 +48,6 @@ namespace VoltstroEngine.Platform.OpenGL
 				[ShaderType.VertexShader] = vertexSrc,
 				[ShaderType.FragmentShader] = fragmentSrc
 			});
-		}
-
-		~OpenGLShader()
-		{
-			Gl.DeleteProgram(program);
 		}
 
 		public void Bind()
@@ -82,6 +75,11 @@ namespace VoltstroEngine.Platform.OpenGL
 		public string GetShaderName()
 		{
 			return ShaderName;
+		}
+
+		~OpenGLShader()
+		{
+			Gl.DeleteProgram(program);
 		}
 
 		private ShaderType GetShaderTypeFromString(string type)
@@ -117,7 +115,7 @@ namespace VoltstroEngine.Platform.OpenGL
 				uint shader = Gl.CreateShader(type);
 
 				//Upload the shader source
-				Gl.ShaderSource(shader, source.Split(new []{Environment.NewLine}, StringSplitOptions.None));
+				Gl.ShaderSource(shader, source.Split(new[] {Environment.NewLine}, StringSplitOptions.None));
 
 				//Compile the shader
 				Gl.CompileShader(shader);
@@ -162,10 +160,7 @@ namespace VoltstroEngine.Platform.OpenGL
 #endif
 			}
 
-			foreach (uint shader in shaderIDs)
-			{
-				Gl.DetachShader(program, shader);
-			}
+			foreach (uint shader in shaderIDs) Gl.DetachShader(program, shader);
 		}
 	}
 }

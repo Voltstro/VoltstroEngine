@@ -9,6 +9,14 @@ namespace VoltstroEngine.Rendering
 {
 	public class OrthographicCameraController
 	{
+		private readonly OrthographicCamera camera;
+
+		public Vector3 CameraPosition;
+		public float CameraRotation;
+		public float CameraRotationSpeed;
+
+		public float CameraTranslationSpeed;
+
 		public OrthographicCameraController(float aspectRatio)
 		{
 			AspectRatio = aspectRatio;
@@ -25,14 +33,6 @@ namespace VoltstroEngine.Rendering
 		public float ZoomLevel { get; private set; }
 
 		public bool Rotation { get; set; } = true;
-
-		public Vector3 CameraPosition;
-		public float CameraRotation;
-
-		public float CameraTranslationSpeed;
-		public float CameraRotationSpeed;
-
-		private readonly OrthographicCamera camera;
 
 		/// <summary>
 		/// Gets the <see cref="OrthographicCamera"/>
@@ -86,10 +86,10 @@ namespace VoltstroEngine.Rendering
 
 		private void OnWindowResized(WindowResizedEvent e)
 		{
-			if(e.Width == 0 || e.Height == 0)
+			if (e.Width == 0 || e.Height == 0)
 				return;
 
-			AspectRatio = (float)e.Width / e.Height;
+			AspectRatio = (float) e.Width / e.Height;
 			camera.SetProjection(-AspectRatio * ZoomLevel, AspectRatio * ZoomLevel, -ZoomLevel, ZoomLevel);
 		}
 	}

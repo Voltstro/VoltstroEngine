@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using GLFW;
 using OpenGL;
 using VoltstroEngine.Core.Logging;
@@ -10,9 +9,9 @@ namespace VoltstroEngine.Platform.OpenGL
 {
 	public class OpenGLContext : IGraphicsContext
 	{
-		private readonly GLFW.Window window;
+		private readonly Window window;
 
-		public OpenGLContext(GLFW.Window window)
+		public OpenGLContext(Window window)
 		{
 			this.window = window;
 		}
@@ -32,6 +31,7 @@ namespace VoltstroEngine.Platform.OpenGL
 				Logger.Log(ex.Message, LogVerbosity.Error);
 #endif
 			}
+
 			Logger.Log("OpenGL Initialized", LogVerbosity.Debug);
 
 			Logger.Log("OpenGL Info:");

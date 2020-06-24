@@ -13,12 +13,6 @@ namespace VoltstroEngine.Core
 	/// </summary>
 	public class Application
 	{
-		private bool isRunning = true;
-		private bool minimized;
-
-		private readonly IWindow window;
-		private readonly LayerStack layerStack;
-
 		private static Application app;
 
 		/// <summary>
@@ -27,7 +21,13 @@ namespace VoltstroEngine.Core
 		/// </summary>
 		public static string GameName;
 
+		private readonly LayerStack layerStack;
+
+		private readonly IWindow window;
+		private bool isRunning = true;
+
 		private float lastTime;
+		private bool minimized;
 
 		public Application()
 		{
@@ -79,7 +79,7 @@ namespace VoltstroEngine.Core
 			}
 
 			minimized = false;
-			Renderer.OnWindowResize((uint)e.Width, (uint)e.Height);
+			Renderer.OnWindowResize((uint) e.Width, (uint) e.Height);
 		}
 
 		private void OnClose(WindowCloseEvent e)
@@ -99,10 +99,8 @@ namespace VoltstroEngine.Core
 				lastTime = time;
 
 				if (!minimized)
-				{
 					foreach (ILayer layer in layerStack.GetLayers())
 						layer.OnUpdate(timeStep);
-				}
 
 				window.OnUpdate();
 			}

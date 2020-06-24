@@ -31,8 +31,8 @@ namespace VoltstroEngine.Platform.OpenGL
 
 			Debug.Assert(internalFormat != 0, "Format not supported!");
 
-			width = (uint)image.Width;
-			height = (uint)image.Height;
+			width = (uint) image.Width;
+			height = (uint) image.Height;
 
 			textureID = Gl.CreateTexture(TextureTarget.Texture2d);
 			Gl.TextureStorage2D(textureID, 1, internalFormat, image.Width, image.Height);
@@ -40,12 +40,8 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.TextureParameteri(textureID, TextureParameterName.TextureMinFilter, Gl.LINEAR);
 			Gl.TextureParameteri(textureID, TextureParameterName.TextureMagFilter, Gl.NEAREST);
 
-			Gl.TextureSubImage2D(textureID, 0, 0, 0, image.Width, image.Height, dataFormat, PixelType.UnsignedByte, image.Data);
-		}
-
-		~OpenGL2DTexture()
-		{
-			Gl.DeleteTextures(textureID);
+			Gl.TextureSubImage2D(textureID, 0, 0, 0, image.Width, image.Height, dataFormat, PixelType.UnsignedByte,
+				image.Data);
 		}
 
 		public uint GetWidth()
@@ -61,6 +57,11 @@ namespace VoltstroEngine.Platform.OpenGL
 		public void Bind(uint slot = 0)
 		{
 			Gl.BindTextureUnit(slot, textureID);
+		}
+
+		~OpenGL2DTexture()
+		{
+			Gl.DeleteTextures(textureID);
 		}
 	}
 }

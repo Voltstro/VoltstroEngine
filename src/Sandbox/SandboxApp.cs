@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using VoltstroEngine;
 using VoltstroEngine.Core;
 using VoltstroEngine.Core.Layers;
 using VoltstroEngine.Events;
@@ -13,15 +12,14 @@ namespace Sandbox
 {
 	public class ExampleLayer : ILayer
 	{
-		private readonly ShaderLibrary shaderLibrary;
+		private static readonly Matrix4x4 Scale = Matrix4x4.CreateScale(0.1f);
 
 		private readonly I2DTexture birdiTexture, faceTexture;
 
-		private readonly IVertexArray squareVertexArray;
-
 		private readonly OrthographicCameraController cameraController;
+		private readonly ShaderLibrary shaderLibrary;
 
-		private static readonly Matrix4x4 Scale = Matrix4x4.CreateScale(0.1f);
+		private readonly IVertexArray squareVertexArray;
 
 		public ExampleLayer()
 		{
@@ -36,16 +34,17 @@ namespace Sandbox
 			// ----------
 			squareVertexArray = IVertexArray.Create();
 
-			float[] squareVertices = {
+			float[] squareVertices =
+			{
 				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-				 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-				-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+				0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+				0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+				-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 			};
 
 			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, squareVertices.GetBytes());
 
-			BufferLayout squareBufferLayout = new BufferLayout(new []
+			BufferLayout squareBufferLayout = new BufferLayout(new[]
 			{
 				new BufferElement("a_Position", ShaderDataType.Float3),
 				new BufferElement("a_TexCoord", ShaderDataType.Float2)
@@ -54,7 +53,8 @@ namespace Sandbox
 			squareVertexArray.AddVertexBuffer(squareVertexBuffer);
 
 			uint[] squareIndices = {0, 1, 2, 2, 3, 0};
-			IIndexBuffer squareIndexBuffer = IIndexBuffer.Create(squareIndices, squareIndices.GetBytes() / sizeof(uint));
+			IIndexBuffer squareIndexBuffer =
+				IIndexBuffer.Create(squareIndices, squareIndices.GetBytes() / sizeof(uint));
 			squareVertexArray.SetIndexBuffer(squareIndexBuffer);
 
 			//Square shader
@@ -63,7 +63,7 @@ namespace Sandbox
 			//Texture shader
 			IShader textureShader = IShader.Create("Shaders/Texture.glsl");
 			shaderLibrary.AddShader(textureShader);
-			
+
 			birdiTexture = I2DTexture.Create("Textures/Birdi.png");
 			faceTexture = I2DTexture.Create("Textures/Face.png");
 
@@ -73,12 +73,10 @@ namespace Sandbox
 
 		public void OnAttach()
 		{
-
 		}
 
 		public void OnDetach()
 		{
-			
 		}
 
 		public void OnUpdate(TimeStep ts)
@@ -93,14 +91,12 @@ namespace Sandbox
 			{
 				//Square
 				for (int y = 0; y < 10; y++)
+				for (int x = 0; x < 10; x++)
 				{
-					for (int x = 0; x < 10; x++)
-					{
-						Vector3 pos = new Vector3(x * 1.1f, y * 1.1f, 0);
-						Matrix4x4 transform = Matrix4x4.CreateTranslation(pos) * Scale;
+					Vector3 pos = new Vector3(x * 1.1f, y * 1.1f, 0);
+					Matrix4x4 transform = Matrix4x4.CreateTranslation(pos) * Scale;
 
-						Renderer.Submit(shaderLibrary.GetShader("Square"), squareVertexArray, transform);
-					}
+					Renderer.Submit(shaderLibrary.GetShader("Square"), squareVertexArray, transform);
 				}
 
 				birdiTexture.Bind();

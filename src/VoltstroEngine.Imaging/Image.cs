@@ -9,6 +9,26 @@ namespace VoltstroEngine.Imaging
 	public class Image
 	{
 		/// <summary>
+		/// How many channels does this image have?
+		/// </summary>
+		public readonly int Channels;
+
+		/// <summary>
+		/// The data of this image
+		/// </summary>
+		public readonly byte[] Data;
+
+		/// <summary>
+		/// The height of this image
+		/// </summary>
+		public readonly int Height;
+
+		/// <summary>
+		/// The width of this image
+		/// </summary>
+		public readonly int Width;
+
+		/// <summary>
 		/// Creates and loads and new image
 		/// </summary>
 		/// <param name="fileLocation">Location of the image</param>
@@ -16,11 +36,11 @@ namespace VoltstroEngine.Imaging
 		/// <exception cref="FileNotFoundException"></exception>
 		public Image(string fileLocation, bool filp)
 		{
-			if(!File.Exists(fileLocation))
+			if (!File.Exists(fileLocation))
 				throw new FileNotFoundException("Image doesn't exist!", fileLocation);
 
 			//Filp image on load, if we want to filp it
-			if(filp)
+			if (filp)
 				StbImage.stbi_set_flip_vertically_on_load(1);
 
 			//Open stream
@@ -33,27 +53,7 @@ namespace VoltstroEngine.Imaging
 			Height = image.Height;
 
 			//IDK if this was purposely done, but the enum number matches to the channels count of what the enum is
-			Channels = (int)image.SourceComp;
+			Channels = (int) image.SourceComp;
 		}
-
-		/// <summary>
-		/// The width of this image
-		/// </summary>
-		public readonly int Width;
-
-		/// <summary>
-		/// The height of this image
-		/// </summary>
-		public readonly int Height;
-
-		/// <summary>
-		/// How many channels does this image have?
-		/// </summary>
-		public readonly int Channels;
-
-		/// <summary>
-		/// The data of this image
-		/// </summary>
-		public readonly byte[] Data;
 	}
 }

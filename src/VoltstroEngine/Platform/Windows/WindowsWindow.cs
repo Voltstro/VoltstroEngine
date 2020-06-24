@@ -18,10 +18,10 @@ namespace VoltstroEngine.Platform.Windows
 	{
 		private static bool glfwInitialized;
 
-		private WindowProperties windowProperties;
+		private IGraphicsContext context;
 		private NativeWindow window;
 
-		private IGraphicsContext context;
+		private WindowProperties windowProperties;
 
 		public WindowsWindow(WindowProperties properties)
 		{
@@ -30,7 +30,7 @@ namespace VoltstroEngine.Platform.Windows
 
 		public void OnUpdate()
 		{
-			if(Glfw.WindowShouldClose(window)) return;
+			if (Glfw.WindowShouldClose(window)) return;
 			try
 			{
 				Glfw.PollEvents();
@@ -70,7 +70,7 @@ namespace VoltstroEngine.Platform.Windows
 
 		public float GetTime()
 		{
-			return (float)Glfw.Time;
+			return (float) Glfw.Time;
 		}
 
 		public event IWindow.OnEventDelegate OnEvent;
@@ -125,13 +125,13 @@ namespace VoltstroEngine.Platform.Windows
 				switch (args.State)
 				{
 					case InputState.Release:
-						OnEvent?.Invoke(new KeyReleasedEvent((KeyCode)args.Key));
+						OnEvent?.Invoke(new KeyReleasedEvent((KeyCode) args.Key));
 						break;
 					case InputState.Press:
-						OnEvent?.Invoke(new KeyPressedEvent((KeyCode)args.Key));
+						OnEvent?.Invoke(new KeyPressedEvent((KeyCode) args.Key));
 						break;
 					case InputState.Repeat:
-						OnEvent?.Invoke(new KeyPressedEvent((KeyCode)args.Key, 1));
+						OnEvent?.Invoke(new KeyPressedEvent((KeyCode) args.Key, 1));
 						break;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(args.State), args.State, null);
@@ -143,19 +143,21 @@ namespace VoltstroEngine.Platform.Windows
 				switch (args.Action)
 				{
 					case InputState.Press:
-						OnEvent?.Invoke(new MouseButtonPressedEvent((int)args.Button));
+						OnEvent?.Invoke(new MouseButtonPressedEvent((int) args.Button));
 						break;
 					case InputState.Release:
-						OnEvent?.Invoke(new MouseButtonReleasedEvent((int)args.Button));
+						OnEvent?.Invoke(new MouseButtonReleasedEvent((int) args.Button));
 						break;
 				}
 			};
 
-			window.MouseScroll += (sender, args) => OnEvent?.Invoke(new MouseScrollEvent((float) args.X, (float) args.Y));
+			window.MouseScroll += (sender, args) =>
+				OnEvent?.Invoke(new MouseScrollEvent((float) args.X, (float) args.Y));
 
 			window.MouseMoved += (sender, args) => OnEvent?.Invoke(new MouseMovedEvent((float) args.X, (float) args.Y));
 
-			Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})", LogVerbosity.Debug);
+			Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})",
+				LogVerbosity.Debug);
 		}
 
 		private static void ErrorHandler(ErrorCode code, IntPtr message)

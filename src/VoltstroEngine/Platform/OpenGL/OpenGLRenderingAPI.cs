@@ -38,7 +38,8 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void DrawIndexed(IVertexArray vertexArray)
 		{
-			Gl.DrawElements(PrimitiveType.Triangles, (int)vertexArray.GetIndexBuffer().GetCount(), DrawElementsType.UnsignedInt, null);
+			Gl.DrawElements(PrimitiveType.Triangles, (int) vertexArray.GetIndexBuffer().GetCount(),
+				DrawElementsType.UnsignedInt, null);
 		}
 
 		public RenderingAPI GetAPI()
@@ -48,7 +49,7 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void SetViewport(uint x, uint y, uint width, uint height)
 		{
-			Gl.Viewport((int)x, (int)y, (int)width, (int)height);
+			Gl.Viewport((int) x, (int) y, (int) width, (int) height);
 		}
 	}
 }

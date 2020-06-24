@@ -15,10 +15,7 @@ namespace VoltstroEngine.Events
 		/// <param name="result"></param>
 		public static void DispatchEvent<T>(IEvent e, Action<T> result)
 		{
-			if (e.GetType() == typeof(T))
-			{
-				result.Invoke((T)e);
-			}
+			if (e.GetType() == typeof(T)) result.Invoke((T) e);
 		}
 	}
 }

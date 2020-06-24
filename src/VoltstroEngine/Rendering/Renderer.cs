@@ -12,7 +12,7 @@ namespace VoltstroEngine.Rendering
 
 		private static IRenderingAPI renderingAPI;
 
-		private static SceneData sceneData = new SceneData();
+		private static SceneData sceneData;
 
 		/// <summary>
 		/// Gets the currently in use rendering API
@@ -22,42 +22,6 @@ namespace VoltstroEngine.Rendering
 		{
 			return renderingAPI.GetAPI();
 		}
-
-		#region Rendering Stuff to Screen
-
-		/// <summary>
-		/// Starts a new scene
-		/// </summary>
-		public static void BeginScene(OrthographicCamera camera)
-		{
-			sceneData.ViewProjectionMatrix = camera.ViewProjectionMatrix;
-		}
-
-		/// <summary>
-		/// Ends the current scene
-		/// </summary>
-		public static void EndScene()
-		{
-
-		}
-
-		/// <summary>
-		/// Submit something to be drawn
-		/// </summary>
-		/// <param name="shader"></param>
-		/// <param name="vertexArray"></param>
-		/// <param name="transform"></param>
-		public static void Submit(IShader shader, IVertexArray vertexArray, Matrix4x4 transform)
-		{
-			shader.Bind();
-			shader.UploadUniformMat4("u_ViewProjection", sceneData.ViewProjectionMatrix);
-			shader.UploadUniformMat4("u_Transform", transform);
-
-			vertexArray.Bind();
-			renderingAPI.DrawIndexed(vertexArray);
-		}
-		
-		#endregion
 
 		/// <summary>
 		/// Creates the rendering system
@@ -115,5 +79,40 @@ namespace VoltstroEngine.Rendering
 		{
 			public Matrix4x4 ViewProjectionMatrix;
 		}
+
+		#region Rendering Stuff to Screen
+
+		/// <summary>
+		/// Starts a new scene
+		/// </summary>
+		public static void BeginScene(OrthographicCamera camera)
+		{
+			sceneData.ViewProjectionMatrix = camera.ViewProjectionMatrix;
+		}
+
+		/// <summary>
+		/// Ends the current scene
+		/// </summary>
+		public static void EndScene()
+		{
+		}
+
+		/// <summary>
+		/// Submit something to be drawn
+		/// </summary>
+		/// <param name="shader"></param>
+		/// <param name="vertexArray"></param>
+		/// <param name="transform"></param>
+		public static void Submit(IShader shader, IVertexArray vertexArray, Matrix4x4 transform)
+		{
+			shader.Bind();
+			shader.UploadUniformMat4("u_ViewProjection", sceneData.ViewProjectionMatrix);
+			shader.UploadUniformMat4("u_Transform", transform);
+
+			vertexArray.Bind();
+			renderingAPI.DrawIndexed(vertexArray);
+		}
+
+		#endregion
 	}
 }

@@ -16,11 +16,6 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.BufferData(BufferTarget.ArrayBuffer, size, vertices, BufferUsage.StaticDraw);
 		}
 
-		~OpenGLVertexBuffer()
-		{
-			Gl.DeleteBuffers(renderID);
-		}
-
 		public void Bind()
 		{
 			Gl.BindBuffer(BufferTarget.ArrayBuffer, renderID);
@@ -39,6 +34,11 @@ namespace VoltstroEngine.Platform.OpenGL
 		public BufferLayout GetLayout()
 		{
 			return bufferLayout;
+		}
+
+		~OpenGLVertexBuffer()
+		{
+			Gl.DeleteBuffers(renderID);
 		}
 	}
 }

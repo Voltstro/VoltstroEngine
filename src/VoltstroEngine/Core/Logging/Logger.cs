@@ -8,9 +8,8 @@ namespace VoltstroEngine.Core.Logging
 {
 	public static class Logger
 	{
-		private static bool LogDebugMessagesToConsole = true;
-
 		private const string LogDirectory = "Logs/";
+		private static readonly bool LogDebugMessagesToConsole = true;
 
 		private static string finalLogName;
 
@@ -95,6 +94,7 @@ namespace VoltstroEngine.Core.Logging
 						Debug.WriteLine(formattedMessage);
 #endif
 					}
+
 					break;
 				case LogVerbosity.Error:
 					WriteMessageToConsole(formattedMessage, ConsoleColor.Red);

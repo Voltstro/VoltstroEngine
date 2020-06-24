@@ -1,8 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>x64</Platforms>
+    <Authors>Voltstro</Authors>
+    <Description>Handles loading images.</Description>
+    <Copyright>Copyright © Voltstro 2020</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Voltstro/VoltstroEngine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Voltstro/VoltstroEngine</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -27,16 +27,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ThirdParty\glfw-net\GLFW.NET\GLFW.NET.csproj" />
+    <ProjectReference Include="..\VoltstroEngine.Imaging\VoltstroEngine.Imaging.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\ThirdParty\glfw-libs\win64\glfw.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Magick.NET-Q8-x64" Version="7.19.0.1" />
   </ItemGroup>
 
   <ItemGroup>

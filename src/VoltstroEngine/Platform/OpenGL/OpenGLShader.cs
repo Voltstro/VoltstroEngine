@@ -5,7 +5,8 @@ using System.IO;
 using System.Numerics;
 using System.Text;
 using OpenGL;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Core;
+using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Rendering.Shaders;
 
 namespace VoltstroEngine.Platform.OpenGL

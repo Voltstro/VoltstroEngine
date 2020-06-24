@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using VoltstroEngine.Core.Layers;
+using VoltstroEngine.Core.Logging;
+using VoltstroEngine.Core.Window;
 using VoltstroEngine.Events;
-using VoltstroEngine.Layers;
-using VoltstroEngine.Logging;
 using VoltstroEngine.Rendering;
-using VoltstroEngine.Window;
 
-namespace VoltstroEngine
+namespace VoltstroEngine.Core
 {
 	/// <summary>
 	/// Main application

@@ -1,4 +1,4 @@
-﻿namespace VoltstroEngine.Window
+﻿namespace VoltstroEngine.Core.Window
 {
 	/// <summary>
 	/// Properties for the window

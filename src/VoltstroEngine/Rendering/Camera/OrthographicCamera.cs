@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using VoltstroEngine.Extensions;
-using VoltstroEngine.Logging;
 
 namespace VoltstroEngine.Rendering.Camera
 {

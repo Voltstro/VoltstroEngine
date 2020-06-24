@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace VoltstroEngine.Logging
+namespace VoltstroEngine.Core.Logging
 {
 	public static class Logger
 	{

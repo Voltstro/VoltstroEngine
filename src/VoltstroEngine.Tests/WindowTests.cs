@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Core.Logging;
+using VoltstroEngine.Core.Window;
 using VoltstroEngine.Rendering;
-using VoltstroEngine.Window;
 
 namespace VoltstroEngine.Tests
 {

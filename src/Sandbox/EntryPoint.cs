@@ -1,5 +1,6 @@
 ﻿using VoltstroEngine;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Core;
+using VoltstroEngine.Core.Logging;
 
 namespace Sandbox
 {

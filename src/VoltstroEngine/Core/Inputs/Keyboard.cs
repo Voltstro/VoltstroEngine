@@ -1,4 +1,4 @@
-﻿namespace VoltstroEngine.Inputs
+﻿namespace VoltstroEngine.Core.Inputs
 {
 	public enum KeyCode
 	{

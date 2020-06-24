@@ -1,4 +1,4 @@
-﻿namespace VoltstroEngine
+﻿namespace VoltstroEngine.Core
 {
 	/// <summary>
 	/// A <see cref="TimeStep"/>

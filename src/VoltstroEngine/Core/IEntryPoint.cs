@@ -1,4 +1,4 @@
-﻿namespace VoltstroEngine
+﻿namespace VoltstroEngine.Core
 {
 	public interface IEntryPoint
 	{

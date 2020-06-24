@@ -1,6 +1,6 @@
 ﻿using VoltstroEngine.Events;
 
-namespace VoltstroEngine.Window
+namespace VoltstroEngine.Core.Window
 {
 	/// <summary>
 	/// Window interface

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Numerics;
+using VoltstroEngine.Core;
+using VoltstroEngine.Core.Inputs;
 using VoltstroEngine.Events;
-using VoltstroEngine.Inputs;
 using VoltstroEngine.Rendering.Camera;
 
-namespace VoltstroEngine
+namespace VoltstroEngine.Rendering
 {
 	public class OrthographicCameraController
 	{

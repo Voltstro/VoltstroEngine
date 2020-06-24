@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using GLFW;
+using VoltstroEngine.Core.Inputs;
+using VoltstroEngine.Core.Logging;
+using VoltstroEngine.Core.Window;
 using VoltstroEngine.Events;
-using VoltstroEngine.Inputs;
-using VoltstroEngine.Logging;
 using VoltstroEngine.Platform.OpenGL;
 using VoltstroEngine.Rendering;
-using VoltstroEngine.Window;
 using Exception = System.Exception;
 
 namespace VoltstroEngine.Platform.Windows

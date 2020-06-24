@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using VoltstroEngine;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Core;
+using VoltstroEngine.Core.Logging;
 
 namespace VoltstroEngineLauncher
 {

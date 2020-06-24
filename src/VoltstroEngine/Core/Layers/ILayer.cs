@@ -1,6 +1,6 @@
 ﻿using VoltstroEngine.Events;
 
-namespace VoltstroEngine.Layers
+namespace VoltstroEngine.Core.Layers
 {
 	public interface ILayer
 	{

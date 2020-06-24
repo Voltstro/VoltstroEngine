@@ -1,4 +1,4 @@
-﻿namespace VoltstroEngine.Logging
+﻿namespace VoltstroEngine.Core.Logging
 {
 	public enum LogVerbosity
 	{

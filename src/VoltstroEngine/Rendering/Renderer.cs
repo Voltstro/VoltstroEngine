@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Platform.OpenGL;
 using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;

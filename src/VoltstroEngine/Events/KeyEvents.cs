@@ -1,4 +1,4 @@
-﻿using VoltstroEngine.Inputs;
+﻿using VoltstroEngine.Core.Inputs;
 
 namespace VoltstroEngine.Events
 {

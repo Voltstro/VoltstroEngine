@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using OpenGL;
+using VoltstroEngine.Core;
 using VoltstroEngine.Imaging;
 using VoltstroEngine.Rendering.Texture;
 

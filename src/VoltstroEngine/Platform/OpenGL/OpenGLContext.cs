@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using GLFW;
 using OpenGL;
-using VoltstroEngine.Logging;
+using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Rendering;
 using Exception = System.Exception;
 

@@ -60,6 +60,12 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.UseProgram(0);
 		}
 
+		public void UploadUniformFloat4(string name, Vector4 value)
+		{
+			int location = Gl.GetUniformLocation(program, name);
+			Gl.Uniform4f(location, 1, value);
+		}
+
 		public void UploadUniformMat4(string name, Matrix4x4 matrix)
 		{
 			int location = Gl.GetUniformLocation(program, name);

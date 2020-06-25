@@ -118,7 +118,8 @@ namespace Sandbox
 	{
 		public SandboxApp()
 		{
-			PushOverlay(new ExampleLayer());
+			//PushOverlay(new ExampleLayer());
+			PushLayer(new Sandbox2D());
 		}
 	}
 }

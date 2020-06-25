@@ -48,6 +48,8 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// </summary>
 		public void UnBind();
 
+		public void UploadUniformFloat4(string name, Vector4 value);
+
 		/// <summary>
 		/// Uploads a uniform <see cref="Matrix4x4"/>
 		/// </summary>

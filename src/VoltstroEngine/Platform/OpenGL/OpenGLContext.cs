@@ -34,10 +34,23 @@ namespace VoltstroEngine.Platform.OpenGL
 
 			Logger.Log("OpenGL Initialized", LogVerbosity.Debug);
 
-			Logger.Log("OpenGL Info:");
-			Logger.Log($"	Vendor: {Gl.GetString(StringName.Vendor)}");
-			Logger.Log($"	Renderer: {Gl.GetString(StringName.Renderer)}");
-			Logger.Log($"	Version: {Gl.GetString(StringName.Version)}");
+			Logger.Log("OpenGL Info:", LogVerbosity.Debug);
+			Logger.Log($"	Vendor: {Gl.GetString(StringName.Vendor)}", LogVerbosity.Debug);
+			Logger.Log($"	Renderer: {Gl.GetString(StringName.Renderer)}", LogVerbosity.Debug);
+			Logger.Log($"	Version: {Gl.GetString(StringName.Version)}", LogVerbosity.Debug);
+
+			Gl.GetInteger(GetPName.MajorVersion, out int versionMajor);
+			Gl.GetInteger(GetPName.MinorVersion, out int versionMinor);
+
+			Logger.Log($"Running OpenGL Version {versionMajor}.{versionMinor}", LogVerbosity.Debug);
+
+			if (versionMajor >= 4 && (versionMajor != 4 || versionMinor >= 5)) return;
+
+			Debug.Assert(false, "Voltstro Engine excepts at least OpenGL version 4.5!");
+#if !DEBUG
+			Logger.Log("Voltstro Engine excepts at least OpenGL version 4.5!", LogVerbosity.Error);
+			System.Environment.Exit(-1);
+#endif
 		}
 
 		public void SwapBuffers()

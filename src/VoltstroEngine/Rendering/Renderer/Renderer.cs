@@ -108,8 +108,8 @@ namespace VoltstroEngine.Rendering.Renderer
 		public static void Submit(IShader shader, IVertexArray vertexArray, Matrix4x4 transform)
 		{
 			shader.Bind();
-			shader.UploadUniformMat4("u_ViewProjection", sceneData.ViewProjectionMatrix);
-			shader.UploadUniformMat4("u_Transform", transform);
+			shader.SetMat4("u_ViewProjection", sceneData.ViewProjectionMatrix);
+			shader.SetMat4("u_Transform", transform);
 
 			vertexArray.Bind();
 			renderingAPI.DrawIndexed(vertexArray);

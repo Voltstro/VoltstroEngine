@@ -56,8 +56,7 @@ namespace VoltstroEngine.Rendering.Renderer
 		public static void BeginScene(OrthographicCamera camera)
 		{
 			rendererData.FlatColorShader.Bind();
-			rendererData.FlatColorShader.UploadUniformMat4("u_ViewProjection", camera.ViewProjectionMatrix);
-			rendererData.FlatColorShader.UploadUniformMat4("u_Transform", Matrix4x4.Identity);
+			rendererData.FlatColorShader.SetMat4("u_ViewProjection", camera.ViewProjectionMatrix);
 		}
 
 		public static void EndScene()
@@ -70,7 +69,8 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// Draws a quad
 		/// </summary>
 		/// <param name="position"></param>
-		/// <param name=""></param>
+		/// <param name="size"></param>
+		/// <param name="color"></param>
 		public static void DrawQuad(Vector2 position, Vector2 size, Vector4 color)
 		{
 			DrawQuad(new Vector3(position.X, position.Y, 0.0f), size, color);
@@ -80,11 +80,15 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// Draws a quad
 		/// </summary>
 		/// <param name="position"></param>
-		/// <param name=""></param>
+		/// <param name="size"></param>
+		/// <param name="color"></param>
 		public static void DrawQuad(Vector3 position, Vector2 size, Vector4 color)
 		{
 			rendererData.FlatColorShader.Bind();
-			rendererData.FlatColorShader.UploadUniformFloat4("u_Color", color);
+			rendererData.FlatColorShader.SetVec4("u_Color", color);
+
+			Matrix4x4 transform = Matrix4x4.CreateTranslation(position) * Matrix4x4.CreateScale(size.X, size.Y, 1.0f);
+			rendererData.FlatColorShader.SetMat4("u_Transform", transform);
 
 			rendererData.QuadVertexArray.Bind();
 			Renderer.renderingAPI.DrawIndexed(rendererData.QuadVertexArray);

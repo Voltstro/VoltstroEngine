@@ -60,6 +60,34 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.UseProgram(0);
 		}
 
+		public void SetInt(string name, int value)
+		{
+			UploadUniformInt(name, value);
+		}
+
+		public void SetVec3(string name, Vector3 vector)
+		{
+			UploadUniformFloat3(name, vector);
+		}
+
+		public void SetVec4(string name, Vector4 vector)
+		{
+			UploadUniformFloat4(name, vector);
+		}
+
+		public void SetMat4(string name, Matrix4x4 matrix)
+		{
+			UploadUniformMat4(name, matrix);
+		}
+
+		#region OpenGL upload uniform functions
+
+		public void UploadUniformFloat3(string name, Vector3 value)
+		{
+			int location = Gl.GetUniformLocation(program, name);
+			Gl.Uniform3f(location, 1, value);
+		}
+
 		public void UploadUniformFloat4(string name, Vector4 value)
 		{
 			int location = Gl.GetUniformLocation(program, name);
@@ -77,6 +105,8 @@ namespace VoltstroEngine.Platform.OpenGL
 			int location = Gl.GetUniformLocation(program, name);
 			Gl.Uniform1i(location, 1, value);
 		}
+
+		#endregion
 
 		public string GetShaderName()
 		{

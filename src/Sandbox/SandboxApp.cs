@@ -69,7 +69,7 @@ namespace Sandbox
 			faceTexture = I2DTexture.Create("Textures/Face.png");
 
 			textureShader.Bind();
-			textureShader.UploadUniformInt("u_Texture", 0);
+			textureShader.SetInt("u_Texture", 0);
 		}
 
 		public void OnAttach()

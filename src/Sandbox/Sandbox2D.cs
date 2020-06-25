@@ -31,7 +31,9 @@ namespace Sandbox
 
 			Renderer2D.BeginScene(cameraController.GetCamera());
 			{
-				Renderer2D.DrawQuad(Vector2.Zero, Vector2.One, new Vector4(0.8f, 0.2f, 0.3f, 1.0f));
+				Renderer2D.DrawQuad(new Vector2(-1.0f, 0.0f), new Vector2(0.8f, 0.8f), new Vector4(0.8f, 0.2f, 0.3f, 1.0f));
+
+				Renderer2D.DrawQuad(new Vector2(0.5f, -0.5f), new Vector2(0.5f, 0.75f), new Vector4(0.2f, 0.3f, 0.8f, 1.0f));
 			}
 			Renderer2D.EndScene();
 		}

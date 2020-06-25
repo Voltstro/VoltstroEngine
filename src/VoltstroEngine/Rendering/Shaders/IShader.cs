@@ -48,21 +48,33 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// </summary>
 		public void UnBind();
 
-		public void UploadUniformFloat4(string name, Vector4 value);
-
 		/// <summary>
-		/// Uploads a uniform <see cref="Matrix4x4"/>
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="matrix"></param>
-		public void UploadUniformMat4(string name, Matrix4x4 matrix);
-
-		/// <summary>
-		/// Uploads a uniform <see cref="int"/>
+		/// Sets a <see cref="int"/> in the shader
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="value"></param>
-		public void UploadUniformInt(string name, int value);
+		public void SetInt(string name, int value);
+
+		/// <summary>
+		/// Sets a <see cref="Vector3"/> in the shader
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="vector"></param>
+		public void SetVec3(string name, Vector3 vector);
+
+		/// <summary>
+		/// Sets a <see cref="Vector4"/> in the shader
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="vector"></param>
+		public void SetVec4(string name, Vector4 vector);
+
+		/// <summary>
+		/// Sets a <see cref="Matrix4x4"/> in the shader
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="matrix"></param>
+		public void SetMat4(string name, Matrix4x4 matrix);
 
 		/// <summary>
 		/// Get this shader's name

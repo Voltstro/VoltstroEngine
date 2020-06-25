@@ -6,7 +6,7 @@ namespace VoltstroEngine.Rendering.Buffer
 	{
 		public static IVertexBuffer Create(object vertices, uint size)
 		{
-			switch (Renderer.GetRenderingAPI())
+			switch (Renderer.Renderer.GetRenderingAPI())
 			{
 				case RenderingAPI.OpenGL:
 					return new Platform.OpenGL.OpenGLVertexBuffer(vertices, size);

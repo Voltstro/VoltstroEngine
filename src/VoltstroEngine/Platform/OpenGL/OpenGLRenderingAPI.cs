@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using OpenGL;
 using VoltstroEngine.Rendering;
+using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Platform.OpenGL
 {

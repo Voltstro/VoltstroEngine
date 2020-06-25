@@ -3,6 +3,7 @@ using GLFW;
 using OpenGL;
 using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Rendering;
+using VoltstroEngine.Rendering.Renderer;
 using Exception = System.Exception;
 
 namespace VoltstroEngine.Platform.OpenGL

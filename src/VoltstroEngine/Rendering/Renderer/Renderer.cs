@@ -4,13 +4,13 @@ using VoltstroEngine.Platform.OpenGL;
 using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
 
-namespace VoltstroEngine.Rendering
+namespace VoltstroEngine.Rendering.Renderer
 {
 	public static class Renderer
 	{
 		private static bool initialized;
 
-		private static IRenderingAPI renderingAPI;
+		public static IRenderingAPI renderingAPI;
 
 		private static SceneData sceneData;
 
@@ -41,6 +41,8 @@ namespace VoltstroEngine.Rendering
 				Logger.Log("The rendering api is already initialized!", LogVerbosity.Error);
 				return;
 			}
+
+			Renderer2D.Init();
 
 			renderingAPI.Init();
 			initialized = true;

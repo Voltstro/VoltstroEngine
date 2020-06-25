@@ -1,9 +1,9 @@
-﻿namespace VoltstroEngine.Rendering
+﻿namespace VoltstroEngine.Rendering.Renderer
 {
 	/// <summary>
 	/// Interface for a rending API (Such as OpenGL or Vulkan)
 	/// </summary>
-	internal interface IRenderingAPI
+	public interface IRenderingAPI
 	{
 		/// <summary>
 		/// Initializes the rendering API

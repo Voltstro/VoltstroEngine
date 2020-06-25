@@ -5,6 +5,7 @@ using VoltstroEngine.Events;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Buffer;
+using VoltstroEngine.Rendering.Renderer;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Rendering.Texture;
 

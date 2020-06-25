@@ -5,6 +5,7 @@ using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Core.Window;
 using VoltstroEngine.Events;
 using VoltstroEngine.Rendering;
+using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Core
 {

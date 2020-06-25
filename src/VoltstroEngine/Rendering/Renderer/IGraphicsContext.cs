@@ -1,4 +1,4 @@
-﻿namespace VoltstroEngine.Rendering
+﻿namespace VoltstroEngine.Rendering.Renderer
 {
 	public interface IGraphicsContext
 	{

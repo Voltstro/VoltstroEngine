@@ -14,7 +14,7 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <returns></returns>
 		public static IShader Create(string shaderPath)
 		{
-			switch (Renderer.GetRenderingAPI())
+			switch (Renderer.Renderer.GetRenderingAPI())
 			{
 				case RenderingAPI.OpenGL:
 					return new Platform.OpenGL.OpenGLShader(shaderPath);
@@ -29,7 +29,7 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <returns></returns>
 		public static IShader Create(string name, string vertexSrc, string fragmentSrc)
 		{
-			switch (Renderer.GetRenderingAPI())
+			switch (Renderer.Renderer.GetRenderingAPI())
 			{
 				case RenderingAPI.OpenGL:
 					return new Platform.OpenGL.OpenGLShader(name, vertexSrc, fragmentSrc);

@@ -17,6 +17,7 @@ namespace VoltstroEngine.Platform.OpenGL
 			{
 				Gl.Enable(EnableCap.Blend);
 				Gl.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+				Gl.Enable(EnableCap.DepthTest);
 			}
 			catch (Exception ex)
 			{

@@ -40,6 +40,9 @@ namespace VoltstroEngine.Platform.OpenGL
 			Gl.TextureParameteri(textureID, TextureParameterName.TextureMinFilter, Gl.LINEAR);
 			Gl.TextureParameteri(textureID, TextureParameterName.TextureMagFilter, Gl.NEAREST);
 
+			Gl.TextureParameterIi(textureID, TextureParameterName.TextureWrapS, Gl.REPEAT);
+			Gl.TextureParameterIi(textureID, TextureParameterName.TextureWrapT, Gl.REPEAT);
+
 			Gl.TextureSubImage2D(textureID, 0, 0, 0, image.Width, image.Height, dataFormat, PixelType.UnsignedByte,
 				image.Data);
 		}

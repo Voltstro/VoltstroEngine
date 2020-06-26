@@ -18,6 +18,13 @@
 		public uint GetHeight();
 
 		/// <summary>
+		/// Sets data
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="size"></param>
+		public void SetData(object data, uint size);
+
+		/// <summary>
 		/// Bind this texture
 		/// </summary>
 		/// <param name="slot"></param>

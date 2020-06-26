@@ -12,8 +12,8 @@ namespace VoltstroEngine.Rendering.Renderer
 		private struct Renderer2DStorage
 		{
 			public IVertexArray QuadVertexArray;
-			public IShader FlatColorShader;
 			public IShader TextureShader;
+			public I2DTexture WhiteTexture;
 		}
 
 		private static Renderer2DStorage rendererData;
@@ -48,7 +48,9 @@ namespace VoltstroEngine.Rendering.Renderer
 				IIndexBuffer.Create(squareIndices, squareIndices.GetBytes() / sizeof(uint));
 			rendererData.QuadVertexArray.SetIndexBuffer(squareIndexBuffer);
 
-			rendererData.FlatColorShader = IShader.Create("Shaders/FlatColor.glsl");
+			rendererData.WhiteTexture = I2DTexture.Create(1, 1);
+			uint whiteTextureData = 0xffffffff;
+			rendererData.WhiteTexture.SetData(whiteTextureData, sizeof(uint));
 
 			rendererData.TextureShader = IShader.Create("Shaders/Texture.glsl");
 			rendererData.TextureShader.Bind();
@@ -62,9 +64,6 @@ namespace VoltstroEngine.Rendering.Renderer
 
 		public static void BeginScene(OrthographicCamera camera)
 		{
-			rendererData.FlatColorShader.Bind();
-			rendererData.FlatColorShader.SetMat4("u_ViewProjection", camera.ViewProjectionMatrix);
-
 			rendererData.TextureShader.Bind();
 			rendererData.TextureShader.SetMat4("u_ViewProjection", camera.ViewProjectionMatrix);
 		}
@@ -94,11 +93,11 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// <param name="color"></param>
 		public static void DrawQuad(Vector3 position, Vector2 size, Vector4 color)
 		{
-			rendererData.FlatColorShader.Bind();
-			rendererData.FlatColorShader.SetVec4("u_Color", color);
+			rendererData.TextureShader.SetVec4("u_Color", color);
+			rendererData.WhiteTexture.Bind();
 
 			Matrix4x4 transform = Matrix4x4.CreateTranslation(position) * Matrix4x4.CreateScale(size.X, size.Y, 1.0f);
-			rendererData.FlatColorShader.SetMat4("u_Transform", transform);
+			rendererData.TextureShader.SetMat4("u_Transform", transform);
 
 			rendererData.QuadVertexArray.Bind();
 			Renderer.renderingAPI.DrawIndexed(rendererData.QuadVertexArray);
@@ -123,12 +122,11 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// <param name="texture"></param>
 		public static void DrawQuad(Vector3 position, Vector2 size, I2DTexture texture)
 		{
-			rendererData.TextureShader.Bind();
+			rendererData.TextureShader.SetVec4("u_Color", Vector4.One);
+			texture.Bind();
 
 			Matrix4x4 transform = Matrix4x4.CreateTranslation(position) * Matrix4x4.CreateScale(size.X, size.Y, 1.0f);
 			rendererData.TextureShader.SetMat4("u_Transform", transform);
-
-			texture.Bind();
 
 			rendererData.QuadVertexArray.Bind();
 			Renderer.renderingAPI.DrawIndexed(rendererData.QuadVertexArray);

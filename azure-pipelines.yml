@@ -11,4 +11,4 @@ jobs:
   steps:
   - template: azure/checkout.yml
   - template: azure/build.yml
-  - template: azure/test.yml
+# - template: azure/test.yml

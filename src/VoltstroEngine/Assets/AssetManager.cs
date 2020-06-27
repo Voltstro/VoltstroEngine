@@ -5,7 +5,7 @@ namespace VoltstroEngine.Assets
 {
 	public static class AssetManager
 	{
-		private static string GameAssetsPath => Application.GameName;
+		private static string GameAssetsPath => Engine.GameName;
 
 		/// <summary>
 		/// Reads all text from a file in the game's directory

@@ -4,7 +4,6 @@ using VoltstroEngine.Core.Layers;
 using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Core.Window;
 using VoltstroEngine.Events;
-using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Core
@@ -15,12 +14,6 @@ namespace VoltstroEngine.Core
 	public class Application
 	{
 		private static Application app;
-
-		/// <summary>
-		/// The name and location of the game
-		/// <para>E.G: Sandbox</para>
-		/// </summary>
-		public static string GameName;
 
 		private readonly LayerStack layerStack;
 
@@ -42,10 +35,6 @@ namespace VoltstroEngine.Core
 			}
 
 			app = this;
-			GameName = Assembly.GetCallingAssembly().GetName().Name;
-			Logger.Log($"Game name is '{GameName}'", LogVerbosity.Debug);
-
-			Renderer.Create();
 
 			//Creates a new window
 			window = IWindow.CreateWindow(new WindowProperties
@@ -58,8 +47,6 @@ namespace VoltstroEngine.Core
 			window.OnEvent += WindowOnOnEvent;
 
 			layerStack = new LayerStack();
-
-			Renderer.Init();
 		}
 
 		private void WindowOnOnEvent(IEvent e)
@@ -80,7 +67,7 @@ namespace VoltstroEngine.Core
 			}
 
 			minimized = false;
-			Renderer.OnWindowResize((uint) e.Width, (uint) e.Height);
+			RenderingAPI.OnWindowResize((uint) e.Width, (uint) e.Height);
 		}
 
 		private void OnClose(WindowCloseEvent e)

@@ -67,7 +67,7 @@ namespace VoltstroEngineLauncher
 			//Create the app and run it
 			try
 			{
-				entryPoint.CreateApplication().Run();
+				Engine.Init(entryPoint);
 			}
 			catch (Exception ex)
 			{

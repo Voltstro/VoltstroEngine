@@ -34,7 +34,7 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public OpenGL2DTexture(string imagePath)
 		{
-			Image image = new Image($"{Application.GameName}/{imagePath}", true);
+			Image image = new Image($"{Engine.GameName}/{imagePath}", true);
 
 			InternalFormat internalFormat = 0;
 			dataFormat = 0;

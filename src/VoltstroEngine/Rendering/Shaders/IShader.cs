@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering.Shaders
 {
@@ -14,9 +15,9 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <returns></returns>
 		public static IShader Create(string shaderPath)
 		{
-			switch (Renderer.Renderer.GetRenderingAPI())
+			switch (Renderer.RenderingAPI.GetRenderingAPI())
 			{
-				case RenderingAPI.OpenGL:
+				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGLShader(shaderPath);
 				default:
 					throw new ArgumentOutOfRangeException();
@@ -29,9 +30,9 @@ namespace VoltstroEngine.Rendering.Shaders
 		/// <returns></returns>
 		public static IShader Create(string name, string vertexSrc, string fragmentSrc)
 		{
-			switch (Renderer.Renderer.GetRenderingAPI())
+			switch (Renderer.RenderingAPI.GetRenderingAPI())
 			{
-				case RenderingAPI.OpenGL:
+				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGLShader(name, vertexSrc, fragmentSrc);
 				default:
 					throw new ArgumentOutOfRangeException();

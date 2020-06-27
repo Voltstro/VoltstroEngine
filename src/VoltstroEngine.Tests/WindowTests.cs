@@ -1,9 +1,7 @@
-//TODO: Will fix up once the new init system is done
-/*
 using NUnit.Framework;
+using VoltstroEngine.Core;
 using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Core.Window;
-using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Tests
@@ -14,8 +12,7 @@ namespace VoltstroEngine.Tests
 		public void Setup()
 		{
 			Logger.InitiateLogger();
-			Renderer.Create();
-			Renderer.Init();
+			Engine.Init(new WindowTestEntryPoint(), true);
 		}
 
 		[OneTimeTearDown]
@@ -27,7 +24,7 @@ namespace VoltstroEngine.Tests
 		[Test]
 		public void CheckRenderingAPI()
 		{
-			Assert.IsTrue(Renderer.GetRenderingAPI() == RenderingAPI.OpenGL, "The rendering API wasn't OpenGL!");
+			Assert.IsTrue(RenderingAPI.GetRenderingAPI() == RenderingAPIType.OpenGL, "The rendering API wasn't OpenGL!");
 		}
 
 		//This doesn't work on Azure build agents (Or well at least the hosted ones from Microsoft)
@@ -55,6 +52,18 @@ namespace VoltstroEngine.Tests
 
 			window.Shutdown();
 		}
+
+		private class WindowTestEntryPoint : IEntryPoint
+		{
+			public Application CreateApplication()
+			{
+				throw new System.NotImplementedException();
+			}
+
+			public string GetGameName()
+			{
+				return "VoltstroEngineTest";
+			}
+		}
 	}
 }
-*/

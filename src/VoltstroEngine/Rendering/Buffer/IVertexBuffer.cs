@@ -1,4 +1,5 @@
 ﻿using System;
+using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering.Buffer
 {
@@ -6,9 +7,9 @@ namespace VoltstroEngine.Rendering.Buffer
 	{
 		public static IVertexBuffer Create(object vertices, uint size)
 		{
-			switch (Renderer.Renderer.GetRenderingAPI())
+			switch (Renderer.RenderingAPI.GetRenderingAPI())
 			{
-				case RenderingAPI.OpenGL:
+				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGLVertexBuffer(vertices, size);
 				default:
 					throw new ArgumentOutOfRangeException();

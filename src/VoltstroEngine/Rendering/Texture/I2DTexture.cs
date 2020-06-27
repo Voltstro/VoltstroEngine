@@ -1,4 +1,5 @@
 ﻿using System;
+using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering.Texture
 {
@@ -15,9 +16,9 @@ namespace VoltstroEngine.Rendering.Texture
 		/// <returns></returns>
 		public static I2DTexture Create(uint width, uint height)
 		{
-			switch (Renderer.Renderer.GetRenderingAPI())
+			switch (Renderer.RenderingAPI.GetRenderingAPI())
 			{
-				case RenderingAPI.OpenGL:
+				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGL2DTexture(width, height);
 				default:
 					throw new ArgumentOutOfRangeException();
@@ -31,9 +32,9 @@ namespace VoltstroEngine.Rendering.Texture
 		/// <returns></returns>
 		public static I2DTexture Create(string texturePath)
 		{
-			switch (Renderer.Renderer.GetRenderingAPI())
+			switch (Renderer.RenderingAPI.GetRenderingAPI())
 			{
-				case RenderingAPI.OpenGL:
+				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGL2DTexture(texturePath);
 				default:
 					throw new ArgumentOutOfRangeException();

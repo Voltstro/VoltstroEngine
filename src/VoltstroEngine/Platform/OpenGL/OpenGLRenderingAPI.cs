@@ -44,9 +44,9 @@ namespace VoltstroEngine.Platform.OpenGL
 				DrawElementsType.UnsignedInt, null);
 		}
 
-		public RenderingAPI GetAPI()
+		public RenderingAPIType GetAPI()
 		{
-			return RenderingAPI.OpenGL;
+			return RenderingAPIType.OpenGL;
 		}
 
 		public void SetViewport(uint x, uint y, uint width, uint height)

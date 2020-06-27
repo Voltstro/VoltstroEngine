@@ -96,9 +96,9 @@ namespace VoltstroEngine.Platform.Windows
 			window = new NativeWindow(properties.Width, properties.Height, properties.Title);
 
 			//Create context
-			context = Renderer.GetRenderingAPI() switch
+			context = RenderingAPI.GetRenderingAPI() switch
 			{
-				RenderingAPI.OpenGL => new OpenGLContext(window),
+				RenderingAPIType.OpenGL => new OpenGLContext(window),
 				_ => throw new ArgumentOutOfRangeException()
 			};
 

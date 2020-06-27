@@ -22,7 +22,7 @@ namespace VoltstroEngine.Platform.OpenGL
 		public OpenGLShader(string shaderPath)
 		{
 			//Read shader file, we remove \r\n otherwise it fucks up OpenGL, this is a Windows only issue, of course...
-			string shaderFileText = File.ReadAllText($"{Application.GameName}/{shaderPath}").Replace("\r\n", "\n");
+			string shaderFileText = File.ReadAllText($"{Engine.GameName}/{shaderPath}").Replace("\r\n", "\n");
 
 			//Split the shader
 			string[] sources = shaderFileText.Split("#type ", StringSplitOptions.RemoveEmptyEntries);
@@ -37,7 +37,7 @@ namespace VoltstroEngine.Platform.OpenGL
 			}
 
 			Compile(shaderSources);
-			ShaderName = Path.GetFileNameWithoutExtension($"{Application.GameName}/{shaderPath}");
+			ShaderName = Path.GetFileNameWithoutExtension($"{Engine.GameName}/{shaderPath}");
 		}
 
 		public OpenGLShader(string name, string vertexSrc, string fragmentSrc)

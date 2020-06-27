@@ -1,5 +1,6 @@
 ﻿using System;
 using VoltstroEngine.Rendering.Buffer;
+using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering
 {
@@ -7,9 +8,9 @@ namespace VoltstroEngine.Rendering
 	{
 		public static IVertexArray Create()
 		{
-			switch (Renderer.Renderer.GetRenderingAPI())
+			switch (Renderer.RenderingAPI.GetRenderingAPI())
 			{
-				case RenderingAPI.OpenGL:
+				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGLVertexArray();
 				default:
 					throw new ArgumentOutOfRangeException();

@@ -100,7 +100,7 @@ namespace VoltstroEngine.Rendering.Renderer
 			rendererData.TextureShader.SetMat4("u_Transform", transform);
 
 			rendererData.QuadVertexArray.Bind();
-			Renderer.renderingAPI.DrawIndexed(rendererData.QuadVertexArray);
+			RenderingAPI.DrawIndexed(rendererData.QuadVertexArray);
 		}
 
 		/// <summary>
@@ -129,7 +129,7 @@ namespace VoltstroEngine.Rendering.Renderer
 			rendererData.TextureShader.SetMat4("u_Transform", transform);
 
 			rendererData.QuadVertexArray.Bind();
-			Renderer.renderingAPI.DrawIndexed(rendererData.QuadVertexArray);
+			RenderingAPI.DrawIndexed(rendererData.QuadVertexArray);
 		}
 	}
 }

@@ -85,8 +85,8 @@ namespace Sandbox
 			cameraController.OnUpdate(ts);
 
 			//Render
-			Renderer.SetClearColor(0.2f, 0.2f, 0.2f);
-			Renderer.Clear();
+			RenderingAPI.SetClearColor(0.2f, 0.2f, 0.2f);
+			RenderingAPI.Clear();
 
 			Renderer.BeginScene(cameraController.GetCamera());
 			{

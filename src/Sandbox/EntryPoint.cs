@@ -10,5 +10,10 @@ namespace Sandbox
 			Logger.Log("Creating new sandbox app...");
 			return new SandboxApp();
 		}
+
+		public string GetGameName()
+		{
+			return "Sandbox";
+		}
 	}
 }

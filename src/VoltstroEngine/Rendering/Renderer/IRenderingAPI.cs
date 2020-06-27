@@ -34,7 +34,7 @@
 		/// Returns what type or rendering API this is
 		/// </summary>
 		/// <returns></returns>
-		public RenderingAPI GetAPI();
+		public RenderingAPIType GetAPI();
 
 		/// <summary>
 		/// Sets the viewport size

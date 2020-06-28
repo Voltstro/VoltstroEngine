@@ -7,7 +7,7 @@ namespace VoltstroEngine.Rendering.Buffer
 	{
 		public static IIndexBuffer Create(object indices, uint count)
 		{
-			switch (Renderer.RenderingAPI.GetRenderingAPI())
+			switch (RenderingAPI.GetRenderingAPI())
 			{
 				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGLIndexBuffer(indices, count);

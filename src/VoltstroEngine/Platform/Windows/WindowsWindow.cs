@@ -6,7 +6,6 @@ using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Core.Window;
 using VoltstroEngine.Events;
 using VoltstroEngine.Platform.OpenGL;
-using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
 using Exception = System.Exception;
 

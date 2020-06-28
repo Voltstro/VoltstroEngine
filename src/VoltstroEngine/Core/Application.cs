@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
 using VoltstroEngine.Core.Layers;
-using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Core.Window;
 using VoltstroEngine.Events;
 using VoltstroEngine.Rendering.Renderer;

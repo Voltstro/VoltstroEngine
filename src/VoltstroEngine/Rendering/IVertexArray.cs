@@ -8,7 +8,7 @@ namespace VoltstroEngine.Rendering
 	{
 		public static IVertexArray Create()
 		{
-			switch (Renderer.RenderingAPI.GetRenderingAPI())
+			switch (RenderingAPI.GetRenderingAPI())
 			{
 				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGLVertexArray();

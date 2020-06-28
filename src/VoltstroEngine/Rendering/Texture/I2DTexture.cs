@@ -16,7 +16,7 @@ namespace VoltstroEngine.Rendering.Texture
 		/// <returns></returns>
 		public static I2DTexture Create(uint width, uint height)
 		{
-			switch (Renderer.RenderingAPI.GetRenderingAPI())
+			switch (RenderingAPI.GetRenderingAPI())
 			{
 				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGL2DTexture(width, height);
@@ -32,7 +32,7 @@ namespace VoltstroEngine.Rendering.Texture
 		/// <returns></returns>
 		public static I2DTexture Create(string texturePath)
 		{
-			switch (Renderer.RenderingAPI.GetRenderingAPI())
+			switch (RenderingAPI.GetRenderingAPI())
 			{
 				case RenderingAPIType.OpenGL:
 					return new Platform.OpenGL.OpenGL2DTexture(texturePath);

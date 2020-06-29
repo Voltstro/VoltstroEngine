@@ -11,6 +11,11 @@
     <RepositoryUrl>https://github.com/Voltstro/VoltstroEngine</RepositoryUrl>
     <Description>Voltstro Engine main engine code.</Description>
     <Platforms>x64</Platforms>
+
+    <!-- For each OS -->
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -31,14 +36,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Eto.Forms" Version="2.5.2" />
+  </ItemGroup>
+
+  <!-- Windows Files -->
+  <ItemGroup Condition="'$(IsWindows)' == 'true'">
+    <PackageReference Include="Eto.Platform.Windows" Version="2.5.2" />
+
     <None Include="..\ThirdParty\glfw-libs\win64\glfw.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Eto.Forms" Version="2.5.2" />
-    <PackageReference Include="Eto.Platform.Windows" Version="2.5.2" />
+  <!-- Linux Files -->
+  <ItemGroup Condition="'$(IsLinux)'=='true'">
+    <PackageReference Include="Eto.Platform.Gtk" Version="2.5.2" />
   </ItemGroup>
 
   <ItemGroup>

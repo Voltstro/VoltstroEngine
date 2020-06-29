@@ -6,11 +6,17 @@ namespace VoltstroEngine.Rendering.Renderer
 	{
 		private static IRenderingAPI renderingAPI;
 
+		/// <summary>
+		/// Creates the rendering API (E.G: OpenGl, Vulkan)
+		/// </summary>
 		internal static void Create()
 		{
 			renderingAPI = new OpenGLRenderingAPI();
 		}
 
+		/// <summary>
+		/// Inits the rendering API
+		/// </summary>
 		internal static void Init()
 		{
 			renderingAPI.Init();
@@ -54,6 +60,10 @@ namespace VoltstroEngine.Rendering.Renderer
 			renderingAPI.SetClearColor(red, green, blue, 1.0f);
 		}
 
+		/// <summary>
+		/// Draws something to the screen
+		/// </summary>
+		/// <param name="vertexArray"></param>
 		public static void DrawIndexed(IVertexArray vertexArray)
 		{
 			renderingAPI.DrawIndexed(vertexArray);

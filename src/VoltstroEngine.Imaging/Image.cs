@@ -6,7 +6,7 @@ namespace VoltstroEngine.Imaging
 	/// <summary>
 	/// Represents an image
 	/// </summary>
-	public class Image
+	public sealed class Image
 	{
 		/// <summary>
 		/// How many channels does this image have?

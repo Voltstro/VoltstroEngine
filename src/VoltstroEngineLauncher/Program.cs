@@ -64,7 +64,8 @@ namespace VoltstroEngineLauncher
 			}
 #endif
 
-			//Create the app and run it
+			//Tell the engine to init, and use the game entry point.
+			//This is were we actually start to render and run the game.
 			try
 			{
 				Engine.Init(entryPoint);
@@ -72,8 +73,6 @@ namespace VoltstroEngineLauncher
 			catch (Exception ex)
 			{
 				Logger.Log(ex.ToString(), LogVerbosity.Error);
-				Console.ReadLine();
-				Environment.Exit(0);
 			}
 
 			Logger.EndLogger();

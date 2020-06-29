@@ -61,16 +61,28 @@ namespace VoltstroEngine.EtoForms
 		/// </summary>
 		/// <param name="form"></param>
 		/// <param name="dontShow"></param>
+		/// <exception cref="ArgumentNullException"></exception>
 		public static void AddForm(Form form, bool dontShow = false)
 		{
+			if(form == null)
+				throw new ArgumentNullException(nameof(form), "Form cannot be null!");
+
 			etoForms.Add(form);
 
 			if(!dontShow)
 				form.Show();
 		}
 
+		/// <summary>
+		/// Closes and destroys a form from the system
+		/// </summary>
+		/// <param name="form"></param>
+		/// <exception cref="ArgumentNullException"></exception>
 		public static void DestroyForm(Form form)
 		{
+			if(form == null)
+				throw new ArgumentNullException(nameof(form), "Form cannot be null!");
+
 			etoForms.Remove(form);
 			form.Close();
 			form.Dispose();

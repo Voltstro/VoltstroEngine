@@ -74,7 +74,7 @@ namespace VoltstroEngine.Core
 		}
 
 		/// <summary>
-		/// Runs the application
+		/// Runs the main application loop
 		/// </summary>
 		public void Run()
 		{
@@ -94,6 +94,10 @@ namespace VoltstroEngine.Core
 			window.Shutdown();
 		}
 
+		/// <summary>
+		/// Adds a layer
+		/// </summary>
+		/// <param name="layer"></param>
 		public void PushLayer(ILayer layer)
 		{
 			layerStack.PushLayer(layer);

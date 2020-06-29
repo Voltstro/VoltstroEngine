@@ -1,4 +1,4 @@
-﻿using VoltstroEngine.Core.Logging;
+﻿using System;
 using VoltstroEngine.EtoForms;
 using VoltstroEngine.Rendering.Renderer;
 
@@ -17,21 +17,49 @@ namespace VoltstroEngine.Core
 		/// </summary>
 		/// <param name="entry"></param>
 		/// <param name="noWindow"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="NullReferenceException"></exception>
 		public static void Init(IEntryPoint entry, bool noWindow = false)
 		{
+			//Make sure the entry isn't null, or that there is no game name
+			if(entry == null)
+				throw new ArgumentNullException(nameof(entry), "Entry cannot be null!");
+
+			if(string.IsNullOrWhiteSpace(entry.GetGameName()))
+				throw new NullReferenceException("Game name cannot be null!");
+
+			//Setup render
 			RenderingAPI.Create();
 
-			GameName = entry.GetGameName();
-			Logger.Log($"Game name is {GameName}");
+			//Set game name, since we load all our game related files from that path
+			//So if the game requests for a texture, we load it from the game's bin parent directory, allowing for multiple games, but all using the same copy of the engine
 
+			//E.G:
+			// - Engine Stuff (Launcher/VoltstroEngine.dll)
+			// - |
+			// - Sandbox
+			// - - Textures/
+
+			GameName = entry.GetGameName();
+
+			//We may want no window, E.G: For when we are testing
 			if (!noWindow)
 			{
+				//Init our forms system
 				EtoFormsSystem.Init();
 
+				//Create the app
 				Application app = entry.CreateApplication();
+				if(app == null)
+					throw new NullReferenceException("The app cannot be null!");
+
+				//Init the render
 				Renderer.Init();
+
+				//Run the main loop
 				app.Run();
 
+				//Shutdown stuff
 				EtoFormsSystem.Shutdown();
 			}
 			else

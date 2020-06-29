@@ -1,4 +1,5 @@
 ﻿using VoltstroEngine.Core.Logging;
+using VoltstroEngine.EtoForms;
 using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Core
@@ -25,9 +26,13 @@ namespace VoltstroEngine.Core
 
 			if (!noWindow)
 			{
+				EtoFormsSystem.Init();
+
 				Application app = entry.CreateApplication();
 				Renderer.Init();
 				app.Run();
+
+				EtoFormsSystem.Shutdown();
 			}
 			else
 				Renderer.Init();

@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using VoltstroEngine.Core;
 using VoltstroEngine.Core.Layers;
+using VoltstroEngine.EtoForms;
 using VoltstroEngine.Events;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
@@ -13,10 +14,15 @@ namespace Sandbox
 		private OrthographicCameraController cameraController;
 		private I2DTexture birdiTexture;
 
+		private EtoTestForm testForm;
+
 		public void OnAttach()
 		{
 			cameraController = new OrthographicCameraController(1280.0f / 720.0f);
 			birdiTexture = I2DTexture.Create("Textures/Birdi.png");
+
+			testForm = new EtoTestForm();
+			EtoFormsSystem.AddForm(testForm);
 		}
 
 		public void OnDetach()
@@ -41,6 +47,8 @@ namespace Sandbox
 				Renderer2D.DrawQuad(new Vector3(0f, 0f, -0.1f), new Vector2(10f, 10f), birdiTexture);
 			}
 			Renderer2D.EndScene();
+
+			testForm.TestLabel.Text = ts.Seconds.ToString();
 		}
 
 		public void OnEvent(IEvent e)

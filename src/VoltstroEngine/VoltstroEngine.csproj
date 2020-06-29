@@ -37,6 +37,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Eto.Forms" Version="2.5.2" />
+    <PackageReference Include="Eto.Platform.Windows" Version="2.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="OpenGL.Net">
       <HintPath>..\ThirdParty\OpenGL.Net\OpenGL.Net.dll</HintPath>
     </Reference>

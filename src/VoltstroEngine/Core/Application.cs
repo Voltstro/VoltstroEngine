@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using VoltstroEngine.Core.Layers;
 using VoltstroEngine.Core.Window;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.Events;
 using VoltstroEngine.Rendering.Renderer;
 
@@ -23,6 +24,8 @@ namespace VoltstroEngine.Core
 
 		public Application()
 		{
+			InstrumentationTimer appTimer = InstrumentationTimer.Create("Application Create");
+
 			if (app != null)
 			{
 				Debug.Assert(false, "A running app already exists!");
@@ -45,6 +48,7 @@ namespace VoltstroEngine.Core
 			window.OnEvent += WindowOnOnEvent;
 
 			layerStack = new LayerStack();
+			appTimer.Stop();
 		}
 
 		private void WindowOnOnEvent(IEvent e)
@@ -80,15 +84,30 @@ namespace VoltstroEngine.Core
 		{
 			while (isRunning)
 			{
+				InstrumentationTimer runLoopTimer = InstrumentationTimer.Create("Run Loop");
 				float time = window.GetTime();
 				TimeStep timeStep = new TimeStep(time - lastTime);
 				lastTime = time;
 
-				if (!minimized)
-					foreach (ILayer layer in layerStack.GetLayers())
-						layer.OnUpdate(timeStep);
+				//LayerStack update
+				{
+					InstrumentationTimer layerStackTimer = InstrumentationTimer.Create("LayerStack.OnUpdate");
+					if (!minimized)
+					{
+						foreach (ILayer layer in layerStack.GetLayers())
+							layer.OnUpdate(timeStep);
+					}
+					layerStackTimer.Stop();
+				}
 
-				window.OnUpdate();
+				//Window update
+				{
+					InstrumentationTimer windowUpdateTimer = InstrumentationTimer.Create("Window.OnUpdate");
+					window.OnUpdate();
+					windowUpdateTimer.Stop();
+				}
+				
+				runLoopTimer.Stop();
 			}
 
 			window.Shutdown();

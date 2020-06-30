@@ -2,6 +2,7 @@
 using GLFW;
 using OpenGL;
 using VoltstroEngine.Core.Logging;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.Rendering.Renderer;
 using Exception = System.Exception;
 
@@ -18,6 +19,7 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void Init()
 		{
+			InstrumentationTimer openGlTimer = InstrumentationTimer.Create("OpenGL Context Init");
 			Logger.Log("Initializing OpenGL...", LogVerbosity.Debug);
 			try
 			{
@@ -32,6 +34,7 @@ namespace VoltstroEngine.Platform.OpenGL
 #endif
 			}
 
+			openGlTimer.Stop();
 			Logger.Log("OpenGL Initialized", LogVerbosity.Debug);
 
 			Logger.Log("OpenGL Info:", LogVerbosity.Debug);
@@ -55,7 +58,10 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void SwapBuffers()
 		{
+			InstrumentationTimer swapBuffersTimer = InstrumentationTimer.Create("OpenGLContext.SwapBuffers");
+			Glfw.PollEvents();
 			Glfw.SwapBuffers(window);
+			swapBuffersTimer.Stop();
 		}
 	}
 }

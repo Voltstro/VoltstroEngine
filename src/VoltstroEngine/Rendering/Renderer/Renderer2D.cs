@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.Extensions;
 using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Camera;
@@ -20,6 +21,8 @@ namespace VoltstroEngine.Rendering.Renderer
 
 		public static void Init()
 		{
+			InstrumentationTimer render2dTimer = InstrumentationTimer.Create("Renderer2D Init");
+
 			rendererData = new Renderer2DStorage
 			{
 				QuadVertexArray = IVertexArray.Create()
@@ -55,6 +58,8 @@ namespace VoltstroEngine.Rendering.Renderer
 			rendererData.TextureShader = IShader.Create("Shaders/Texture.glsl");
 			rendererData.TextureShader.Bind();
 			rendererData.TextureShader.SetInt("u_Texture", 0);
+
+			render2dTimer.Stop();
 		}
 
 		public static void Shutdown()

@@ -30,6 +30,7 @@ namespace VoltstroEngine.Core
 				throw new NullReferenceException("Game name cannot be null!");
 
 			Instrumentor.BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
+			var engineInitTimer = InstrumentationTimer.Create("Engine Init");
 
 			//Setup render
 			RenderingAPI.Create();
@@ -59,11 +60,16 @@ namespace VoltstroEngine.Core
 				//Init the render
 				Renderer.Init();
 
+				engineInitTimer.Stop();
 				Instrumentor.EndSession();
 
 				//Run the main loop
 				Instrumentor.BeginSession("Runtime", "VoltstroEngineProfile-Runtime.json");
-				app.Run();
+				{
+					InstrumentationTimer gameLoopTimer = InstrumentationTimer.Create("App Run");
+					app.Run();
+					gameLoopTimer.Stop();
+				}
 				Instrumentor.EndSession();
 
 				//Shutdown stuff

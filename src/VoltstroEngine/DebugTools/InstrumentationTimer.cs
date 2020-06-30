@@ -15,35 +15,38 @@ namespace VoltstroEngine.DebugTools
 #if PROFILE
 			startTime = DateTime.Now;
 			this.name = name;
+			stopwatch = new Stopwatch();
+
+			stopwatch.Start();
 #endif
 		}
 
 #if PROFILE
-		~InstrumentationTimer()
-		{
-			if (!stopped)
-				Stop();
-		}
-
-		private bool stopped;
 		private readonly DateTime startTime;
 		private readonly string name;
+
+		private readonly Stopwatch stopwatch;
 #endif
 
 		[Conditional("PROFILE")]
 		public void Stop()
 		{
 #if PROFILE
-			DateTime endTime = DateTime.Now;
+			stopwatch.Stop();
 
-			double start = startTime.TimeOfDay.TotalMilliseconds;
-			double end = endTime.TimeOfDay.TotalMilliseconds;
-
+			long start = startTime.Ticks / (TimeSpan.TicksPerMillisecond / 1000);
 			int threadId = Thread.CurrentThread.ManagedThreadId;
 
-			Instrumentor.Instance.AddProfile(new ProfileResult(name, threadId, start, end));
+			Instrumentor.Instance.AddProfile(new ProfileResult(name, threadId, start, stopwatch.ElapsedTicks * 1000000 / Stopwatch.Frequency));
+#endif
+		}
 
-			stopped = true;
+		public static InstrumentationTimer Create(string name)
+		{
+#if PROFILE
+			return new InstrumentationTimer(name);
+#else
+			return null;
 #endif
 		}
 	}

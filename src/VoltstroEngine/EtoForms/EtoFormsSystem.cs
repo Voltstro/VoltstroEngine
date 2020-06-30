@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using Eto.Forms;
 using VoltstroEngine.Core.Logging;
+using VoltstroEngine.DebugTools;
 
 namespace VoltstroEngine.EtoForms
 {
@@ -17,6 +18,7 @@ namespace VoltstroEngine.EtoForms
 		/// </summary>
 		internal static void Init()
 		{
+			InstrumentationTimer etoFormInitTimer = InstrumentationTimer.Create("Eto.Forms Init");
 			etoForms = new List<Form>();
 
 			Thread appThread = new Thread(() =>
@@ -37,6 +39,7 @@ namespace VoltstroEngine.EtoForms
 			appThread.SetApartmentState(ApartmentState.STA);
 			appThread.Start();
 			Logger.Log("Eto.Forms was successfully initialized!", LogVerbosity.Debug);
+			etoFormInitTimer.Stop();
 		}
 
 		/// <summary>

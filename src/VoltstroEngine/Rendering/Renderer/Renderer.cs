@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using VoltstroEngine.Core.Logging;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
 
@@ -15,16 +16,19 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// </summary>
 		internal static void Init()
 		{
+			InstrumentationTimer rendererTimer = InstrumentationTimer.Create("Renderer Init");
 			if (initialized)
 			{
 				Logger.Log("The rendering api is already initialized!", LogVerbosity.Error);
+				rendererTimer.Stop();
 				return;
 			}
 
+			RenderingAPI.Init();
 			Renderer2D.Init();
 
-			RenderingAPI.Init();
 			initialized = true;
+			rendererTimer.Stop();
 		}
 
 		private struct SceneData

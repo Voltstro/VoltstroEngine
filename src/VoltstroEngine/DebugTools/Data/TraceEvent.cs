@@ -6,12 +6,12 @@ namespace VoltstroEngine.DebugTools.Data
 	{
 
 		public string cat;
-		public double dur;
+		public long dur;
 		public string name;
 		public string ph;
 		public int pid;
 		public int tid;
-		public double ts;
+		public long ts;
 
 	}
 }

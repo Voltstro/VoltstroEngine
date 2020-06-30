@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using OpenGL;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
 
@@ -13,6 +14,7 @@ namespace VoltstroEngine.Platform.OpenGL
 	{
 		public void Init()
 		{
+			InstrumentationTimer openGlRenderingApiTimer = InstrumentationTimer.Create("OpenGL Rendering API Init");
 			try
 			{
 				Gl.Enable(EnableCap.Blend);
@@ -26,6 +28,7 @@ namespace VoltstroEngine.Platform.OpenGL
 				Core.Logging.Logger.Log(ex.Message, Core.Logging.LogVerbosity.Error);
 #endif
 			}
+			openGlRenderingApiTimer.Stop();
 		}
 
 		public void SetClearColor(float red, float green, float blue, float alpha)

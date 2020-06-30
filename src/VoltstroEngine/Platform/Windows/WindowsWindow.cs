@@ -4,6 +4,7 @@ using GLFW;
 using VoltstroEngine.Core.Inputs;
 using VoltstroEngine.Core.Logging;
 using VoltstroEngine.Core.Window;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.Events;
 using VoltstroEngine.Platform.OpenGL;
 using VoltstroEngine.Rendering.Renderer;
@@ -33,7 +34,6 @@ namespace VoltstroEngine.Platform.Windows
 			if (Glfw.WindowShouldClose(window)) return;
 			try
 			{
-				Glfw.PollEvents();
 				context.SwapBuffers();
 			}
 			catch (Exception ex)
@@ -77,6 +77,7 @@ namespace VoltstroEngine.Platform.Windows
 
 		private void Init(WindowProperties properties)
 		{
+			InstrumentationTimer winInitTimer = InstrumentationTimer.Create("Windows Window init.");
 			Logger.Log("Initializing a window for Windows...", LogVerbosity.Debug);
 
 			//Initialize glfw if it hasn't already
@@ -158,6 +159,7 @@ namespace VoltstroEngine.Platform.Windows
 
 			Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})",
 				LogVerbosity.Debug);
+			winInitTimer.Stop();
 		}
 
 		private static void ErrorHandler(ErrorCode code, IntPtr message)

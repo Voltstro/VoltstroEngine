@@ -3,29 +3,29 @@
 	internal struct ProfileResult
 	{
 #if PROFILE
-		internal ProfileResult(string name, int threadID, double start, double end)
+		internal ProfileResult(string name, int threadID, long startTime, long duration)
 		{
 			Name = name;
 			ThreadID = threadID;
-			Start = start;
-			End = end;
+			Duration = duration;
+			StartTime = startTime;
 		}
 
 		public readonly string Name;
 		public readonly int ThreadID;
-		public readonly double Start, End;
+		public readonly long Duration, StartTime;
 
 		public TraceEvent ToTraceEvent()
 		{
 			return new TraceEvent
 			{
 				cat = "function",
-				dur = End - Start,
+				dur = Duration,
 				name = Name,
 				ph = "X",
 				pid = 0,
 				tid = ThreadID,
-				ts = Start
+				ts = StartTime
 			};
 		}
 #endif

@@ -26,7 +26,7 @@ namespace VoltstroEngine.DebugTools
 		private readonly DateTime startTime;
 		private readonly string name;
 
-		[Conditional("DEBUG")]
+		[Conditional("PROFILE")]
 		public void Stop()
 		{
 			DateTime endTime = DateTime.Now;

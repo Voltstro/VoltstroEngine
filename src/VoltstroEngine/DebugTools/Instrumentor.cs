@@ -20,7 +20,7 @@ namespace VoltstroEngine.DebugTools
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="filePath"></param>
-		[Conditional("DEBUG")]
+		[Conditional("PROFILE")]
 		public void BeginSession(string name, string filePath = "results.json")
 		{
 			session = new InstrumentationSession
@@ -38,7 +38,7 @@ namespace VoltstroEngine.DebugTools
 		/// <summary>
 		/// Ends the session and writes the profile file
 		/// </summary>
-		[Conditional("DEBUG")]
+		[Conditional("PROFILE")]
 		public void EndSession()
 		{
 			//Convert all of the profile results a traced event
@@ -65,7 +65,7 @@ namespace VoltstroEngine.DebugTools
 		/// Adds a new profile
 		/// </summary>
 		/// <param name="result"></param>
-		[Conditional("DEBUG")]
+		[Conditional("PROFILE")]
 		internal void AddProfile(ProfileResult result)
 		{
 			profileResults.Add(result);

@@ -17,7 +17,7 @@ namespace VoltstroEngine.Platform.Windows
 	/// </summary>
 	public class WindowsWindow : IWindow
 	{
-		private static bool glfwInitialized;
+		private static uint windowCount;
 
 		private IGraphicsContext context;
 		private NativeWindow window;
@@ -65,7 +65,16 @@ namespace VoltstroEngine.Platform.Windows
 
 		public void Shutdown()
 		{
+			InstrumentationTimer glfwShutdownTimer = InstrumentationTimer.Create("WindowsWindow.Shutdown");
+
+			//For what ever reason this is causing an System.AccessViolationException
 			//Glfw.DestroyWindow(window);
+			windowCount--;
+
+			if(windowCount == 0)
+				Glfw.Terminate();
+
+			glfwShutdownTimer.Stop();
 		}
 
 		public float GetTime()
@@ -81,19 +90,27 @@ namespace VoltstroEngine.Platform.Windows
 			Logger.Log("Initializing a window for Windows...", LogVerbosity.Debug);
 
 			//Initialize glfw if it hasn't already
-			if (!glfwInitialized)
+			if (windowCount == 0)
 			{
 				bool success = Glfw.Init();
 				Debug.Assert(success, "GLFW failed to init!");
 
 				Glfw.SetErrorCallback(ErrorHandler);
-
-				glfwInitialized = true;
 			}
+
+#if DEBUG
+			if(RenderingAPI.GetRenderingAPI() == RenderingAPIType.OpenGL)
+				Glfw.WindowHint(Hint.OpenglDebugContext, true);
+#endif
 
 			//Set the properties and create the window
 			windowProperties = properties;
-			window = new NativeWindow(properties.Width, properties.Height, properties.Title);
+			{
+				InstrumentationTimer glfwCreateWindowTimer = InstrumentationTimer.Create("Glfw.CreateWindow");
+				window = new NativeWindow(properties.Width, properties.Height, properties.Title);
+				windowCount++;
+				glfwCreateWindowTimer.Stop();
+			}
 
 			//Create context
 			context = RenderingAPI.GetRenderingAPI() switch

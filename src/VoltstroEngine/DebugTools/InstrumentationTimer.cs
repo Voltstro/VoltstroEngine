@@ -27,7 +27,9 @@ namespace VoltstroEngine.DebugTools
 
 		private readonly Stopwatch stopwatch;
 #endif
-
+		/// <summary>
+		/// Stops the timer, and records it
+		/// </summary>
 		[Conditional("PROFILE")]
 		public void Stop()
 		{

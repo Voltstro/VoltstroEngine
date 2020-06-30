@@ -30,7 +30,7 @@ namespace VoltstroEngine.Core
 				throw new NullReferenceException("Game name cannot be null!");
 
 			Instrumentor.BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
-			var engineInitTimer = InstrumentationTimer.Create("Engine Init");
+			InstrumentationTimer engineInitTimer = InstrumentationTimer.Create("Engine Init");
 
 			//Setup render
 			RenderingAPI.Create();
@@ -73,7 +73,14 @@ namespace VoltstroEngine.Core
 				Instrumentor.EndSession();
 
 				//Shutdown stuff
-				EtoFormsSystem.Shutdown();
+				Instrumentor.BeginSession("Shutdown", "VoltstroEngineProfile-Shutdown.json");
+				{
+					InstrumentationTimer shutdownTimer = InstrumentationTimer.Create("Engine.Shutdown");
+					Application.Shutdown();
+					EtoFormsSystem.Shutdown();
+					shutdownTimer.Stop();
+				}
+				Instrumentor.EndSession();
 			}
 			else
 			{

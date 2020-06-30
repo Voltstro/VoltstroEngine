@@ -18,7 +18,7 @@ namespace VoltstroEngine.EtoForms
 		/// </summary>
 		internal static void Init()
 		{
-			InstrumentationTimer etoFormInitTimer = InstrumentationTimer.Create("Eto.Forms Init");
+			InstrumentationTimer etoFormInitTimer = InstrumentationTimer.Create("EtoFormsSystem.Init");
 			etoForms = new List<Form>();
 
 			Thread appThread = new Thread(() =>
@@ -38,6 +38,7 @@ namespace VoltstroEngine.EtoForms
 			});
 			appThread.SetApartmentState(ApartmentState.STA);
 			appThread.Start();
+
 			Logger.Log("Eto.Forms was successfully initialized!", LogVerbosity.Debug);
 			etoFormInitTimer.Stop();
 		}
@@ -47,6 +48,7 @@ namespace VoltstroEngine.EtoForms
 		/// </summary>
 		internal static void Shutdown()
 		{
+			InstrumentationTimer etoFormsShutdownTimer = InstrumentationTimer.Create("EtoFormsSystem.Shutdown");
 			// ReSharper disable once ForCanBeConvertedToForeach
 			for (int i = 0; i < etoForms.Count; i++)
 			{
@@ -57,6 +59,7 @@ namespace VoltstroEngine.EtoForms
 			app.Dispose();
 
 			etoForms.Clear();
+			etoFormsShutdownTimer.Stop();
 		}
 
 		/// <summary>
@@ -70,10 +73,14 @@ namespace VoltstroEngine.EtoForms
 			if(form == null)
 				throw new ArgumentNullException(nameof(form), "Form cannot be null!");
 
+			InstrumentationTimer addFormTimer = InstrumentationTimer.Create("EtoFormsSystem.AddForm");
+
 			etoForms.Add(form);
 
 			if(!dontShow)
 				form.Show();
+
+			addFormTimer.Stop();
 		}
 
 		/// <summary>

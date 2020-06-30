@@ -109,8 +109,11 @@ namespace VoltstroEngine.Core
 				
 				runLoopTimer.Stop();
 			}
+		}
 
-			window.Shutdown();
+		internal static void Shutdown()
+		{
+			app.window.Shutdown();
 		}
 
 		/// <summary>

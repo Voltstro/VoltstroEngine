@@ -1,6 +1,10 @@
-﻿namespace VoltstroEngine.DebugTools.Data
+﻿#if PROFILE
+
+namespace VoltstroEngine.DebugTools.Data
 {
 	internal struct TraceOtherData
 	{
 	}
 }
+
+#endif

@@ -12,10 +12,13 @@ namespace VoltstroEngine.DebugTools
 	{
 		public InstrumentationTimer(string name)
 		{
+#if PROFILE
 			startTime = DateTime.Now;
 			this.name = name;
+#endif
 		}
 
+#if PROFILE
 		~InstrumentationTimer()
 		{
 			if (!stopped)
@@ -25,10 +28,12 @@ namespace VoltstroEngine.DebugTools
 		private bool stopped;
 		private readonly DateTime startTime;
 		private readonly string name;
+#endif
 
 		[Conditional("PROFILE")]
 		public void Stop()
 		{
+#if PROFILE
 			DateTime endTime = DateTime.Now;
 
 			double start = startTime.TimeOfDay.TotalMilliseconds;
@@ -39,6 +44,7 @@ namespace VoltstroEngine.DebugTools
 			Instrumentor.Instance.AddProfile(new ProfileResult(name, threadId, start, end));
 
 			stopped = true;
+#endif
 		}
 	}
 }

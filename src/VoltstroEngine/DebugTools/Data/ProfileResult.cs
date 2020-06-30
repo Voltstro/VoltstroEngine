@@ -2,6 +2,7 @@
 {
 	internal struct ProfileResult
 	{
+#if PROFILE
 		internal ProfileResult(string name, int threadID, double start, double end)
 		{
 			Name = name;
@@ -27,5 +28,6 @@
 				ts = Start
 			};
 		}
+#endif
 	}
 }

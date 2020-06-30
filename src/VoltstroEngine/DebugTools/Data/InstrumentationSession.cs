@@ -1,8 +1,14 @@
-﻿namespace VoltstroEngine.DebugTools.Data
+﻿#if PROFILE
+
+namespace VoltstroEngine.DebugTools.Data
 {
 	internal struct InstrumentationSession
 	{
+
 		public string Name;
 		public string FilePath;
+
 	}
 }
+
+#endif

@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DefineConstants>TRACE;PROFILE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <OutputPath>../../game/bin/Release</OutputPath>
     <Optimize>true</Optimize>
   </PropertyGroup>

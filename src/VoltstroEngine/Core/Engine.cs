@@ -1,4 +1,5 @@
 ﻿using System;
+using VoltstroEngine.DebugTools;
 using VoltstroEngine.EtoForms;
 using VoltstroEngine.Rendering.Renderer;
 
@@ -28,6 +29,8 @@ namespace VoltstroEngine.Core
 			if(string.IsNullOrWhiteSpace(entry.GetGameName()))
 				throw new NullReferenceException("Game name cannot be null!");
 
+			new Instrumentor().BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
+
 			//Setup render
 			RenderingAPI.Create();
 
@@ -56,14 +59,21 @@ namespace VoltstroEngine.Core
 				//Init the render
 				Renderer.Init();
 
+				Instrumentor.Instance.EndSession();
+
 				//Run the main loop
+				new Instrumentor().BeginSession("Runtime", "VoltstroEngineProfile-Runtime.json");
 				app.Run();
+				Instrumentor.Instance.EndSession();
 
 				//Shutdown stuff
 				EtoFormsSystem.Shutdown();
 			}
 			else
+			{
 				Renderer.Init();
+				Instrumentor.Instance.EndSession();
+			}
 		}
 	}
 }

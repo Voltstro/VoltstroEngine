@@ -2,7 +2,6 @@
 using VoltstroEngine.Core;
 using VoltstroEngine.Core.Layers;
 using VoltstroEngine.DebugTools;
-using VoltstroEngine.EtoForms;
 using VoltstroEngine.Events;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
@@ -16,15 +15,10 @@ namespace Sandbox
 		private OrthographicCameraController cameraController;
 		private I2DTexture birdiTexture;
 
-		private EtoTestForm testForm;
-
 		public void OnAttach()
 		{
 			cameraController = new OrthographicCameraController(1280.0f / 720.0f);
 			birdiTexture = I2DTexture.Create("Textures/Birdi.png");
-
-			testForm = new EtoTestForm();
-			EtoFormsSystem.AddForm(testForm);
 		}
 
 		public void OnDetach()

@@ -17,10 +17,11 @@ namespace VoltstroEngine.Rendering
 
 		public float CameraTranslationSpeed;
 
-		public OrthographicCameraController(float aspectRatio)
+		public OrthographicCameraController(float aspectRatio, bool rotation = true)
 		{
 			AspectRatio = aspectRatio;
 			ZoomLevel = 1.0f;
+			Rotation = rotation;
 
 			CameraPosition = Vector3.Zero;
 			CameraTranslationSpeed = 2.0f;
@@ -32,7 +33,7 @@ namespace VoltstroEngine.Rendering
 		public float AspectRatio { get; private set; }
 		public float ZoomLevel { get; private set; }
 
-		public bool Rotation { get; set; } = true;
+		public bool Rotation { get; set; }
 
 		/// <summary>
 		/// Gets the <see cref="OrthographicCamera"/>

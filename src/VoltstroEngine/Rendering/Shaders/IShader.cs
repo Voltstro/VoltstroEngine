@@ -57,6 +57,13 @@ namespace VoltstroEngine.Rendering.Shaders
 		public void SetInt(string name, int value);
 
 		/// <summary>
+		/// Sets a <see cref="float"/> in the shader
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="value"></param>
+		public void SetFloat(string name, float value);
+
+		/// <summary>
 		/// Sets a <see cref="Vector3"/> in the shader
 		/// </summary>
 		/// <param name="name"></param>

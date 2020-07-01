@@ -7,6 +7,7 @@ using VoltstroEngine.Events;
 using VoltstroEngine.Rendering;
 using VoltstroEngine.Rendering.Renderer;
 using VoltstroEngine.Rendering.Texture;
+using VoltstroEngine.Types;
 
 namespace Sandbox
 {
@@ -56,11 +57,25 @@ namespace Sandbox
 
 				Renderer2D.BeginScene(cameraController.GetCamera());
 				{
-					Renderer2D.DrawQuad(new Vector2(-1.0f, 0.0f), new Vector2(0.8f, 0.8f), new Vector4(0.8f, 0.2f, 0.3f, 1.0f));
+					Renderer2D.DrawRotatedQuad(new Transform
+					{
+						Position = new Vector3(-1.0f, 0.0f, 0.0f),
+						Scale = new Vector2(0.8f, 0.8f),
+						Rotation = 45.0f
+					}, new Vector4(0.8f, 0.2f, 0.3f, 1.0f));
 
-					Renderer2D.DrawQuad(new Vector2(0.5f, -0.5f), new Vector2(0.5f, 0.75f), new Vector4(0.2f, 0.3f, 0.8f, 1.0f));
+					Renderer2D.DrawQuad(new Transform
+					{
+						Position = new Vector3(0.5f, -0.5f, 1.0f),
+						Scale = new Vector2(0.5f, 0.75f)
+					}, new Vector4(0.2f, 0.3f, 0.8f, 1.0f));
 
-					Renderer2D.DrawQuad(new Vector3(0f, 0f, -0.1f), new Vector2(10f, 10f), birdiTexture);
+					
+					Renderer2D.DrawQuad(new Transform
+					{
+						Position = new Vector3(0f, 0f, -0.1f),
+						Scale = new Vector2(10f, 10f)
+					}, birdiTexture, new Vector4(1.0f, 0.9f, 0.9f, 1.0f), 10.0f);
 				}
 				Renderer2D.EndScene();
 				renderer.Stop();

@@ -5,6 +5,7 @@ using VoltstroEngine.Rendering.Buffer;
 using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
 using VoltstroEngine.Rendering.Texture;
+using VoltstroEngine.Types;
 
 namespace VoltstroEngine.Rendering.Renderer
 {
@@ -79,62 +80,107 @@ namespace VoltstroEngine.Rendering.Renderer
 
 		//Primitives
 
-		/// <summary>
-		/// Draws a quad
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="size"></param>
-		/// <param name="color"></param>
-		public static void DrawQuad(Vector2 position, Vector2 size, Vector4 color)
-		{
-			DrawQuad(new Vector3(position.X, position.Y, 0.0f), size, color);
-		}
+		#region DrawQuads
 
 		/// <summary>
-		/// Draws a quad
+		/// Draws a quad using a color
 		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="size"></param>
+		/// <param name="transform"></param>
 		/// <param name="color"></param>
-		public static void DrawQuad(Vector3 position, Vector2 size, Vector4 color)
+		public static void DrawQuad(Transform transform, Vector4 color)
 		{
 			rendererData.TextureShader.SetVec4("u_Color", color);
+			rendererData.TextureShader.SetFloat("u_TilingFactor", 1.0f);
 			rendererData.WhiteTexture.Bind();
 
-			Matrix4x4 transform = Matrix4x4.CreateTranslation(position) * Matrix4x4.CreateScale(size.X, size.Y, 1.0f);
-			rendererData.TextureShader.SetMat4("u_Transform", transform);
+			Matrix4x4 shaderTransform = Matrix4x4.CreateTranslation(transform.Position) * Matrix4x4.CreateScale(transform.Scale.X, transform.Scale.Y, 1.0f);
+			rendererData.TextureShader.SetMat4("u_Transform", shaderTransform);
 
 			rendererData.QuadVertexArray.Bind();
 			RenderingAPI.DrawIndexed(rendererData.QuadVertexArray);
 		}
 
 		/// <summary>
-		/// Draws a quad
+		/// Draws a quad using a texture
 		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="size"></param>
+		/// <param name="transform"></param>
 		/// <param name="texture"></param>
-		public static void DrawQuad(Vector2 position, Vector2 size, I2DTexture texture)
+		/// <param name="tintColor"></param>
+		/// <param name="tillingFactor"></param>
+		public static void DrawQuad(Transform transform, I2DTexture texture, Vector4 tintColor, float tillingFactor = 1.0f)
 		{
-			DrawQuad(new Vector3(position.X, position.Y, 0.0f), size, texture);
-		}
-
-		/// <summary>
-		/// Draws a quad
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="size"></param>
-		/// <param name="texture"></param>
-		public static void DrawQuad(Vector3 position, Vector2 size, I2DTexture texture)
-		{
-			rendererData.TextureShader.SetVec4("u_Color", Vector4.One);
+			rendererData.TextureShader.SetVec4("u_Color", tintColor);
+			rendererData.TextureShader.SetFloat("u_TilingFactor", tillingFactor);
 			texture.Bind();
 
-			Matrix4x4 transform = Matrix4x4.CreateTranslation(position) * Matrix4x4.CreateScale(size.X, size.Y, 1.0f);
-			rendererData.TextureShader.SetMat4("u_Transform", transform);
+			Matrix4x4 shaderTransform = Matrix4x4.CreateTranslation(transform.Position) * Matrix4x4.CreateScale(transform.Scale.X, transform.Scale.Y, 1.0f);
+			rendererData.TextureShader.SetMat4("u_Transform", shaderTransform);
 
 			rendererData.QuadVertexArray.Bind();
 			RenderingAPI.DrawIndexed(rendererData.QuadVertexArray);
 		}
+		
+		#endregion
+
+		#region DrawQuads Rotated
+
+		/// <summary>
+		/// Draws a quad rotated using color
+		/// </summary>
+		/// <param name="transform"></param>
+		/// <param name="color"></param>
+		public static void DrawRotatedQuad(Transform transform, Vector4 color)
+		{
+			//If the rotation is only 0, we will call the regular draw quad, to save performance on the rotation calculations
+			if (transform.Rotation == 0.0f)
+			{
+				DrawQuad(transform, color);
+				return;
+			}
+
+			rendererData.TextureShader.SetVec4("u_Color", color);
+			rendererData.TextureShader.SetFloat("u_TilingFactor", 1.0f);
+			rendererData.WhiteTexture.Bind();
+
+			Matrix4x4 shaderTransform = Matrix4x4.CreateTranslation(transform.Position) 
+								  * Matrix4x4.CreateRotationZ(transform.Rotation.ToRadian())
+			                      * Matrix4x4.CreateScale(transform.Scale.X, transform.Scale.Y, 1.0f);
+			rendererData.TextureShader.SetMat4("u_Transform", shaderTransform);
+
+			rendererData.QuadVertexArray.Bind();
+			RenderingAPI.DrawIndexed(rendererData.QuadVertexArray);
+		}
+
+		/// <summary>
+		/// Draws a quad rotated
+		/// </summary>
+		/// <param name="transform"></param>
+		/// <param name="tintColor"></param>
+		/// <param name="texture"></param>
+		/// <param name="tillingFactor"></param>
+		public static void DrawRotatedQuad(Transform transform, Vector4 tintColor, I2DTexture texture, float tillingFactor = 1.0f)
+		{
+			//If the rotation is only 0, we will call the regular draw quad, to save performance on the rotation calculations
+			if (transform.Rotation == 0.0f)
+			{
+				DrawQuad(transform, texture, tintColor, tillingFactor);
+				return;
+			}
+
+			rendererData.TextureShader.SetVec4("u_Color", tintColor);
+			rendererData.TextureShader.SetFloat("u_TilingFactor", tillingFactor);
+			texture.Bind();
+
+			Matrix4x4 shaderTransform = Matrix4x4.CreateTranslation(transform.Position) 
+			                      * Matrix4x4.CreateRotationZ(transform.Rotation.ToRadian()) 
+			                      * Matrix4x4.CreateScale(transform.Scale.X, transform.Scale.Y, 1.0f);
+
+			rendererData.TextureShader.SetMat4("u_Transform", shaderTransform);
+
+			rendererData.QuadVertexArray.Bind();
+			RenderingAPI.DrawIndexed(rendererData.QuadVertexArray);
+		}
+
+		#endregion
 	}
 }

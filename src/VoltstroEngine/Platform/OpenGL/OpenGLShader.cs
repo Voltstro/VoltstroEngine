@@ -65,6 +65,11 @@ namespace VoltstroEngine.Platform.OpenGL
 			UploadUniformInt(name, value);
 		}
 
+		public void SetFloat(string name, float value)
+		{
+			UploadUniformFloat(name, value);
+		}
+
 		public void SetVec3(string name, Vector3 vector)
 		{
 			UploadUniformFloat3(name, vector);
@@ -81,6 +86,12 @@ namespace VoltstroEngine.Platform.OpenGL
 		}
 
 		#region OpenGL upload uniform functions
+
+		public void UploadUniformFloat(string name, float value)
+		{
+			int location = Gl.GetUniformLocation(program, name);
+			Gl.Uniform1f(location, 1, value);
+		}
 
 		public void UploadUniformFloat3(string name, Vector3 value)
 		{

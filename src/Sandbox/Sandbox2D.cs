@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using VoltstroEngine.Core;
+using VoltstroEngine.Core.Inputs;
 using VoltstroEngine.Core.Layers;
 using VoltstroEngine.DebugTools;
 using VoltstroEngine.Events;
@@ -81,6 +82,14 @@ namespace Sandbox
 		public void OnEvent(IEvent e)
 		{
 			cameraController.OnEvent(e);
+			EventDispatcher.DispatchEvent<KeyPressedEvent>(e, keyPressedEvent =>
+			{
+				if (keyPressedEvent.KeyCode != KeyCode.Tab) return;
+
+				cameraController.SetCameraRotation(0f);
+				cameraController.SetCameraPosition(Vector3.Zero);
+				cameraController.SetZoomLevel(1.0f);
+			});
 		}
 	}
 }

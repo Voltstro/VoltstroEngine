@@ -3,8 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Eto;
 using VoltstroEngine.Core;
 using VoltstroEngine.Core.Logging;
+using Application = Eto.Forms.Application;
 
 namespace VoltstroEngineLauncher
 {
@@ -15,8 +17,10 @@ namespace VoltstroEngineLauncher
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			//Initiate the logger first
-			Logger.InitiateLogger();
+			//Create our Eto.Forms app, so we can show message boxes
+			//We shut this down before we run the engine
+			Platform.AllowReinitialize = true;
+			Application app = new Application();
 
 			IEntryPoint entryPoint = null;
 			string dllPath = Path.GetFullPath($"{DefaultGame}/bin/{DefaultGame}.dll");
@@ -39,7 +43,9 @@ namespace VoltstroEngineLauncher
 			{
 				Debug.Assert(false, $"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!\n{ex}");
 #if !DEBUG
-				Logger.Log($"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!\n{ex.Message}", LogVerbosity.Error);
+				Eto.Forms.MessageBox.Show($"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!", "Engine Error",
+					Eto.Forms.MessageBoxButtons.OK, Eto.Forms.MessageBoxType.Error);
+				app.Dispose();
 				Environment.Exit(0);
 #endif
 			}
@@ -47,7 +53,9 @@ namespace VoltstroEngineLauncher
 			{
 				Debug.Assert(false, $"An unknown error occured while preparing the game for launching!\n{ex}");
 #if !DEBUG
-				Logger.Log($"An unknown error occured while preparing the game for launching!\n{ex.Message}", LogVerbosity.Error);
+				Eto.Forms.MessageBox.Show($"An unknown error occured while preparing the game for launching!", "Engine Error",
+					Eto.Forms.MessageBoxButtons.OK, Eto.Forms.MessageBoxType.Error);
+				app.Dispose();
 				Environment.Exit(0);
 #endif
 			}
@@ -57,12 +65,17 @@ namespace VoltstroEngineLauncher
 #if !DEBUG
 			if (entryPoint == null)
 			{
-				Logger.Log("The game DLL doesn't contain an entry point!", LogVerbosity.Error);
-				Console.ReadLine();
+				Eto.Forms.MessageBox.Show("The game DLL didn't contain an entry point!", "Engine Error", Eto.Forms.MessageBoxButtons.OK, 
+					Eto.Forms.MessageBoxType.Error);
+				app.Dispose();
 				Environment.Exit(0);
 				return;
 			}
 #endif
+
+			//Dispose of the Eto.Forms app
+			app.Quit();
+			app.Dispose();
 
 			//Tell the engine to init, and use the game entry point.
 			//This is were we actually start to render and run the game.
@@ -72,10 +85,13 @@ namespace VoltstroEngineLauncher
 			}
 			catch (Exception ex)
 			{
-				Logger.Log(ex.ToString(), LogVerbosity.Error);
+				if(Logger.IsLoggerInitialized)
+					Logger.Log(ex.ToString(), LogVerbosity.Error);
+				//If the logger isn't initialized, then the only option we got to log the error is to dump it into console, as we disposed of Eto.Forms Application earlier
+				//and can't create message boxes with out it
+				else 
+					Console.WriteLine(ex.ToString());
 			}
-
-			Logger.EndLogger();
 		}
 	}
 }

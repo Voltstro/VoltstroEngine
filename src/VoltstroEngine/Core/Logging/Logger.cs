@@ -18,6 +18,8 @@ namespace VoltstroEngine.Core.Logging
 		private static StreamWriter logStream;
 		private static readonly ConcurrentQueue<string> Messages = new ConcurrentQueue<string>();
 
+		public static bool IsLoggerInitialized => logStream != null;
+		
 		/// <summary>
 		/// Initializes the logger
 		/// </summary>

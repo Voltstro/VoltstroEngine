@@ -1,4 +1,5 @@
 ﻿using System;
+using VoltstroEngine.Core.Logging;
 using VoltstroEngine.DebugTools;
 using VoltstroEngine.EtoForms;
 using VoltstroEngine.Rendering.Renderer;
@@ -28,6 +29,9 @@ namespace VoltstroEngine.Core
 
 			if(string.IsNullOrWhiteSpace(entry.GetGameName()))
 				throw new NullReferenceException("Game name cannot be null!");
+
+			//Initiate the logger first
+			Logger.InitiateLogger();
 
 			Instrumentor.BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
 			InstrumentationTimer engineInitTimer = InstrumentationTimer.Create("Engine Init");
@@ -79,6 +83,7 @@ namespace VoltstroEngine.Core
 					Application.Shutdown();
 					EtoFormsSystem.Shutdown();
 					shutdownTimer.Stop();
+					Logger.EndLogger();
 				}
 				Instrumentor.EndSession();
 			}

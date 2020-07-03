@@ -39,7 +39,6 @@ namespace VoltstroEngine.EtoForms
 			appThread.SetApartmentState(ApartmentState.STA);
 			appThread.Start();
 
-			Logger.Log("Eto.Forms was successfully initialized!", LogVerbosity.Debug);
 			etoFormInitTimer.Stop();
 		}
 

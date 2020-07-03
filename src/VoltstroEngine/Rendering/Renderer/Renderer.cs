@@ -16,19 +16,19 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// </summary>
 		internal static void Init()
 		{
-			InstrumentationTimer rendererTimer = InstrumentationTimer.Create("Renderer Init");
-			if (initialized)
+			ProfilerTimer.Profile(() =>
 			{
-				Logger.Log("The rendering api is already initialized!", LogVerbosity.Error);
-				rendererTimer.Stop();
-				return;
-			}
+				if (initialized)
+				{
+					Logger.Log("The rendering api is already initialized!", LogVerbosity.Error);
+					return;
+				}
 
-			RenderingAPI.Init();
-			Renderer2D.Init();
+				RenderingAPI.Init();
+				Renderer2D.Init();
 
-			initialized = true;
-			rendererTimer.Stop();
+				initialized = true;
+			});
 		}
 
 		private struct SceneData

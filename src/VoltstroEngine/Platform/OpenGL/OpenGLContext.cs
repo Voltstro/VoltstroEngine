@@ -19,22 +19,22 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void Init()
 		{
-			InstrumentationTimer openGlTimer = InstrumentationTimer.Create("OpenGL Context Init");
-			Logger.Log("Initializing OpenGL...", LogVerbosity.Debug);
-			try
+			ProfilerTimer.Profile(() =>
 			{
-				Gl.Initialize();
-				Glfw.MakeContextCurrent(window);
-			}
-			catch (Exception ex)
-			{
-				Debug.Assert(false, $"Some error occured while initializing OpenGL for GLFW!\n{ex}");
+				Logger.Log("Initializing OpenGL...", LogVerbosity.Debug);
+				try
+				{
+					Gl.Initialize();
+					Glfw.MakeContextCurrent(window);
+				}
+				catch (Exception ex)
+				{
+					Debug.Assert(false, $"Some error occured while initializing OpenGL for GLFW!\n{ex}");
 #if !DEBUG
 				Logger.Log(ex.Message, LogVerbosity.Error);
 #endif
-			}
-
-			openGlTimer.Stop();
+				}
+			});
 			Logger.Log("OpenGL Initialized", LogVerbosity.Debug);
 
 			Logger.Log("OpenGL Info:", LogVerbosity.Debug);
@@ -58,10 +58,11 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		public void SwapBuffers()
 		{
-			InstrumentationTimer swapBuffersTimer = InstrumentationTimer.Create("OpenGLContext.SwapBuffers");
-			Glfw.PollEvents();
-			Glfw.SwapBuffers(window);
-			swapBuffersTimer.Stop();
+			ProfilerTimer.Profile(() =>
+			{
+				Glfw.PollEvents();
+				Glfw.SwapBuffers(window);
+			});
 		}
 	}
 }

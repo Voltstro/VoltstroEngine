@@ -28,55 +28,50 @@ namespace Sandbox
 
 		public void OnUpdate(TimeStep ts)
 		{
-			InstrumentationTimer mainTimer = new InstrumentationTimer("Sandbox2D.OnUpdate");
-
-			//Update
+			ProfilerTimer.Profile("Sandbox.OnUpdate", () =>
 			{
-				InstrumentationTimer update = new InstrumentationTimer("CameraController.OnUpdate");
-				cameraController.OnUpdate(ts);
-				update.Stop();
-			}
-
-			//Render
-			{
-				InstrumentationTimer renderPrep = new InstrumentationTimer("Renderer Prep");
-
-				RenderingAPI.SetClearColor(0.1f, 0.1f, 0.1f);
-				RenderingAPI.Clear();
-
-				renderPrep.Stop();
-			}
-
-			{
-				InstrumentationTimer renderer = new InstrumentationTimer("Renderer Draw");
-
-				Renderer2D.BeginScene(cameraController.GetCamera());
+				//Update
 				{
-					Renderer2D.DrawRotatedQuad(new Transform
-					{
-						Position = new Vector3(-1.0f, 0.0f, 0.0f),
-						Scale = new Vector2(0.8f, 0.8f),
-						Rotation = 45.0f
-					}, new Vector4(0.8f, 0.2f, 0.3f, 1.0f));
-
-					Renderer2D.DrawQuad(new Transform
-					{
-						Position = new Vector3(0.5f, -0.5f, 1.0f),
-						Scale = new Vector2(0.5f, 0.75f)
-					}, new Vector4(0.2f, 0.3f, 0.8f, 1.0f));
-
-					
-					Renderer2D.DrawQuad(new Transform
-					{
-						Position = new Vector3(0f, 0f, -0.1f),
-						Scale = new Vector2(10f, 10f)
-					}, birdiTexture, new Vector4(1.0f, 0.9f, 0.9f, 1.0f), 10.0f);
+					ProfilerTimer.Profile("Sandbox Update", () => cameraController.OnUpdate(ts));
 				}
-				Renderer2D.EndScene();
-				renderer.Stop();
-			}
-			
-			mainTimer.Stop();
+
+				//Render
+				{
+					ProfilerTimer.Profile("Renderer Prep", () =>
+					{
+						RenderingAPI.SetClearColor(0.1f, 0.1f, 0.1f);
+						RenderingAPI.Clear();
+					});
+				}
+
+				{
+					ProfilerTimer.Profile("Renderer Draw", () =>
+					{
+						Renderer2D.BeginScene(cameraController.GetCamera());
+						{
+							Renderer2D.DrawRotatedQuad(new Transform
+							{
+								Position = new Vector3(-1.0f, 0.0f, 0.0f),
+								Scale = new Vector2(0.8f, 0.8f),
+								Rotation = 45.0f
+							}, new Vector4(0.8f, 0.2f, 0.3f, 1.0f));
+
+							Renderer2D.DrawQuad(new Transform
+							{
+								Position = new Vector3(0.5f, -0.5f, 1.0f),
+								Scale = new Vector2(0.5f, 0.75f)
+							}, new Vector4(0.2f, 0.3f, 0.8f, 1.0f));
+
+							Renderer2D.DrawQuad(new Transform
+							{
+								Position = new Vector3(0f, 0f, -0.1f),
+								Scale = new Vector2(10f, 10f)
+							}, birdiTexture, new Vector4(1.0f, 0.9f, 0.9f, 1.0f), 10.0f);
+						}
+						Renderer2D.EndScene();
+					});
+				}
+			});
 		}
 
 		public void OnEvent(IEvent e)

@@ -14,21 +14,22 @@ namespace VoltstroEngine.Platform.OpenGL
 	{
 		public void Init()
 		{
-			InstrumentationTimer openGlRenderingApiTimer = InstrumentationTimer.Create("OpenGL Rendering API Init");
-			try
+			ProfilerTimer.Profile(() =>
 			{
-				Gl.Enable(EnableCap.Blend);
-				Gl.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-				Gl.Enable(EnableCap.DepthTest);
-			}
-			catch (Exception ex)
-			{
-				Debug.Assert(false, $"An error occured while enabling OpenGL!\n{ex}");
+				try
+				{
+					Gl.Enable(EnableCap.Blend);
+					Gl.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+					Gl.Enable(EnableCap.DepthTest);
+				}
+				catch (Exception ex)
+				{
+					Debug.Assert(false, $"An error occured while enabling OpenGL!\n{ex}");
 #if !DEBUG
 				Core.Logging.Logger.Log(ex.Message, Core.Logging.LogVerbosity.Error);
 #endif
-			}
-			openGlRenderingApiTimer.Stop();
+				}
+			});
 		}
 
 		public void SetClearColor(float red, float green, float blue, float alpha)

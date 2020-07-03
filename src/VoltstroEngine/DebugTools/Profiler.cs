@@ -9,13 +9,13 @@ using VoltstroEngine.DebugTools.Data;
 
 namespace VoltstroEngine.DebugTools
 {
-	public class Instrumentor
+	public class Profiler
 	{
 #if PROFILE
 		private InstrumentationSession session;
 		private List<ProfileResult> profileResults;
 
-		public static Instrumentor Instance { get; private set; }
+		public static Profiler Instance { get; private set; }
 #endif
 
 		[Conditional("PROFILE")]
@@ -25,7 +25,7 @@ namespace VoltstroEngine.DebugTools
 			if(Instance != null)
 				throw new Exception("A existing session is already running!");
 
-			Instance = new Instrumentor();
+			Instance = new Profiler();
 			Instance.BeginSessionInternal(name, filePath);
 #endif
 		}

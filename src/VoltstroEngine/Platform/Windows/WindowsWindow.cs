@@ -65,16 +65,15 @@ namespace VoltstroEngine.Platform.Windows
 
 		public void Shutdown()
 		{
-			InstrumentationTimer glfwShutdownTimer = InstrumentationTimer.Create("WindowsWindow.Shutdown");
+			ProfilerTimer.Profile(() =>
+			{
+				//For what ever reason this is causing an System.AccessViolationException
+				//Glfw.DestroyWindow(window);
+				windowCount--;
 
-			//For what ever reason this is causing an System.AccessViolationException
-			//Glfw.DestroyWindow(window);
-			windowCount--;
-
-			if(windowCount == 0)
-				Glfw.Terminate();
-
-			glfwShutdownTimer.Stop();
+				if(windowCount == 0)
+					Glfw.Terminate();
+			});
 		}
 
 		public float GetTime()
@@ -86,97 +85,99 @@ namespace VoltstroEngine.Platform.Windows
 
 		private void Init(WindowProperties properties)
 		{
-			InstrumentationTimer winInitTimer = InstrumentationTimer.Create("Windows Window init.");
-			Logger.Log("Initializing a window for Windows...", LogVerbosity.Debug);
-
-			//Initialize glfw if it hasn't already
-			if (windowCount == 0)
+			ProfilerTimer.Profile(() =>
 			{
-				bool success = Glfw.Init();
-				Debug.Assert(success, "GLFW failed to init!");
+				Logger.Log("Initializing a window for Windows...", LogVerbosity.Debug);
 
-				Glfw.SetErrorCallback(ErrorHandler);
-			}
+				//Initialize glfw if it hasn't already
+				if (windowCount == 0)
+				{
+					bool success = Glfw.Init();
+					Debug.Assert(success, "GLFW failed to init!");
+
+					Glfw.SetErrorCallback(ErrorHandler);
+				}
 
 #if DEBUG
-			if(RenderingAPI.GetRenderingAPI() == RenderingAPIType.OpenGL)
-				Glfw.WindowHint(Hint.OpenglDebugContext, true);
+				if(RenderingAPI.GetRenderingAPI() == RenderingAPIType.OpenGL)
+					Glfw.WindowHint(Hint.OpenglDebugContext, true);
 #endif
 
-			//Set the properties and create the window
-			windowProperties = properties;
-			{
-				InstrumentationTimer glfwCreateWindowTimer = InstrumentationTimer.Create("Glfw.CreateWindow");
-				window = new NativeWindow(properties.Width, properties.Height, properties.Title);
-				windowCount++;
-				glfwCreateWindowTimer.Stop();
-			}
-
-			//Create context
-			context = RenderingAPI.GetRenderingAPI() switch
-			{
-				RenderingAPIType.OpenGL => new OpenGLContext(window),
-				_ => throw new ArgumentOutOfRangeException()
-			};
-
-			//Init the context
-			context.Init();
-
-			SetVSync(properties.VSync);
-
-			//Setup input
-			Input.KeyInputImpl = new WindowsInput(window);
-
-			//GLFW callbacks
-			window.Closed += (sender, args) => OnEvent?.Invoke(new WindowCloseEvent());
-
-			window.SizeChanged += delegate(object sender, SizeChangeEventArgs args)
-			{
-				windowProperties.Width = args.Size.Width;
-				windowProperties.Height = args.Size.Height;
-
-				OnEvent?.Invoke(new WindowResizedEvent(args.Size.Width, args.Size.Height));
-			};
-
-			window.KeyAction += delegate(object sender, KeyEventArgs args)
-			{
-				switch (args.State)
+				//Set the properties and create the window
+				windowProperties = properties;
 				{
-					case InputState.Release:
-						OnEvent?.Invoke(new KeyReleasedEvent((KeyCode) args.Key));
-						break;
-					case InputState.Press:
-						OnEvent?.Invoke(new KeyPressedEvent((KeyCode) args.Key));
-						break;
-					case InputState.Repeat:
-						OnEvent?.Invoke(new KeyPressedEvent((KeyCode) args.Key, 1));
-						break;
-					default:
-						throw new ArgumentOutOfRangeException(nameof(args.State), args.State, null);
+					ProfilerTimer.Profile("GLFW Create Window", () =>
+					{
+						window = new NativeWindow(properties.Width, properties.Height, properties.Title);
+						windowCount++;
+					});
 				}
-			};
 
-			window.MouseButton += delegate(object sender, MouseButtonEventArgs args)
-			{
-				switch (args.Action)
+				//Create context
+				context = RenderingAPI.GetRenderingAPI() switch
 				{
-					case InputState.Press:
-						OnEvent?.Invoke(new MouseButtonPressedEvent((int) args.Button));
-						break;
-					case InputState.Release:
-						OnEvent?.Invoke(new MouseButtonReleasedEvent((int) args.Button));
-						break;
-				}
-			};
+					RenderingAPIType.OpenGL => new OpenGLContext(window),
+					_ => throw new ArgumentOutOfRangeException()
+				};
 
-			window.MouseScroll += (sender, args) =>
-				OnEvent?.Invoke(new MouseScrollEvent((float) args.X, (float) args.Y));
+				//Init the context
+				context.Init();
 
-			window.MouseMoved += (sender, args) => OnEvent?.Invoke(new MouseMovedEvent((float) args.X, (float) args.Y));
+				SetVSync(properties.VSync);
 
-			Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})",
-				LogVerbosity.Debug);
-			winInitTimer.Stop();
+				//Setup input
+				Input.KeyInputImpl = new WindowsInput(window);
+
+				//GLFW callbacks
+				window.Closed += (sender, args) => OnEvent?.Invoke(new WindowCloseEvent());
+
+				window.SizeChanged += delegate(object sender, SizeChangeEventArgs args)
+				{
+					windowProperties.Width = args.Size.Width;
+					windowProperties.Height = args.Size.Height;
+
+					OnEvent?.Invoke(new WindowResizedEvent(args.Size.Width, args.Size.Height));
+				};
+
+				window.KeyAction += delegate(object sender, KeyEventArgs args)
+				{
+					switch (args.State)
+					{
+						case InputState.Release:
+							OnEvent?.Invoke(new KeyReleasedEvent((KeyCode) args.Key));
+							break;
+						case InputState.Press:
+							OnEvent?.Invoke(new KeyPressedEvent((KeyCode) args.Key));
+							break;
+						case InputState.Repeat:
+							OnEvent?.Invoke(new KeyPressedEvent((KeyCode) args.Key, 1));
+							break;
+						default:
+							throw new ArgumentOutOfRangeException(nameof(args.State), args.State, null);
+					}
+				};
+
+				window.MouseButton += delegate(object sender, MouseButtonEventArgs args)
+				{
+					switch (args.Action)
+					{
+						case InputState.Press:
+							OnEvent?.Invoke(new MouseButtonPressedEvent((int) args.Button));
+							break;
+						case InputState.Release:
+							OnEvent?.Invoke(new MouseButtonReleasedEvent((int) args.Button));
+							break;
+					}
+				};
+
+				window.MouseScroll += (sender, args) =>
+					OnEvent?.Invoke(new MouseScrollEvent((float) args.X, (float) args.Y));
+
+				window.MouseMoved += (sender, args) => OnEvent?.Invoke(new MouseMovedEvent((float) args.X, (float) args.Y));
+
+				Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})",
+					LogVerbosity.Debug);
+			});
 		}
 
 		private static void ErrorHandler(ErrorCode code, IntPtr message)

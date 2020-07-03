@@ -18,28 +18,28 @@ namespace VoltstroEngine.EtoForms
 		/// </summary>
 		internal static void Init()
 		{
-			InstrumentationTimer etoFormInitTimer = InstrumentationTimer.Create("EtoFormsSystem.Init");
-			etoForms = new List<Form>();
-
-			Thread appThread = new Thread(() =>
+			ProfilerTimer.Profile((() =>
 			{
-				try
-				{
-					app = new Application();
-					app.Run();
-				}
-				catch (Exception e)
-				{
-					Debug.Assert(false, $"An error occured in the Eto.Forms system!\n{e}");
-#if !DEBUG
-					Logger.Log($"An error occured in the Eto.Forms system!\n{e.Message}", LogVerbosity.Error);
-#endif
-				}
-			});
-			appThread.SetApartmentState(ApartmentState.STA);
-			appThread.Start();
+				etoForms = new List<Form>();
 
-			etoFormInitTimer.Stop();
+				Thread appThread = new Thread(() =>
+				{
+					try
+					{
+						app = new Application();
+						app.Run();
+					}
+					catch (Exception e)
+					{
+						Debug.Assert(false, $"An error occured in the Eto.Forms system!\n{e}");
+#if !DEBUG
+						Logger.Log($"An error occured in the Eto.Forms system!\n{e.Message}", LogVerbosity.Error);
+#endif
+					}
+				});
+				appThread.SetApartmentState(ApartmentState.STA);
+				appThread.Start();
+			}));
 		}
 
 		/// <summary>
@@ -47,18 +47,19 @@ namespace VoltstroEngine.EtoForms
 		/// </summary>
 		internal static void Shutdown()
 		{
-			InstrumentationTimer etoFormsShutdownTimer = InstrumentationTimer.Create("EtoFormsSystem.Shutdown");
-			// ReSharper disable once ForCanBeConvertedToForeach
-			for (int i = 0; i < etoForms.Count; i++)
+			ProfilerTimer.Profile(() =>
 			{
-				DestroyForm(etoForms[i]);
-			}
+				// ReSharper disable once ForCanBeConvertedToForeach
+				for (int i = 0; i < etoForms.Count; i++)
+				{
+					DestroyForm(etoForms[i]);
+				}
 
-			app.Quit();
-			app.Dispose();
+				app.Quit();
+				app.Dispose();
 
-			etoForms.Clear();
-			etoFormsShutdownTimer.Stop();
+				etoForms.Clear();
+			});
 		}
 
 		/// <summary>
@@ -72,14 +73,13 @@ namespace VoltstroEngine.EtoForms
 			if(form == null)
 				throw new ArgumentNullException(nameof(form), "Form cannot be null!");
 
-			InstrumentationTimer addFormTimer = InstrumentationTimer.Create("EtoFormsSystem.AddForm");
+			ProfilerTimer.Profile(() =>
+			{
+				etoForms.Add(form);
 
-			etoForms.Add(form);
-
-			if(!dontShow)
-				form.Show();
-
-			addFormTimer.Stop();
+				if(!dontShow)
+					form.Show();
+			});
 		}
 
 		/// <summary>

@@ -33,65 +33,72 @@ namespace VoltstroEngine.Core
 			//Initiate the logger first
 			Logger.InitiateLogger();
 
-			Instrumentor.BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
-			InstrumentationTimer engineInitTimer = InstrumentationTimer.Create("Engine Init");
+			Profiler.BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
 
-			//Setup render
-			RenderingAPI.Create();
+			Application app = null;
+			ProfilerTimer.Profile(() =>
+			{
+				//Setup render
+				RenderingAPI.Create();
 
-			//Set game name, since we load all our game related files from that path
-			//So if the game requests for a texture, we load it from the game's bin parent directory, allowing for multiple games, but all using the same copy of the engine
+				//Set game name, since we load all our game related files from that path
+				//So if the game requests for a texture, we load it from the game's bin parent directory, allowing for multiple games, but all using the same copy of the engine
 
-			//E.G:
-			// - Engine Stuff (Launcher/VoltstroEngine.dll)
-			// - |
-			// - Sandbox
-			// - - Textures/
+				//E.G:
+				// - Engine Stuff (Launcher/VoltstroEngine.dll)
+				// - |
+				// - Sandbox
+				// - - Textures/
 
-			GameName = entry.GetGameName();
+				GameName = entry.GetGameName();
 
-			//We may want no window, E.G: For when we are testing
+				if (!noWindow)
+				{
+					//Init our forms system
+					EtoFormsSystem.Init();
+
+					//Create the app
+					app = entry.CreateApplication();
+					if(app == null)
+						throw new NullReferenceException("The app cannot be null!");
+
+					//Init the render
+					Renderer.Init();
+				}
+				else
+				{
+					//Init the render
+					Renderer.Init();
+				}
+			});
+
+			Profiler.EndSession();
+
+			//Run the main loop
 			if (!noWindow)
 			{
-				//Init our forms system
-				EtoFormsSystem.Init();
-
-				//Create the app
-				Application app = entry.CreateApplication();
-				if(app == null)
-					throw new NullReferenceException("The app cannot be null!");
-
-				//Init the render
-				Renderer.Init();
-
-				engineInitTimer.Stop();
-				Instrumentor.EndSession();
-
-				//Run the main loop
-				Instrumentor.BeginSession("Runtime", "VoltstroEngineProfile-Runtime.json");
+				Profiler.BeginSession("Runtime", "VoltstroEngineProfile-Runtime.json");
 				{
-					InstrumentationTimer gameLoopTimer = InstrumentationTimer.Create("App Run");
-					app.Run();
-					gameLoopTimer.Stop();
+					ProfilerTimer.Profile("Game Loop", () =>
+					{
+						app.Run();
+					});
 				}
-				Instrumentor.EndSession();
-
-				//Shutdown stuff
-				Instrumentor.BeginSession("Shutdown", "VoltstroEngineProfile-Shutdown.json");
+				Profiler.EndSession();
+			}
+			
+			//Shutdown stuff
+			Profiler.BeginSession("Shutdown", "VoltstroEngineProfile-Shutdown.json");
+			{
+				ProfilerTimer.Profile("Shutdown", () =>
 				{
-					InstrumentationTimer shutdownTimer = InstrumentationTimer.Create("Engine.Shutdown");
 					Application.Shutdown();
 					EtoFormsSystem.Shutdown();
-					shutdownTimer.Stop();
-					Logger.EndLogger();
-				}
-				Instrumentor.EndSession();
+				});
+				
+				Logger.EndLogger();
 			}
-			else
-			{
-				Renderer.Init();
-				Instrumentor.EndSession();
-			}
+			Profiler.EndSession();
 		}
 	}
 }

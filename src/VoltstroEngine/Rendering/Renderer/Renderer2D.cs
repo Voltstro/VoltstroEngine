@@ -22,45 +22,44 @@ namespace VoltstroEngine.Rendering.Renderer
 
 		public static void Init()
 		{
-			InstrumentationTimer render2dTimer = InstrumentationTimer.Create("Renderer2D Init");
-
-			rendererData = new Renderer2DStorage
+			ProfilerTimer.Profile(() =>
 			{
-				QuadVertexArray = IVertexArray.Create()
-			};
+				rendererData = new Renderer2DStorage
+				{
+					QuadVertexArray = IVertexArray.Create()
+				};
 
-			float[] squareVertices =
-			{
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-				 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-				-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-			};
+				float[] squareVertices =
+				{
+					-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+					0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+					0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+					-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+				};
 
-			IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, squareVertices.GetBytes());
+				IVertexBuffer squareVertexBuffer = IVertexBuffer.Create(squareVertices, squareVertices.GetBytes());
 
-			BufferLayout squareBufferLayout = new BufferLayout(new[]
-			{
-				new BufferElement("a_Position", ShaderDataType.Float3),
-				new BufferElement("a_TexCoord", ShaderDataType.Float2)
+				BufferLayout squareBufferLayout = new BufferLayout(new[]
+				{
+					new BufferElement("a_Position", ShaderDataType.Float3),
+					new BufferElement("a_TexCoord", ShaderDataType.Float2)
+				});
+				squareVertexBuffer.SetLayout(squareBufferLayout);
+				rendererData.QuadVertexArray.AddVertexBuffer(squareVertexBuffer);
+
+				uint[] squareIndices = {0, 1, 2, 2, 3, 0};
+				IIndexBuffer squareIndexBuffer =
+					IIndexBuffer.Create(squareIndices, squareIndices.GetBytes() / sizeof(uint));
+				rendererData.QuadVertexArray.SetIndexBuffer(squareIndexBuffer);
+
+				rendererData.WhiteTexture = I2DTexture.Create(1, 1);
+				uint whiteTextureData = 0xffffffff;
+				rendererData.WhiteTexture.SetData(whiteTextureData, sizeof(uint));
+
+				rendererData.TextureShader = IShader.Create("Shaders/Texture.glsl");
+				rendererData.TextureShader.Bind();
+				rendererData.TextureShader.SetInt("u_Texture", 0);
 			});
-			squareVertexBuffer.SetLayout(squareBufferLayout);
-			rendererData.QuadVertexArray.AddVertexBuffer(squareVertexBuffer);
-
-			uint[] squareIndices = {0, 1, 2, 2, 3, 0};
-			IIndexBuffer squareIndexBuffer =
-				IIndexBuffer.Create(squareIndices, squareIndices.GetBytes() / sizeof(uint));
-			rendererData.QuadVertexArray.SetIndexBuffer(squareIndexBuffer);
-
-			rendererData.WhiteTexture = I2DTexture.Create(1, 1);
-			uint whiteTextureData = 0xffffffff;
-			rendererData.WhiteTexture.SetData(whiteTextureData, sizeof(uint));
-
-			rendererData.TextureShader = IShader.Create("Shaders/Texture.glsl");
-			rendererData.TextureShader.Bind();
-			rendererData.TextureShader.SetInt("u_Texture", 0);
-
-			render2dTimer.Stop();
 		}
 
 		public static void Shutdown()

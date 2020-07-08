@@ -1,0 +1,6 @@
+[
+    {
+        "ItemToCopy": "/Shaders/*",
+        "WhereToCopyInBuild": "/Shaders/"
+    }
+]

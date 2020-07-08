@@ -1,0 +1,10 @@
+﻿[
+  {
+    "ItemToCopy": "/Shaders/*",
+    "WhereToCopyInBuild": "/Shaders/"
+  },
+  {
+    "ItemToCopy": "/Textures/*",
+    "WhereToCopyInBuild": "/Textures/"
+  }
+]

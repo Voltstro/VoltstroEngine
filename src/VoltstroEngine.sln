@@ -21,7 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StbImageSharp", "ThirdParty
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{5FD07E7D-97E4-4668-B960-CF0DC628751A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordRPCExample", "Examples\DiscordRPCExample\DiscordRPCExample.csproj", "{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordRPCExample", "Examples\DiscordRPCExample\DiscordRPCExample.csproj", "{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{87917865-ACA6-410B-854B-31E4F90F8D53}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\CopyFilesOnBuild.ps1 = Scripts\CopyFilesOnBuild.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

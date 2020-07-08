@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\Square.glsl&quot; &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\Texture.glsl&quot; &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Shaders\FlatColor.glsl&quot; &quot;$(TargetDir)..\Shaders\&quot;&#xD;&#xA;&#xD;&#xA;mkdir &quot;$(TargetDir)..\Textures\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Textures\Birdi.png&quot; &quot;$(TargetDir)..\Textures\&quot;&#xD;&#xA;copy /Y &quot;$(ProjectDir)Textures\Face.png&quot; &quot;$(TargetDir)..\Textures\&quot;" />
+    <Exec Command="pwsh ../Scripts/CopyFilesOnBuild.ps1 -gameDirectory ../../game/bin/$(ConfigurationName)/$(ProjectName) -projectDirectory $(ProjectDir)" />
   </Target>
 
 </Project>

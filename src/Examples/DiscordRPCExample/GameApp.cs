@@ -36,7 +36,7 @@ namespace DiscordRPCExample
 		{
 			manager.OnUpdate();
 
-			RenderingAPI.SetClearColor(1, 1, 1);
+			RenderingAPI.SetClearColor(0, 0, 0);
 			RenderingAPI.Clear();
 		}
 

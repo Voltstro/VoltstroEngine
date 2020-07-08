@@ -4,7 +4,7 @@ using VoltstroEngine.Core.Logging;
 namespace DiscordRPCExample
 {
 	/// <summary>
-	/// This is the custom <see cref="ILogger"/> for the <see cref="DiscordRPC.DiscordRpcClient"/> using TC's
+	/// This is the custom <see cref="ILogger"/> for the <see cref="DiscordRPC.DiscordRpcClient"/> using VE's
 	/// <see cref="Logger"/>
 	/// </summary>
 	public sealed class VEDiscordLogger : ILogger

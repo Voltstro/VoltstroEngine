@@ -11,7 +11,7 @@ using VoltstroEngine.Rendering.Shaders;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
-	public class OpenGLShader : IShader
+	internal sealed class OpenGLShader : IShader
 	{
 		private static readonly string[] ShaderTypes = {"vert", "frag"};
 
@@ -124,11 +124,6 @@ namespace VoltstroEngine.Platform.OpenGL
 			return ShaderName;
 		}
 
-		~OpenGLShader()
-		{
-			Gl.DeleteProgram(program);
-		}
-
 		private ShaderType GetShaderTypeFromString(string type)
 		{
 			switch (type)
@@ -208,6 +203,22 @@ namespace VoltstroEngine.Platform.OpenGL
 			}
 
 			foreach (uint shader in shaderIDs) Gl.DetachShader(program, shader);
+		}
+
+		~OpenGLShader()
+		{
+			ReleaseUnmanagedResources();
+		}
+
+		private void ReleaseUnmanagedResources()
+		{
+			Gl.DeleteProgram(program);
+		}
+
+		public void Dispose()
+		{
+			ReleaseUnmanagedResources();
+			GC.SuppressFinalize(this);
 		}
 	}
 }

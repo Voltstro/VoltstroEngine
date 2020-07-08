@@ -7,7 +7,7 @@ using VoltstroEngine.Rendering.Buffer;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
-	public class OpenGLVertexArray : IVertexArray
+	internal sealed class OpenGLVertexArray : IVertexArray
 	{
 		private readonly uint rendererID;
 		private readonly List<IVertexBuffer> vertexBuffers;
@@ -72,7 +72,7 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		~OpenGLVertexArray()
 		{
-			Gl.DeleteVertexArrays(rendererID);
+			Dispose(false);
 		}
 
 		private VertexAttribType ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
@@ -98,6 +98,26 @@ namespace VoltstroEngine.Platform.OpenGL
 				default:
 					throw new ArgumentOutOfRangeException(nameof(type), type, null);
 			}
+		}
+
+		private void ReleaseUnmanagedResources()
+		{
+			Gl.DeleteVertexArrays(rendererID);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			ReleaseUnmanagedResources();
+			if (disposing)
+			{
+				indexBuffer?.Dispose();
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

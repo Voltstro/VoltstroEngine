@@ -80,7 +80,7 @@ namespace VoltstroEngine.Core
 		/// <summary>
 		/// Runs the main application loop
 		/// </summary>
-		public void Run()
+		internal void Run()
 		{
 			while (isRunning)
 			{
@@ -110,6 +110,9 @@ namespace VoltstroEngine.Core
 			}
 		}
 
+		/// <summary>
+		/// Shuts down the application
+		/// </summary>
 		internal static void Shutdown()
 		{
 			app.window.Shutdown();

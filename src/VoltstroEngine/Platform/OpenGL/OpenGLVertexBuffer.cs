@@ -1,9 +1,10 @@
-﻿using OpenGL;
+﻿using System;
+using OpenGL;
 using VoltstroEngine.Rendering.Buffer;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
-	public class OpenGLVertexBuffer : IVertexBuffer
+	internal sealed class OpenGLVertexBuffer : IVertexBuffer
 	{
 		private readonly uint renderID;
 
@@ -38,7 +39,18 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		~OpenGLVertexBuffer()
 		{
+			ReleaseUnmanagedResources();
+		}
+
+		private void ReleaseUnmanagedResources()
+		{
 			Gl.DeleteBuffers(renderID);
+		}
+
+		public void Dispose()
+		{
+			ReleaseUnmanagedResources();
+			GC.SuppressFinalize(this);
 		}
 	}
 }

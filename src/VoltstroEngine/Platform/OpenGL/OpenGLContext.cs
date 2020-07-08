@@ -8,7 +8,7 @@ using Exception = System.Exception;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
-	public class OpenGLContext : IGraphicsContext
+	internal sealed class OpenGLContext : IGraphicsContext
 	{
 		private readonly Window window;
 

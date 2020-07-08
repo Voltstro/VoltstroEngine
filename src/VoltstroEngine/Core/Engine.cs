@@ -93,6 +93,7 @@ namespace VoltstroEngine.Core
 				ProfilerTimer.Profile("Shutdown", () =>
 				{
 					Application.Shutdown();
+					Renderer.Shutdown();
 					EtoFormsSystem.Shutdown();
 				});
 				

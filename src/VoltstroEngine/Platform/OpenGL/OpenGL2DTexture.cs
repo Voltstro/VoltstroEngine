@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using OpenGL;
 using VoltstroEngine.Core;
 using VoltstroEngine.Imaging;
@@ -6,7 +7,7 @@ using VoltstroEngine.Rendering.Texture;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
-	internal class OpenGL2DTexture : I2DTexture
+	internal sealed class OpenGL2DTexture : I2DTexture
 	{
 		private readonly uint textureID;
 
@@ -94,7 +95,18 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		~OpenGL2DTexture()
 		{
+			ReleaseUnmanagedResources();
+		}
+
+		private void ReleaseUnmanagedResources()
+		{
 			Gl.DeleteTextures(textureID);
+		}
+
+		public void Dispose()
+		{
+			ReleaseUnmanagedResources();
+			GC.SuppressFinalize(this);
 		}
 	}
 }

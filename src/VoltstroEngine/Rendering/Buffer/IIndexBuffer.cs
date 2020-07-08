@@ -3,7 +3,7 @@ using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering.Buffer
 {
-	public interface IIndexBuffer
+	public interface IIndexBuffer : IDisposable
 	{
 		public static IIndexBuffer Create(object indices, uint count)
 		{

@@ -3,7 +3,7 @@ using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering.Buffer
 {
-	public interface IVertexBuffer
+	public interface IVertexBuffer : IDisposable
 	{
 		public static IVertexBuffer Create(object vertices, uint size)
 		{

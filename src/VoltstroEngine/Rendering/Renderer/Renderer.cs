@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
-using VoltstroEngine.Core.Logging;
 using VoltstroEngine.DebugTools;
+using VoltstroEngine.Exceptions;
 using VoltstroEngine.Rendering.Camera;
 using VoltstroEngine.Rendering.Shaders;
 
@@ -14,21 +14,32 @@ namespace VoltstroEngine.Rendering.Renderer
 		/// <summary>
 		/// Initializes the rendering system
 		/// </summary>
+		/// <exception cref="InitializationException"></exception>
 		internal static void Init()
 		{
 			ProfilerTimer.Profile(() =>
 			{
 				if (initialized)
-				{
-					Logger.Log("The rendering api is already initialized!", LogVerbosity.Error);
-					return;
-				}
+					throw new InitializationException("The rendering system is already initialized!");
 
 				RenderingAPI.Init();
 				Renderer2D.Init();
 
 				initialized = true;
 			});
+		}
+
+		/// <summary>
+		/// Shuts down the rendering system
+		/// </summary>
+		/// <exception cref="InitializationException"></exception>
+		internal static void Shutdown()
+		{
+			if (!initialized)
+				throw new InitializationException("The rendering system is not initialized!");
+
+			Renderer2D.Shutdown();
+			initialized = false;
 		}
 
 		private struct SceneData

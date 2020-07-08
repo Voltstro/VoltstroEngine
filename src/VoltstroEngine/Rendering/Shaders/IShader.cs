@@ -7,7 +7,7 @@ namespace VoltstroEngine.Rendering.Shaders
 	/// <summary>
 	/// A shader... what did you except?
 	/// </summary>
-	public interface IShader
+	public interface IShader : IDisposable
 	{
 		/// <summary>
 		/// Creates a new shader

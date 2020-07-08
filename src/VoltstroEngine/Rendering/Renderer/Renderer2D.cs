@@ -20,7 +20,10 @@ namespace VoltstroEngine.Rendering.Renderer
 
 		private static Renderer2DStorage rendererData;
 
-		public static void Init()
+		/// <summary>
+		/// Initializes the 2D rendering system
+		/// </summary>
+		internal static void Init()
 		{
 			ProfilerTimer.Profile(() =>
 			{
@@ -62,17 +65,29 @@ namespace VoltstroEngine.Rendering.Renderer
 			});
 		}
 
-		public static void Shutdown()
+		/// <summary>
+		/// Shuts down the 2D rendering system
+		/// </summary>
+		internal static void Shutdown()
 		{
-			//TODO: Implement disposing for VertexBuffer, IndexBuffer, Shader
+			rendererData.QuadVertexArray.Dispose();
+			rendererData.TextureShader.Dispose();
+			rendererData.WhiteTexture.Dispose();
 		}
 
+		/// <summary>
+		/// Begins a new scene
+		/// </summary>
+		/// <param name="camera"></param>
 		public static void BeginScene(OrthographicCamera camera)
 		{
 			rendererData.TextureShader.Bind();
 			rendererData.TextureShader.SetMat4("u_ViewProjection", camera.ViewProjectionMatrix);
 		}
 
+		/// <summary>
+		/// Ends the scene
+		/// </summary>
 		public static void EndScene()
 		{
 		}

@@ -6,7 +6,7 @@ namespace VoltstroEngine.Rendering.Texture
 	/// <summary>
 	/// A 2D Texture
 	/// </summary>
-	public interface I2DTexture : ITexture
+	public interface I2DTexture : ITexture, IDisposable
 	{
 		/// <summary>
 		/// Creates a new texture

@@ -1,24 +1,25 @@
-﻿using OpenGL;
+﻿using System;
+using OpenGL;
 using VoltstroEngine.Rendering.Buffer;
 
 namespace VoltstroEngine.Platform.OpenGL
 {
-	public class OpenGLIndexBuffer : IIndexBuffer
+	internal sealed class OpenGLIndexBuffer : IIndexBuffer
 	{
 		private readonly uint count;
-		private readonly uint renderID;
+		private readonly uint bufferID;
 
 		public OpenGLIndexBuffer(object indices, uint count)
 		{
 			this.count = count;
-			renderID = Gl.CreateBuffer();
-			Gl.BindBuffer(BufferTarget.ElementArrayBuffer, renderID);
+			bufferID = Gl.CreateBuffer();
+			Gl.BindBuffer(BufferTarget.ElementArrayBuffer, bufferID);
 			Gl.BufferData(BufferTarget.ElementArrayBuffer, count * sizeof(uint), indices, BufferUsage.StaticDraw);
 		}
 
 		public void Bind()
 		{
-			Gl.BindBuffer(BufferTarget.ElementArrayBuffer, renderID);
+			Gl.BindBuffer(BufferTarget.ElementArrayBuffer, bufferID);
 		}
 
 		public void UnBind()
@@ -33,7 +34,18 @@ namespace VoltstroEngine.Platform.OpenGL
 
 		~OpenGLIndexBuffer()
 		{
-			Gl.DeleteBuffers(renderID);
+			ReleaseUnmanagedResources();
+		}
+
+		private void ReleaseUnmanagedResources()
+		{
+			Gl.DeleteBuffers(bufferID);
+		}
+
+		public void Dispose()
+		{
+			ReleaseUnmanagedResources();
+			GC.SuppressFinalize(this);
 		}
 	}
 }

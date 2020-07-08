@@ -12,7 +12,7 @@ namespace VoltstroEngineLauncher
 {
 	public class Program
 	{
-		private const string DefaultGame = "DiscordRPCExample";
+		private const string DefaultGame = "Sandbox";
 
 		[STAThread]
 		public static void Main(string[] args)

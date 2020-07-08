@@ -4,7 +4,7 @@ using VoltstroEngine.Rendering.Renderer;
 
 namespace VoltstroEngine.Rendering
 {
-	public interface IVertexArray
+	public interface IVertexArray : IDisposable
 	{
 		public static IVertexArray Create()
 		{

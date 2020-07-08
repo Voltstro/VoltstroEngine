@@ -10,7 +10,7 @@ namespace VoltstroEngine.Platform.OpenGL
 	/// <summary>
 	/// The OpenGL rendering API
 	/// </summary>
-	public class OpenGLRenderingAPI : IRenderingAPI
+	internal sealed class OpenGLRenderingAPI : IRenderingAPI
 	{
 		public void Init()
 		{

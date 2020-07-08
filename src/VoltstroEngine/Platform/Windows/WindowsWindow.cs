@@ -15,7 +15,7 @@ namespace VoltstroEngine.Platform.Windows
 	/// <summary>
 	/// A window for Windows
 	/// </summary>
-	public class WindowsWindow : IWindow
+	internal sealed class WindowsWindow : IWindow
 	{
 		private static uint windowCount;
 
@@ -67,8 +67,7 @@ namespace VoltstroEngine.Platform.Windows
 		{
 			ProfilerTimer.Profile(() =>
 			{
-				//For what ever reason this is causing an System.AccessViolationException
-				//Glfw.DestroyWindow(window);
+				window.Dispose();
 				windowCount--;
 
 				if(windowCount == 0)

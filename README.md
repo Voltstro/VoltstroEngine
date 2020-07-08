@@ -28,6 +28,7 @@ Here are some features the VoltstroEngine supports, obviously, things will chang
 
 You will need:
 
+- [Powershell Core 7.x](https://github.com/PowerShell/PowerShell/releases)
 - [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - An IDE
     - Solution/Workspace files for [Visual Studio](https://visualstudio.microsoft.com/), [Rider](https://www.jetbrains.com/rider/) and [VS Code](https://code.visualstudio.com/) are provided, ready to go

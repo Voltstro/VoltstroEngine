@@ -27,7 +27,8 @@ namespace VoltstroEngineLauncher
 			try
 			{
 				//Load the game assembly
-				Assembly gameDll = Assembly.LoadFile(dllPath);
+				AssemblyLoad assemblyLoad = new AssemblyLoad();
+				Assembly gameDll = assemblyLoad.LoadAssembly(Path.GetFullPath($"{DefaultGame}/bin"), $"{DefaultGame}.dll");
 
 				//Find a class the inherits from IEntryPoint so that we can create the game
 				foreach (Type type in gameDll.GetTypes().Where(x => x.IsPublic && x.IsClass)) //Needs to be public

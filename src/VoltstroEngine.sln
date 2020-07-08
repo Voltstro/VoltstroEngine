@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoltstroEngine.Imaging", "V
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StbImageSharp", "ThirdParty\StbImageSharp\src\StbImageSharp.csproj", "{480F50CE-E337-4B80-9796-8F270C715120}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{5FD07E7D-97E4-4668-B960-CF0DC628751A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordRPCExample", "Examples\DiscordRPCExample\DiscordRPCExample.csproj", "{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -49,6 +53,10 @@ Global
 		{480F50CE-E337-4B80-9796-8F270C715120}.Debug|x64.Build.0 = Debug|x64
 		{480F50CE-E337-4B80-9796-8F270C715120}.Release|x64.ActiveCfg = Release|x64
 		{480F50CE-E337-4B80-9796-8F270C715120}.Release|x64.Build.0 = Release|x64
+		{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}.Debug|x64.ActiveCfg = Debug|x64
+		{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}.Debug|x64.Build.0 = Debug|x64
+		{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}.Release|x64.ActiveCfg = Release|x64
+		{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +64,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D2BE0D77-D1FD-4585-B872-274CCFDE80D0} = {A7EAA04C-6E4E-4F76-9343-4F5018625CF7}
 		{480F50CE-E337-4B80-9796-8F270C715120} = {A7EAA04C-6E4E-4F76-9343-4F5018625CF7}
+		{AB1C29B9-E1CB-4F13-A62F-EE89CA4AC034} = {5FD07E7D-97E4-4668-B960-CF0DC628751A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C60704E-4B00-40A0-8798-F24EBB9A9C46}

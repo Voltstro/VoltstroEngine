@@ -58,7 +58,7 @@ namespace VoltstroEngine.DebugTools
 			profileResults = new List<ProfileResult>();
 			Instance = this;
 
-			Logger.Log($"Started a new instrumentor session {name}", LogVerbosity.Debug);
+			Logger.Debug("Started a new profiler session {@Name}", name);
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace VoltstroEngine.DebugTools
 			profileResults.Clear();
 			profileResults = null;
 
-			Logger.Log($"Ended instrumentor session {session.Name}", LogVerbosity.Debug);
+			Logger.Debug("Ended profiler session {@Name}", session.Name);
 		}
 #endif
 

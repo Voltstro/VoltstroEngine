@@ -26,7 +26,7 @@ namespace VoltstroEngine.Platform.OpenGL
 				{
 					Debug.Assert(false, $"An error occured while enabling OpenGL!\n{ex}");
 #if !DEBUG
-				Core.Logging.Logger.Log(ex.Message, Core.Logging.LogVerbosity.Error);
+					Core.Logging.Logger.Error("Am error occured while initializing OpenGL!\n{@Message}", ex);
 #endif
 				}
 			});

@@ -13,15 +13,14 @@ namespace DiscordRPCExample
 		{
 			client = new DiscordRpcClient(ApplicationId, -1, new VEDiscordLogger());
 
-			client.OnError += (sender, args) => Logger.Log($"Error with Discord RPC: {args.Code}:{args.Message}");
-			client.OnReady += (sender, args) => Logger.Log("Client ready: " + args.User.Username);
+			client.OnError += (sender, args) => Logger.Error("Error with Discord RPC: {@Code}:{@Message}", args.Code, args.Message);
+			client.OnReady += (sender, args) => Logger.Info("Client ready: " + args.User.Username);
 			client.OnConnectionFailed += (sender, args) =>
 			{
-				Logger.Log($"Error communicating with Discord: Pipe: `{args.FailedPipe}`. Is Discord running?",
-					LogVerbosity.Error);
+				Logger.Error("Error communicating with Discord: Pipe: `{@FailedPipe}`. Is Discord running?", args.FailedPipe);
 				client.Deinitialize();
 			};
-			client.OnClose += (sender, args) => Logger.Log($"Discord RPC was closed: {args.Code}:{args.Reason}");
+			client.OnClose += (sender, args) => Logger.Info($"Discord RPC was closed: {args.Code}:{args.Reason}");
 
 			client.Initialize();
 		}

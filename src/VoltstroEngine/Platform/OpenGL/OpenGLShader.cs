@@ -172,7 +172,7 @@ namespace VoltstroEngine.Platform.OpenGL
 					StringBuilder infoLog = new StringBuilder(logMaxLength);
 					Gl.GetShaderInfoLog(shader, logMaxLength, out int infoLogLength, infoLog);
 
-					Logger.Log($"The shader failed to compile!\n{infoLog}", LogVerbosity.Error);
+					Logger.Error("The shader failed to compile!\n{@InfoLog}", infoLog);
 					Debug.Assert(false, $"The shader failed to compile!\n{infoLog}");
 #if !DEBUG
 					return;
@@ -195,10 +195,10 @@ namespace VoltstroEngine.Platform.OpenGL
 
 				Gl.GetProgramInfoLog(program, 1024, out int infoLogLength, infoLog);
 
-				Logger.Log($"The program failed to link!\n{infoLog}", LogVerbosity.Error);
+				Logger.Error("The program failed to link!\n{@InfoLog}", infoLog);
 				Debug.Assert(false, $"The program failed to link!\n{infoLog}");
 #if !DEBUG
-					return;
+				return;
 #endif
 			}
 

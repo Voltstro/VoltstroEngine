@@ -30,7 +30,7 @@ namespace VoltstroEngine.Core
 				{
 					Debug.Assert(false, "A running app already exists!");
 #if !DEBUG
-				Logging.Logger.Log("A running app already exists!", Logging.LogVerbosity.Error);
+					Logging.Logger.Error("A running app already exists!");
 				return;
 #endif
 				}

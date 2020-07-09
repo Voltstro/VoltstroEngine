@@ -95,7 +95,7 @@ namespace VoltstroEngineLauncher
 			catch (Exception ex)
 			{
 				if(Logger.IsLoggerInitialized)
-					Logger.Log(ex.ToString(), LogVerbosity.Error);
+					Logger.Error("An error occured: {@Exception}", ex);
 				//If the logger isn't initialized, then the only option we got to log the error is to dump it into console, as we disposed of Eto.Forms Application earlier
 				//and can't create message boxes with out it
 				else 

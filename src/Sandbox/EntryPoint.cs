@@ -1,5 +1,4 @@
 ﻿using VoltstroEngine.Core;
-using VoltstroEngine.Core.Logging;
 
 namespace Sandbox
 {
@@ -7,7 +6,6 @@ namespace Sandbox
 	{
 		public Application CreateApplication()
 		{
-			Logger.Log("Creating new sandbox app...");
 			return new SandboxApp();
 		}
 

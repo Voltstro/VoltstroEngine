@@ -33,7 +33,7 @@ namespace VoltstroEngine.EtoForms
 					{
 						Debug.Assert(false, $"An error occured in the Eto.Forms system!\n{e}");
 #if !DEBUG
-						Logger.Log($"An error occured in the Eto.Forms system!\n{e.Message}", LogVerbosity.Error);
+						Logger.Error("An error occured in the Eto.Forms system!\n{@Message}", e);
 #endif
 					}
 				});

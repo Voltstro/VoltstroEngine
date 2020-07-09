@@ -31,7 +31,7 @@ namespace VoltstroEngine.Core
 				throw new NullReferenceException("Game name cannot be null!");
 
 			//Initiate the logger first
-			Logger.InitiateLogger();
+			Logger.Init();
 
 			Profiler.BeginSession("Startup", "VoltstroEngineProfile-Startup.json");
 
@@ -58,6 +58,7 @@ namespace VoltstroEngine.Core
 					EtoFormsSystem.Init();
 
 					//Create the app
+					Logger.Info("Creating {@GameName}'s application...", GameName);
 					app = entry.CreateApplication();
 					if(app == null)
 						throw new NullReferenceException("The app cannot be null!");
@@ -97,7 +98,7 @@ namespace VoltstroEngine.Core
 					EtoFormsSystem.Shutdown();
 				});
 				
-				Logger.EndLogger();
+				Logger.Shutdown();
 			}
 			Profiler.EndSession();
 		}

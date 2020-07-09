@@ -38,7 +38,7 @@ namespace VoltstroEngine.Platform.Windows
 			}
 			catch (Exception ex)
 			{
-				Logger.Log(ex.ToString());
+				Logger.Error("An error occured while swapping buffers!", ex);
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace VoltstroEngine.Platform.Windows
 		{
 			ProfilerTimer.Profile(() =>
 			{
-				Logger.Log("Initializing a window for Windows...", LogVerbosity.Debug);
+				Logger.Info("Initializing a window for Windows...");
 
 				//Initialize glfw if it hasn't already
 				if (windowCount == 0)
@@ -174,14 +174,13 @@ namespace VoltstroEngine.Platform.Windows
 
 				window.MouseMoved += (sender, args) => OnEvent?.Invoke(new MouseMovedEvent((float) args.X, (float) args.Y));
 
-				Logger.Log($"Created a window for Windows ({properties.Width}x{properties.Height}, {properties.VSync})",
-					LogVerbosity.Debug);
+				Logger.Debug("Created a window for Windows ({@Width}x{@Height}, {@VSync})", properties.Width, properties.Height, properties.VSync);
 			});
 		}
 
 		private static void ErrorHandler(ErrorCode code, IntPtr message)
 		{
-			Logger.Log($"GLFW Error: {code}:{message}", LogVerbosity.Error);
+			Logger.Error("GLFW Error: {@Code}:{@Message}", code, message);
 		}
 	}
 }

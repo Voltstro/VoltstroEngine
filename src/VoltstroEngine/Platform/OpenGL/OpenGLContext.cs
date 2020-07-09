@@ -21,7 +21,7 @@ namespace VoltstroEngine.Platform.OpenGL
 		{
 			ProfilerTimer.Profile(() =>
 			{
-				Logger.Log("Initializing OpenGL...", LogVerbosity.Debug);
+				Logger.Info("Initializing OpenGL context...");
 				try
 				{
 					Gl.Initialize();
@@ -31,27 +31,27 @@ namespace VoltstroEngine.Platform.OpenGL
 				{
 					Debug.Assert(false, $"Some error occured while initializing OpenGL for GLFW!\n{ex}");
 #if !DEBUG
-				Logger.Log(ex.Message, LogVerbosity.Error);
+					Logger.Error("An error occured while initializing OpenGL for GLFW!\n{@Message}", ex);
 #endif
 				}
 			});
-			Logger.Log("OpenGL Initialized", LogVerbosity.Debug);
+			Logger.Info("OpenGL context initialized!");
 
-			Logger.Log("OpenGL Info:", LogVerbosity.Debug);
-			Logger.Log($"	Vendor: {Gl.GetString(StringName.Vendor)}", LogVerbosity.Debug);
-			Logger.Log($"	Renderer: {Gl.GetString(StringName.Renderer)}", LogVerbosity.Debug);
-			Logger.Log($"	Version: {Gl.GetString(StringName.Version)}", LogVerbosity.Debug);
+			Logger.Info("OpenGL Info:");
+			Logger.Info("	Vendor: {@Vendor}", Gl.GetString(StringName.Vendor));
+			Logger.Info("	Renderer: {@Renderer}", Gl.GetString(StringName.Renderer));
+			Logger.Info("	Version: {@Version}", Gl.GetString(StringName.Version));
 
 			Gl.GetInteger(GetPName.MajorVersion, out int versionMajor);
 			Gl.GetInteger(GetPName.MinorVersion, out int versionMinor);
 
-			Logger.Log($"Running OpenGL Version {versionMajor}.{versionMinor}", LogVerbosity.Debug);
+			Logger.Info("Running OpenGL Version {@VersionMajor}.{@VersionMinor}", versionMajor, versionMinor);
 
 			if (versionMajor >= 4 && (versionMajor != 4 || versionMinor >= 5)) return;
 
 			Debug.Assert(false, "Voltstro Engine excepts at least OpenGL version 4.5!");
 #if !DEBUG
-			Logger.Log("Voltstro Engine excepts at least OpenGL version 4.5!", LogVerbosity.Error);
+			Logger.Error("Voltstro Engine excepts at least OpenGL version 4.5!");
 			System.Environment.Exit(-1);
 #endif
 		}

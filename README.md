@@ -2,7 +2,7 @@
 
 # VoltstroEngine
  
-[![Build Status](https://dev.azure.com/Voltstro/VoltstroEngine/_apis/build/status/VoltstroEngine?branchName=master)](https://dev.azure.com/Voltstro/VoltstroEngine/_build/latest?definitionId=4&branchName=master)
+[![Build Status](https://dev.azure.com/Voltstro/VoltstroEngine-Public/_apis/build/status/Voltstro.VoltstroEngine?branchName=master)](https://dev.azure.com/Voltstro/VoltstroEngine-Public/_build/latest?definitionId=5&branchName=master)
 [![Discord](https://img.shields.io/badge/Discord-Voltstro-7289da.svg)](https://discord.voltstro.dev) 
 [![YouTube](https://img.shields.io/badge/Youtube-Voltstro-red.svg?logo=youtube)](https://www.youtube.com/Voltstro)
 
@@ -33,6 +33,14 @@ You will need:
 - An IDE
     - Solution/Workspace files for [Visual Studio](https://visualstudio.microsoft.com/), [Rider](https://www.jetbrains.com/rider/) and [VS Code](https://code.visualstudio.com/) are provided, ready to go
     - Visual Studio 2019 the recommend IDE to use, if you have a platform compatible
+
+## Getting the project
+
+You will need to clone the project recursively using git:
+
+```
+git clone --recursive https://github.com/Voltstro/VoltstroEngine.git
+```
 
 ## Compiling
 

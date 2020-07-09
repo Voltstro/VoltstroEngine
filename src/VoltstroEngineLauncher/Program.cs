@@ -10,25 +10,33 @@ using Application = Eto.Forms.Application;
 
 namespace VoltstroEngineLauncher
 {
+	/// <summary>
+	/// Program for VoltstroEngineLauncher
+	/// </summary>
 	public class Program
 	{
-		private const string DefaultGame = "Sandbox";
-
+		/// <summary>
+		/// The launcher for the VoltstroEngine
+		/// </summary>
 		[STAThread]
 		public static void Main(string[] args)
 		{
+			//Do our command line parsing first
+			CommandLine.ParseArguments(args);
+
 			//Create our Eto.Forms app, so we can show message boxes
 			//We shut this down before we run the engine
 			Platform.AllowReinitialize = true;
 			Application app = new Application();
 
+			//Now to get the game's entry point
 			IEntryPoint entryPoint = null;
-			string dllPath = Path.GetFullPath($"{DefaultGame}/bin/{DefaultGame}.dll");
+			string dllPath = Path.GetFullPath($"{CommandLine.GameName}/bin/{CommandLine.GameName}.dll");
 			try
 			{
 				//Load the game assembly
 				AssemblyLoad assemblyLoad = new AssemblyLoad();
-				Assembly gameDll = assemblyLoad.LoadAssembly(Path.GetFullPath($"{DefaultGame}/bin"), $"{DefaultGame}.dll");
+				Assembly gameDll = assemblyLoad.LoadAssembly(Path.GetFullPath($"{CommandLine.GameName}/bin"), $"{CommandLine.GameName}.dll");
 
 				//Find a class the inherits from IEntryPoint so that we can create the game
 				foreach (Type type in gameDll.GetTypes().Where(x => x.IsPublic && x.IsClass)) //Needs to be public
@@ -42,9 +50,9 @@ namespace VoltstroEngineLauncher
 			}
 			catch (FileNotFoundException ex) //The DLL wasn't found
 			{
-				Debug.Assert(false, $"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!\n{ex}");
+				Debug.Assert(false, $"The game DLL for '{CommandLine.GameName}' wasn't found in '{dllPath}'!\n{ex}");
 #if !DEBUG
-				Eto.Forms.MessageBox.Show($"The game DLL for '{DefaultGame}' wasn't found in '{dllPath}'!", "Engine Error",
+				Eto.Forms.MessageBox.Show($"The game DLL for '{CommandLine.GameName}' wasn't found in '{dllPath}'!", "Engine Error",
 					Eto.Forms.MessageBoxButtons.OK, Eto.Forms.MessageBoxType.Error);
 				app.Dispose();
 				Environment.Exit(0);

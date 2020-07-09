@@ -1,0 +1,6 @@
+﻿[
+  {
+    "ItemToCopy": "../../thirdpartycredits.txt",
+    "WhereToCopyInBuild": ""
+  }
+]

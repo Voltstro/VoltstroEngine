@@ -74,9 +74,10 @@
     <None Update="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="..\..\thirdpartycredits.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="pwsh ../Scripts/CopyFilesOnBuild.ps1 -gameDirectory ../../game/bin/$(ConfigurationName) -projectDirectory $(ProjectDir)" />
+  </Target>
 
 </Project>

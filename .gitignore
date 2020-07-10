@@ -354,3 +354,6 @@ MigrationBackup/
 
 # Rider IDE
 .idea/
+
+# Properties launch options
+src/VoltstroEngineLauncher/Properties/launchSettings.json

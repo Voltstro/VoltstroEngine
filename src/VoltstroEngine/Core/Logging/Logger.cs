@@ -48,7 +48,7 @@ namespace VoltstroEngine.Core.Logging
 			if(LoggerConfig == null)
 				LoggerConfig = new LoggerConfig();
 
-			LoggingLevelSwitch level = new LoggingLevelSwitch(LogEventLevel.Verbose)
+			LoggingLevelSwitch level = new LoggingLevelSwitch()
 			{
 #if DEBUG
 				MinimumLevel = LogEventLevel.Debug
